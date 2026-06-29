@@ -1,2 +1,7 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿public static class MathUtil
+{
+    public static int Square(int x)
+    {
+        return x * x;
+    }
+}
