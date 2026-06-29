@@ -1,4 +1,8 @@
-﻿// See https://aka.ms/new-console-template for more information
+static int Square(int x)
+    {
+        return x * x;
+    }
+}
 Console.WriteLine("Hello, World!");
 
 int x = 10;
