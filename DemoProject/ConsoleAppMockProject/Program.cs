@@ -1,6 +1,10 @@
 ﻿// See https://aka.ms/new-console-template for more information
 Console.WriteLine("Hello, World!");
 
+int x = 10;
+int y = 5;
+Console.WriteLine($"The quotient of {x} and {y} is {x / y}");
+///
 int a = 5;
 int b = 10;
 int tong = a + b;
