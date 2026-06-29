@@ -1,5 +1,11 @@
 ﻿// See https://aka.ms/new-console-template for more information
 Console.WriteLine("Hello, World!");
+Console.WriteLine($"17 mod 4 = {ModOperator(17, 4)}");
+
+static int ModOperator(int a, int b)
+{
+    return a % b;
+}
 
 Console.Write("Nhập số thứ nhất: ");
 double num1 = Convert.ToDouble(Console.ReadLine());
