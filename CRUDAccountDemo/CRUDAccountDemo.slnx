@@ -1,8 +1,0 @@
-<Solution>
-  <Project Path="CRUDAccountDemo.API/CRUDAccountDemo.API.csproj" />
-  <Project Path="CRUDAccountDemo.Business/CRUDAccountDemo.Business.csproj" />
-  <Project Path="CRUDAccountDemo.Data/CRUDAccountDemo.Data.csproj" />
-  <Project Path="docker-compose.dcproj">
-    <Build />
-  </Project>
-</Solution>

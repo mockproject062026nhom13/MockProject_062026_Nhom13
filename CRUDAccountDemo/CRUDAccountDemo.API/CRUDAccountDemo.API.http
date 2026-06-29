@@ -1,6 +1,0 @@
-@CRUDAccountDemo.API_HostAddress = http://localhost:5115
-
-GET {{CRUDAccountDemo.API_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
