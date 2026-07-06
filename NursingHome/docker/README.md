@@ -6,7 +6,7 @@ Runs the ASP.NET Core API together with SQL Server 2022 in one command.
 
 | Path | Purpose |
 |------|---------|
-| `docker/api/Dockerfile` | Multi-stage, non-root image for `NursingHome.Api` (.NET 10). |
+| `docker/api/Dockerfile` | Multi-stage, non-root image for `NursingHome.Api` (.NET 8). |
 | `docker/db/init.sh` | One-shot DB initialiser: creates the database, a least-privilege app login, then applies `database/scripts/*.sql` and `database/seeds/*.sql`. |
 | `docker-compose.yml` | Orchestrates `db` + `db-init` + `api` (at the solution root). |
 | `.env.example` | Template for secrets — copy to `.env`. |
@@ -20,8 +20,8 @@ cp .env.example .env      # then edit .env and set strong passwords
 docker compose up --build
 ```
 
-The API comes up on <http://localhost:8080> (change with `API_PORT` in `.env`).
-In `Development` the OpenAPI document is at `/openapi/v1.json`.
+The API comes up on <http://localhost:8088> (change with `API_PORT` in `.env`).
+In `Development` the Swagger UI is at `/swagger` (JSON at `/swagger/v1/swagger.json`).
 
 Startup order is enforced automatically:
 `db` (healthy) → `db-init` (runs once, exits) → `api`.

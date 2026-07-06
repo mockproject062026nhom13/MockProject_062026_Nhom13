@@ -1,12 +1,12 @@
 # syntax=docker/dockerfile:1
 
 # =============================================================================
-# NursingHome.Api — multi-stage, non-root container image (.NET 10)
+# NursingHome.Api — multi-stage, non-root container image (.NET 8)
 # Build context is expected to be the solution root (NursingHome/).
 # =============================================================================
 
 # ---------- Build stage -------------------------------------------------------
-FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # Copy only the project/solution manifests first so `restore` is cached and only
@@ -29,7 +29,7 @@ RUN dotnet publish "src/NursingHome.Api/NursingHome.Api.csproj" \
     /p:UseAppHost=false
 
 # ---------- Runtime stage -----------------------------------------------------
-FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 
 # Copy the published output (owned by root, world-readable).
