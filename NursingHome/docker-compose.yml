@@ -20,8 +20,8 @@ services:
     # The DB port is NOT published by default — it is only reachable on the
     # internal 'backend' network. Uncomment to connect from the host (SSMS,
     # Azure Data Studio); it stays bound to loopback only.
-    # ports:
-    #   - "127.0.0.1:1433:1433"
+    ports:
+      - "127.0.0.1:1433:1433"
     volumes:
       - mssql-data:/var/opt/mssql
     healthcheck:
