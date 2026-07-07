@@ -1,6 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.11" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\NursingHome.Application\NursingHome.Application.csproj" />
     <ProjectReference Include="..\NursingHome.Domain\NursingHome.Domain.csproj" />
   </ItemGroup>
