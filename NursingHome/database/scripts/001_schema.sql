@@ -40,7 +40,12 @@ GO
 */
 
 -- Docker mode
+
 USE NursingHome;
+GO
+
+SET ANSI_NULLS ON;
+SET QUOTED_IDENTIFIER ON;
 GO
 
 -- =====================================================================================
