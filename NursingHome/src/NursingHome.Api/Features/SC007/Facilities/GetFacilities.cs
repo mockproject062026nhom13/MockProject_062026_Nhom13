@@ -1,6 +1,7 @@
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using NursingHome.Infrastructure.Persistence.DbContexts;
+using NursingHome.Application.Common;
 
 public record FacilityResponse(
     string FacilityName,
@@ -9,7 +10,8 @@ public record FacilityResponse(
     string TargetState,
     string City);
 
-public class GetFacilityEndpoint(NursingHomeDbContext db) : EndpointWithoutRequest<List<FacilityResponse>>
+public class GetFacilityEndpoint(NursingHomeDbContext db) :
+  EndpointWithoutRequest<ApiResponse<List<FacilityResponse>>>
 {
     public override void Configure()
     {
@@ -31,7 +33,7 @@ public class GetFacilityEndpoint(NursingHomeDbContext db) : EndpointWithoutReque
                     a.city
                 ))
             .ToListAsync(ct);
-
-        await SendAsync(result, cancellation: ct);
+        var response = ApiResponse<List<FacilityResponse>>.CreateSuccess(result);
+        await SendAsync(response, cancellation: ct);
     }
 }
