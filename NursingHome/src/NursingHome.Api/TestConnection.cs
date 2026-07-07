@@ -1,6 +1,6 @@
 using FastEndpoints;
 
-namespace NursingHome.Api.Features.SC007;
+namespace NursingHome.Api;
 
 public class TestConnection : EndpointWithoutRequest
 {
