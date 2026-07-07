@@ -1,0 +1,39 @@
+# Keep the build context small and, above all, keep secrets OUT of the image.
+
+# ---- Secrets & local configuration (never bake these in) --------------------
+.env
+.env.*
+**/appsettings.Development.json
+**/appsettings.Local.json
+secrets.json
+**/*.pfx
+**/*.p12
+**/*.pem
+**/*.key
+
+# ---- Build artifacts --------------------------------------------------------
+**/bin/
+**/obj/
+**/out/
+**/publish/
+artifacts/
+
+# ---- IDE / VCS --------------------------------------------------------------
+.git/
+.gitignore
+.gitattributes
+.vs/
+.vscode/
+.idea/
+**/*.user
+
+# ---- Docker & infra (not needed to compile the app) -------------------------
+**/docker-compose*.yml
+**/Dockerfile*
+.dockerignore
+docker/
+database/
+tests/
+
+# ---- Docs -------------------------------------------------------------------
+**/*.md
