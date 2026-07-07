@@ -9,7 +9,6 @@
 .env
 .env.local
 appsettings.Local.json
-src/NursingHome.Api/Features/
 docker-compose.override.yml
 
 # --- Re-include committed, secret-free templates/infra ------------------------
