@@ -15,7 +15,7 @@ public class GetFacilityEndpoint(NursingHomeDbContext db) :
 {
     public override void Configure()
     {
-        Get("/facilities/info");
+        Get("api/facilities/info");
         AllowAnonymous();
     }
 

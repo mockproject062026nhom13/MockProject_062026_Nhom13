@@ -3,7 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using NursingHome.Application.Common;
 using NursingHome.Infrastructure.Persistence.DbContexts;
 
-public class GetBedsEndpoint(NursingHomeDbContext db) : EndpointWithoutRequest<ApiResponse<List<BedRecord>>>
+public record GetBedsRequest(int Page = 1);
+
+public class GetBedsEndpoint(NursingHomeDbContext db) : Endpoint<GetBedsRequest, ApiResponse<List<BedRecord>>>
 {
     public override void Configure()
     {
@@ -11,9 +13,16 @@ public class GetBedsEndpoint(NursingHomeDbContext db) : EndpointWithoutRequest<A
         AllowAnonymous();
     }
 
-    public override async Task HandleAsync(CancellationToken ct)
+    public override async Task HandleAsync(GetBedsRequest req, CancellationToken ct)
     {
+        int pageSize = 4;
+        int totalItems = await db.beds.CountAsync(ct);
+        int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
         var data = await db.beds
+            .OrderBy(b => b.id)
+            .Skip((req.Page - 1) * pageSize)
+            .Take(pageSize)
             .Select(b => new BedRecord(
                 b.room.room_number,
                 b.room.room_type,
@@ -21,9 +30,17 @@ public class GetBedsEndpoint(NursingHomeDbContext db) : EndpointWithoutRequest<A
                 b.status
             ))
             .ToListAsync(ct);
-        var response = ApiResponse<List<BedRecord>>.CreateSuccess(data);
+
+        var pagination = new PaginationMetadata(
+            Page: req.Page,
+            PageSize: pageSize,
+            TotalPages: totalPages,
+            TotalItems: totalItems,
+            HasNext: req.Page < totalPages,
+            HasPrevious: req.Page > 1
+        );
+
+        var response = ApiResponse<List<BedRecord>>.CreateSuccess(data, pagination: pagination);
         await SendAsync(response, cancellation: ct);
     }
 }
-
-
