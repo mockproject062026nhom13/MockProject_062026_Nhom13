@@ -1,6 +1,4 @@
-using System.Collections.Generic;
-
-namespace Models.Common;
+namespace NursingHome.Application.Common;
 
 public class ApiResponse<T>
 {
