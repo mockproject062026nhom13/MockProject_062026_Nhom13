@@ -1,8 +1,3 @@
-namespace NursingHome.Application.Features.LocationInfrastructure.DTOs;
+using NursingHome.Application.Features.LocationInfrastructure;
 
-public record FacilityResponse(
-    string FacilityName,
-    string FacilityCode,
-    string LicenseNumber,
-    string TargetState,
-    string City);
+public record GetFacilitiesQuery : IRequest<List<FacilityResponse>>;
