@@ -83,21 +83,6 @@ public class ActivateAccountController : ControllerBase
                     409,
                     "Account has already been activated."));
         }
-        {
-            return Conflict(
-                ApiResponse<object>.CreateError(
-                    409,
-                    "Account has already been activated."));
-        }
-
-        if (user.status == "LOCKED")
-        {
-            return StatusCode(
-                403,
-                ApiResponse<object>.CreateError(
-                    403,
-                    "Account is locked."));
-        }
         
         user.ActivateAccount(BCrypt.Net.BCrypt.HashPassword(request.Password), request.PhoneNumber);
         await _context.SaveChangesAsync();
