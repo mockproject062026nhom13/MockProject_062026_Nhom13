@@ -111,4 +111,6 @@ public partial class user
 
     [InverseProperty("recorded_byNavigation")]
     public virtual ICollection<vital_sign> vital_signs { get; private set; } = new List<vital_sign>();
+
+
 }
