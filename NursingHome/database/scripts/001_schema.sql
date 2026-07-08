@@ -39,6 +39,12 @@ USE NursingHomeManagement_V3;
 GO
 */
 
+SET ANSI_NULLS ON;
+GO
+
+SET QUOTED_IDENTIFIER ON;
+GO
+
 -- Docker mode
 USE NursingHome;
 GO
@@ -89,7 +95,7 @@ CREATE TABLE users (
     last_name           NVARCHAR(100) NOT NULL,
     license_number      NVARCHAR(100) NULL,          -- RN/LPN professional license #
     phone_number        NVARCHAR(20) NULL,
-    status              VARCHAR(20) NOT NULL DEFAULT 'ACTIVE' CHECK (status IN ('ACTIVE','INACTIVE','LOCKED')),
+    status              VARCHAR(20) NOT NULL DEFAULT 'ACTIVE' CHECK (status IN ('INVITED','ACTIVE','INACTIVE','LOCKED')),
     mfa_enabled         BIT NOT NULL DEFAULT 0,       -- HIPAA: khuyến nghị bắt buộc MFA cho tài khoản có quyền PHI
     last_login_at       DATETIMEOFFSET(0) NULL,
     role_id             BIGINT NOT NULL REFERENCES roles(id),

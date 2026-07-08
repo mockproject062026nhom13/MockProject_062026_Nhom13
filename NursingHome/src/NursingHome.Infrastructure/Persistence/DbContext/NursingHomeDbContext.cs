@@ -5,7 +5,8 @@ using NursingHome.Infrastructure.Persistence.Generated;
 
 namespace NursingHome.Infrastructure.Persistence.DbContexts;
 
-public partial class NursingHomeDbContext : DbContext
+public partial class NursingHomeDbContext
+    : Microsoft.EntityFrameworkCore.DbContext
 {
     public NursingHomeDbContext(DbContextOptions<NursingHomeDbContext> options)
         : base(options)
