@@ -6,43 +6,52 @@ using Microsoft.EntityFrameworkCore;
 
 namespace NursingHome.Infrastructure.Persistence.Generated;
 
-[Index("resident_id", Name = "idx_assessments_resident_id")]
-public partial class assessment
+[Table("assessments")]
+[Index("ResidentId", Name = "idx_assessments_resident_id")]
+public partial class Assessment
 {
     [Key]
-    public Guid id { get; private set; }
+    [Column("id")]
+    public long Id { get; private set; }
 
-    public int adl_total_score { get; private set; }
+    [Column("adl_total_score")]
+    public int AdlTotalScore { get; private set; }
 
-    public bool is_overridden { get; private set; }
+    [Column("is_overridden")]
+    public bool IsOverridden { get; private set; }
 
-    public long suggested_care_level_id { get; private set; }
+    [Column("suggested_care_level_id")]
+    public long SuggestedCareLevelId { get; private set; }
 
-    public long confirmed_care_level_id { get; private set; }
+    [Column("confirmed_care_level_id")]
+    public long ConfirmedCareLevelId { get; private set; }
 
-    public Guid resident_id { get; private set; }
+    [Column("resident_id")]
+    public long ResidentId { get; private set; }
 
-    public Guid assessed_by { get; private set; }
+    [Column("assessed_by")]
+    public long AssessedBy { get; private set; }
 
+    [Column("created_at")]
     [Precision(0)]
-    public DateTimeOffset created_at { get; private set; }
+    public DateTimeOffset CreatedAt { get; private set; }
 
-    [ForeignKey("assessed_by")]
-    [InverseProperty("assessments")]
-    public virtual user assessed_byNavigation { get; private set; } = null!;
+    [ForeignKey("AssessedBy")]
+    [InverseProperty("Assessments")]
+    public virtual User AssessedByNavigation { get; private set; } = null!;
 
-    [InverseProperty("assessment")]
-    public virtual ICollection<assessment_detail> assessment_details { get; private set; } = new List<assessment_detail>();
+    [InverseProperty("Assessment")]
+    public virtual ICollection<AssessmentDetail> AssessmentDetails { get; private set; } = new List<AssessmentDetail>();
 
-    [ForeignKey("confirmed_care_level_id")]
-    [InverseProperty("assessmentconfirmed_care_levels")]
-    public virtual care_level confirmed_care_level { get; private set; } = null!;
+    [ForeignKey("ConfirmedCareLevelId")]
+    [InverseProperty("AssessmentConfirmedCareLevels")]
+    public virtual CareLevel ConfirmedCareLevel { get; private set; } = null!;
 
-    [ForeignKey("resident_id")]
-    [InverseProperty("assessments")]
-    public virtual resident resident { get; private set; } = null!;
+    [ForeignKey("ResidentId")]
+    [InverseProperty("Assessments")]
+    public virtual Resident Resident { get; private set; } = null!;
 
-    [ForeignKey("suggested_care_level_id")]
-    [InverseProperty("assessmentsuggested_care_levels")]
-    public virtual care_level suggested_care_level { get; private set; } = null!;
+    [ForeignKey("SuggestedCareLevelId")]
+    [InverseProperty("AssessmentSuggestedCareLevels")]
+    public virtual CareLevel SuggestedCareLevel { get; private set; } = null!;
 }

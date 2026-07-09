@@ -6,109 +6,131 @@ using Microsoft.EntityFrameworkCore;
 
 namespace NursingHome.Infrastructure.Persistence.Generated;
 
-[Index("email", Name = "UQ__users__AB6E6164E8C6DA5D", IsUnique = true)]
-[Index("employee_code", Name = "UQ__users__B0AA7345BD7A3582", IsUnique = true)]
-[Index("role_id", Name = "idx_users_role_id")]
-public partial class user
+[Table("users")]
+[Index("Email", Name = "UQ__users__AB6E61645623D15D", IsUnique = true)]
+[Index("EmployeeCode", Name = "UQ__users__B0AA73456810CD46", IsUnique = true)]
+[Index("RoleId", Name = "idx_users_role_id")]
+[Index("Status", Name = "idx_users_status")]
+public partial class User
 {
     [Key]
-    public Guid id { get; private set; }
+    [Column("id")]
+    public long Id { get; private set; }
 
+    [Column("employee_code")]
     [StringLength(50)]
-    public string employee_code { get; private set; } = null!;
+    public string EmployeeCode { get; private set; } = null!;
 
+    [Column("email")]
     [StringLength(255)]
-    public string email { get; private set; } = null!;
+    public string Email { get; private set; } = null!;
 
+    [Column("password_hash")]
     [StringLength(300)]
-    public string password_hash { get; private set; } = null!;
+    public string PasswordHash { get; private set; } = null!;
 
+    [Column("first_name")]
     [StringLength(100)]
-    public string first_name { get; private set; } = null!;
+    public string FirstName { get; private set; } = null!;
 
+    [Column("middle_name")]
     [StringLength(100)]
-    public string? middle_name { get; private set; }
+    public string? MiddleName { get; private set; }
 
+    [Column("last_name")]
     [StringLength(100)]
-    public string last_name { get; private set; } = null!;
+    public string LastName { get; private set; } = null!;
 
+    [Column("license_number")]
     [StringLength(100)]
-    public string? license_number { get; private set; }
+    public string? LicenseNumber { get; private set; }
 
+    [Column("phone_number")]
     [StringLength(20)]
-    public string? phone_number { get; private set; }
+    public string? PhoneNumber { get; private set; }
 
+    [Column("status")]
     [StringLength(20)]
     [Unicode(false)]
-    public string status { get; private set; } = null!;
+    public string Status { get; private set; } = null!;
 
-    public bool mfa_enabled { get; private set; }
+    [Column("mfa_enabled")]
+    public bool MfaEnabled { get; private set; }
 
+    [Column("last_login_at")]
     [Precision(0)]
-    public DateTimeOffset? last_login_at { get; private set; }
+    public DateTimeOffset? LastLoginAt { get; private set; }
 
-    public long role_id { get; private set; }
+    [Column("role_id")]
+    public long RoleId { get; private set; }
 
-    public bool is_deleted { get; private set; }
+    [Column("is_deleted")]
+    public bool IsDeleted { get; private set; }
 
+    [Column("deleted_at")]
     [Precision(0)]
-    public DateTimeOffset? deleted_at { get; private set; }
+    public DateTimeOffset? DeletedAt { get; private set; }
 
+    [Column("created_at")]
     [Precision(0)]
-    public DateTimeOffset created_at { get; private set; }
+    public DateTimeOffset CreatedAt { get; private set; }
 
+    [Column("updated_at")]
     [Precision(0)]
-    public DateTimeOffset updated_at { get; private set; }
+    public DateTimeOffset UpdatedAt { get; private set; }
 
-    [InverseProperty("assessed_byNavigation")]
-    public virtual ICollection<assessment> assessments { get; private set; } = new List<assessment>();
+    [InverseProperty("AssessedByNavigation")]
+    public virtual ICollection<Assessment> Assessments { get; private set; } = new List<Assessment>();
 
-    [InverseProperty("performed_byNavigation")]
-    public virtual ICollection<audit_log> audit_logs { get; private set; } = new List<audit_log>();
+    [InverseProperty("PerformedByNavigation")]
+    public virtual ICollection<AuditLog> AuditLogs { get; private set; } = new List<AuditLog>();
 
-    [InverseProperty("assigned_cna")]
-    public virtual ICollection<care_task> care_tasks { get; private set; } = new List<care_task>();
+    [InverseProperty("AssignedCna")]
+    public virtual ICollection<CareTask> CareTasks { get; private set; } = new List<CareTask>();
 
-    [InverseProperty("unlocked_byNavigation")]
-    public virtual ICollection<chart_lock_event> chart_lock_events { get; private set; } = new List<chart_lock_event>();
+    [InverseProperty("RecordedByNavigation")]
+    public virtual ICollection<ClinicalRecord> ClinicalRecords { get; private set; } = new List<ClinicalRecord>();
 
-    [InverseProperty("recorded_byNavigation")]
-    public virtual ICollection<clinical_record> clinical_records { get; private set; } = new List<clinical_record>();
+    [InverseProperty("AssignedToUserNavigation")]
+    public virtual ICollection<DurableMedicalEquipment> DurableMedicalEquipments { get; private set; } = new List<DurableMedicalEquipment>();
 
-    [InverseProperty("reported_byNavigation")]
-    public virtual ICollection<incident> incidents { get; private set; } = new List<incident>();
+    [InverseProperty("ActorNavigation")]
+    public virtual ICollection<IncidentTimeline> IncidentTimelines { get; private set; } = new List<IncidentTimeline>();
 
-    [InverseProperty("administered_byNavigation")]
-    public virtual ICollection<medication_log> medication_logadministered_byNavigations { get; private set; } = new List<medication_log>();
+    [InverseProperty("ReportedByNavigation")]
+    public virtual ICollection<Incident> Incidents { get; private set; } = new List<Incident>();
 
-    [InverseProperty("witnessed_byNavigation")]
-    public virtual ICollection<medication_log> medication_logwitnessed_byNavigations { get; private set; } = new List<medication_log>();
+    [InverseProperty("AdministeredByNavigation")]
+    public virtual ICollection<MedicationLog> MedicationLogAdministeredByNavigations { get; private set; } = new List<MedicationLog>();
 
-    [InverseProperty("prescribed_byNavigation")]
-    public virtual ICollection<medication_order> medication_orders { get; private set; } = new List<medication_order>();
+    [InverseProperty("WitnessedByNavigation")]
+    public virtual ICollection<MedicationLog> MedicationLogWitnessedByNavigations { get; private set; } = new List<MedicationLog>();
 
-    [InverseProperty("user")]
-    public virtual ICollection<notification> notifications { get; private set; } = new List<notification>();
+    [InverseProperty("PrescribedByNavigation")]
+    public virtual ICollection<MedicationOrder> MedicationOrders { get; private set; } = new List<MedicationOrder>();
 
-    [InverseProperty("received_byNavigation")]
-    public virtual ICollection<payment> payments { get; private set; } = new List<payment>();
+    [InverseProperty("User")]
+    public virtual ICollection<Notification> Notifications { get; private set; } = new List<Notification>();
 
-    [InverseProperty("accessed_byNavigation")]
-    public virtual ICollection<phi_access_log> phi_access_logs { get; private set; } = new List<phi_access_log>();
+    [InverseProperty("ReceivedByNavigation")]
+    public virtual ICollection<Payment> Payments { get; private set; } = new List<Payment>();
 
-    [InverseProperty("screened_byNavigation")]
-    public virtual ICollection<pre_admission_screening> pre_admission_screenings { get; private set; } = new List<pre_admission_screening>();
+    [InverseProperty("AccessedByNavigation")]
+    public virtual ICollection<PhiAccessLog> PhiAccessLogs { get; private set; } = new List<PhiAccessLog>();
 
-    [ForeignKey("role_id")]
-    [InverseProperty("users")]
-    public virtual role role { get; private set; } = null!;
+    [InverseProperty("ScreenedByNavigation")]
+    public virtual ICollection<PreAdmissionScreening> PreAdmissionScreenings { get; private set; } = new List<PreAdmissionScreening>();
 
-    [InverseProperty("user")]
-    public virtual ICollection<shift_assignment> shift_assignments { get; private set; } = new List<shift_assignment>();
+    [ForeignKey("RoleId")]
+    [InverseProperty("Users")]
+    public virtual Role Role { get; private set; } = null!;
 
-    [InverseProperty("user")]
-    public virtual ICollection<user_facility> user_facilities { get; private set; } = new List<user_facility>();
+    [InverseProperty("User")]
+    public virtual ICollection<ShiftAssignment> ShiftAssignments { get; private set; } = new List<ShiftAssignment>();
 
-    [InverseProperty("recorded_byNavigation")]
-    public virtual ICollection<vital_sign> vital_signs { get; private set; } = new List<vital_sign>();
+    [InverseProperty("User")]
+    public virtual ICollection<UserFacility> UserFacilities { get; private set; } = new List<UserFacility>();
+
+    [InverseProperty("RecordedByNavigation")]
+    public virtual ICollection<VitalSign> VitalSigns { get; private set; } = new List<VitalSign>();
 }
