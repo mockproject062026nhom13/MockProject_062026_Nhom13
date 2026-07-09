@@ -6,47 +6,57 @@ using Microsoft.EntityFrameworkCore;
 
 namespace NursingHome.Infrastructure.Persistence.Generated;
 
-[Index("resident_id", Name = "idx_incidents_resident_id")]
-[Index("status", Name = "idx_incidents_status")]
-public partial class incident
+[Table("incidents")]
+[Index("ResidentId", Name = "idx_incidents_resident_id")]
+[Index("Status", Name = "idx_incidents_status")]
+public partial class Incident
 {
     [Key]
-    public Guid id { get; private set; }
+    [Column("id")]
+    public long Id { get; private set; }
 
+    [Column("incident_type")]
     [StringLength(50)]
     [Unicode(false)]
-    public string incident_type { get; private set; } = null!;
+    public string IncidentType { get; private set; } = null!;
 
+    [Column("status")]
     [StringLength(20)]
     [Unicode(false)]
-    public string status { get; private set; } = null!;
+    public string Status { get; private set; } = null!;
 
-    public string? description { get; private set; }
+    [Column("description")]
+    public string? Description { get; private set; }
 
+    [Column("sla_deadline")]
     [Precision(0)]
-    public DateTimeOffset sla_deadline { get; private set; }
+    public DateTimeOffset SlaDeadline { get; private set; }
 
-    public Guid resident_id { get; private set; }
+    [Column("resident_id")]
+    public long ResidentId { get; private set; }
 
-    public long severity_id { get; private set; }
+    [Column("severity_id")]
+    public long SeverityId { get; private set; }
 
-    public Guid reported_by { get; private set; }
+    [Column("reported_by")]
+    public long ReportedBy { get; private set; }
 
+    [Column("reported_at")]
     [Precision(0)]
-    public DateTimeOffset reported_at { get; private set; }
+    public DateTimeOffset ReportedAt { get; private set; }
 
-    [InverseProperty("incident")]
-    public virtual ICollection<chart_lock_event> chart_lock_events { get; private set; } = new List<chart_lock_event>();
+    [InverseProperty("Incident")]
+    public virtual ICollection<IncidentTimeline> IncidentTimelines { get; private set; } = new List<IncidentTimeline>();
 
-    [ForeignKey("reported_by")]
-    [InverseProperty("incidents")]
-    public virtual user reported_byNavigation { get; private set; } = null!;
+    [ForeignKey("ReportedBy")]
+    [InverseProperty("Incidents")]
+    public virtual User ReportedByNavigation { get; private set; } = null!;
 
-    [ForeignKey("resident_id")]
-    [InverseProperty("incidents")]
-    public virtual resident resident { get; private set; } = null!;
+    [ForeignKey("ResidentId")]
+    [InverseProperty("Incidents")]
+    public virtual Resident Resident { get; private set; } = null!;
 
-    [ForeignKey("severity_id")]
-    [InverseProperty("incidents")]
-    public virtual incident_severity severity { get; private set; } = null!;
+    [ForeignKey("SeverityId")]
+    [InverseProperty("Incidents")]
+    public virtual IncidentSeverity Severity { get; private set; } = null!;
 }

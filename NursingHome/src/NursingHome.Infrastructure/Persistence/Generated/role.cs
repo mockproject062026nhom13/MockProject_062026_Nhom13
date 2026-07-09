@@ -6,30 +6,37 @@ using Microsoft.EntityFrameworkCore;
 
 namespace NursingHome.Infrastructure.Persistence.Generated;
 
-[Index("role_name", Name = "UQ__roles__783254B138792400", IsUnique = true)]
-public partial class role
+[Table("roles")]
+[Index("RoleName", Name = "UQ__roles__783254B186FE301E", IsUnique = true)]
+public partial class Role
 {
     [Key]
-    public long id { get; private set; }
+    [Column("id")]
+    public long Id { get; private set; }
 
+    [Column("role_name")]
     [StringLength(100)]
-    public string role_name { get; private set; } = null!;
+    public string RoleName { get; private set; } = null!;
 
+    [Column("description")]
     [StringLength(500)]
-    public string? description { get; private set; }
+    public string? Description { get; private set; }
 
-    public bool is_deleted { get; private set; }
+    [Column("is_deleted")]
+    public bool IsDeleted { get; private set; }
 
+    [Column("created_at")]
     [Precision(0)]
-    public DateTimeOffset created_at { get; private set; }
+    public DateTimeOffset CreatedAt { get; private set; }
 
+    [Column("updated_at")]
     [Precision(0)]
-    public DateTimeOffset updated_at { get; private set; }
+    public DateTimeOffset UpdatedAt { get; private set; }
 
-    [InverseProperty("role")]
-    public virtual ICollection<user> users { get; private set; } = new List<user>();
+    [InverseProperty("Role")]
+    public virtual ICollection<User> Users { get; private set; } = new List<User>();
 
-    [ForeignKey("role_id")]
-    [InverseProperty("roles")]
-    public virtual ICollection<permission> permissions { get; private set; } = new List<permission>();
+    [ForeignKey("RoleId")]
+    [InverseProperty("Roles")]
+    public virtual ICollection<Permission> Permissions { get; private set; } = new List<Permission>();
 }
