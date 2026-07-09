@@ -9,7 +9,7 @@ using NursingHome.Application.Common;
 
 namespace NursingHome.Application.Features.UserSecurity.Commands;
 
-public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, ApiResponse<Guid>>
+public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, ApiResponse<long>>
 {
     private readonly IUserRepository _userRepository;
     private readonly IValidator<CreateUserCommand> _validator;
@@ -22,7 +22,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, ApiRe
         _validator = validator;
     }
 
-    private static string NormalizePhoneNumber(string input)
+    private static string? NormalizePhoneNumber(string? input)
     {
         if (string.IsNullOrWhiteSpace(input)) 
         {
@@ -30,28 +30,22 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, ApiRe
         }
         var digits = new string(input.Where(char.IsDigit).ToArray());
 
-        // 4155550100
+        // add country code = 1: 4155550101 -> 14155550101
         if (digits.Length == 10)
         {
-            return $"+1{digits}";
+            digits = "1" + digits;
         }
 
-        // 14155550100
+        // 14155550101 -> 1-415-555-0101
         if (digits.Length == 11 && digits.StartsWith("1"))
         {
-            return $"+{digits}";
-        }
-
-        // +14155550100
-        if (input.StartsWith("+"))
-        {
-            return "+" + digits;
+            return $"{digits[0]}-{digits.Substring(1, 3)}-{digits.Substring(4, 3)}-{digits.Substring(7, 4)}";
         }
 
         return input;
     }
 
-    public async Task<ApiResponse<Guid>> Handle(
+    public async Task<ApiResponse<long>> Handle(
         CreateUserCommand request,
         CancellationToken cancellationToken)
     {
@@ -60,7 +54,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, ApiRe
 
         if (!validationResult.IsValid)
         {
-            return ApiResponse<Guid>.CreateError(
+            return ApiResponse<long>.CreateError(
                 400,
                 validationResult.Errors.First().ErrorMessage);
         }
@@ -72,9 +66,26 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, ApiRe
 
         if (!isEmailUnique)
         {
-            return ApiResponse<Guid>.CreateError(
+            return ApiResponse<long>.CreateError(
                 400,
                 "Email is already registered in the system.");
+        }
+
+        bool isRoleValid = await _userRepository.IsRoleExistsAsync(request.RoleId, cancellationToken);
+        if (!isRoleValid)
+        {
+            return ApiResponse<long>.CreateError(400, "The specified Role ID does not exist.");
+        }
+
+        if (request.AssignedFacilityId.HasValue)
+        {
+            bool isFacilityValid = await _userRepository.IsFacilityExistsAsync(request.AssignedFacilityId.Value, cancellationToken);
+            if (!isFacilityValid)
+            {
+                return ApiResponse<long>.CreateError(
+                    400, 
+                    $"The specified Facility ID does not exist in the system.");
+            }
         }
 
         // Split FullName
@@ -131,11 +142,11 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, ApiRe
             AssignedFacilityId = request.AssignedFacilityId
         };
 
-        Guid newUserId =
+        long newUserId =
             await _userRepository.AddUserAsync(
                 userDto,
                 cancellationToken);
 
-        return ApiResponse<Guid>.CreateSuccess(newUserId);
+        return ApiResponse<long>.CreateSuccess(newUserId);
     }
 }

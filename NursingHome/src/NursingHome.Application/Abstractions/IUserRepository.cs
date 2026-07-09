@@ -12,7 +12,7 @@ public class UserCreationDto
     public string LastName { get; set; } = null!;
     public string? PhoneNumber { get; set; }
     public long RoleId { get; set; }
-    public Guid? AssignedFacilityId { get; set; }
+    public long? AssignedFacilityId { get; set; }
 }
 
 public interface IUserRepository
@@ -20,7 +20,13 @@ public interface IUserRepository
     // Check unique email
     Task<bool> IsEmailUniqueAsync(string email, CancellationToken cancellationToken);
     
-    Task<Guid> AddUserAsync(UserCreationDto dto, CancellationToken cancellationToken);
+    // Check exists role
+    Task<bool> IsRoleExistsAsync(long roleId, CancellationToken cancellationToken);
+
+    // Check exists Facility
+    Task<bool> IsFacilityExistsAsync(long facilityId, CancellationToken cancellationToken);
+    
+    Task<long> AddUserAsync(UserCreationDto dto, CancellationToken cancellationToken);
 
     // Get max employee_code
     Task<string?> GetLastEmployeeCodeAsync(CancellationToken cancellationToken);

@@ -3,39 +3,32 @@ using System.Linq;
 
 namespace NursingHome.Infrastructure.Persistence.Generated; 
 
-public partial class user
+public partial class User
 {
-    protected user()
+    protected User()
     {
         
     }
 
-    public user(string employeeCode, string email, string firstName, string? middleName, string lastName, string? phoneNumber, long roleId, string? licenseNumber = null)
+    public User(string employeeCode, string email, string firstName, string? middleName, string lastName, string? phoneNumber, long roleId, string? licenseNumber = null)
     {
-        this.id = Guid.NewGuid(); 
-        this.employee_code = employeeCode;
-        this.role_id = roleId;
+        this.EmployeeCode = employeeCode;
+        this.Email = email;
+        this.FirstName = firstName;
+        this.MiddleName = middleName; 
+        this.LastName = lastName;
+        this.PhoneNumber = phoneNumber;
+        this.RoleId = roleId;
+        this.LicenseNumber = licenseNumber;
 
-        this.email = email;
-        this.phone_number = phoneNumber;
+        this.Status = "INVITED"; 
+  
+        this.PasswordHash = "$2b$12$DummyHashForPendingActivationUsersDoNotUseThisDirectly";
         
-        this.first_name = firstName;
-        this.middle_name = middleName; 
-        this.last_name = lastName;
-
-        this.phone_number = phoneNumber;
-        this.role_id = roleId;
-        this.license_number = licenseNumber;
-
-        this.status = "INVITED"; 
+        this.MfaEnabled = false;
+        this.IsDeleted = false;
         
-        //hardpassword tạm thời
-        this.password_hash = "$2b$12$DummyHashForPendingActivationUsersDoNotUseThisDirectly";
-        
-        this.mfa_enabled = false;
-        this.is_deleted = false;
-        
-        this.created_at = DateTimeOffset.UtcNow;
-        this.updated_at = DateTimeOffset.UtcNow;
+        this.CreatedAt = DateTimeOffset.UtcNow;
+        this.UpdatedAt = DateTimeOffset.UtcNow;
     }
 }

@@ -22,22 +22,32 @@ public class UserRepository : IUserRepository
 
     public async Task<bool> IsEmailUniqueAsync(string email, CancellationToken cancellationToken)
     {
-        return !await _dbContext.users.AnyAsync(u => u.email == email, cancellationToken);
+        return !await _dbContext.Users.AnyAsync(u => u.Email == email, cancellationToken);
     }
 
     public async Task<string?> GetLastEmployeeCodeAsync(CancellationToken cancellationToken)
     {
-        return await _dbContext.users
-            .Where(u => u.employee_code.StartsWith("NHMS-"))
-            .OrderByDescending(u => u.employee_code)
-            .Select(u => u.employee_code)
+        return await _dbContext.Users
+            .Where(u => u.EmployeeCode.StartsWith("NHMS-"))
+            .OrderByDescending(u => u.EmployeeCode)
+            .Select(u => u.EmployeeCode)
             .FirstOrDefaultAsync(cancellationToken);
     }
 
-    public async Task<Guid> AddUserAsync(UserCreationDto dto, CancellationToken cancellationToken)
+    public async Task<bool> IsRoleExistsAsync(long roleId, CancellationToken cancellationToken)
+    {
+        return await _dbContext.Roles.AnyAsync(r => r.Id == roleId, cancellationToken);
+    }
+
+    public async Task<bool> IsFacilityExistsAsync(long facilityId, CancellationToken cancellationToken)
+    {
+        return await _dbContext.Facilities.AnyAsync(f => f.Id == facilityId, cancellationToken);
+    }
+
+    public async Task<long> AddUserAsync(UserCreationDto dto, CancellationToken cancellationToken)
     {
         // 1. Khởi tạo Entity từ DTO
-        var newUser = new user(
+        var newUser = new User(
             employeeCode: dto.EmployeeCode,
             email: dto.Email,
             firstName: dto.FirstName,
@@ -48,14 +58,14 @@ public class UserRepository : IUserRepository
             // licenseNumber default = null
         );
 
-        if (dto.AssignedFacilityId.HasValue)
-        {
-            newUser.user_facilities.Add(new user_facility(newUser.id, dto.AssignedFacilityId.Value));
-        }
-
-        await _dbContext.users.AddAsync(newUser, cancellationToken);
+        await _dbContext.Users.AddAsync(newUser, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
-        return newUser.id;
+        if (dto.AssignedFacilityId.HasValue)
+            {
+                newUser.UserFacilities.Add(new UserFacility(newUser.Id, dto.AssignedFacilityId.Value));
+                await _dbContext.SaveChangesAsync(cancellationToken); // Lưu lần 2 cho bảng trung gian
+            }
+        return newUser.Id;
     }
 }

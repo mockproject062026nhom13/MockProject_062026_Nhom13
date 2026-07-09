@@ -2,15 +2,15 @@ using System;
 
 namespace NursingHome.Infrastructure.Persistence.Generated;
 
-public partial class user_facility
+public partial class UserFacility
 {
-    protected user_facility()
+    protected UserFacility()
     {
         
     }
-    public user_facility(Guid userId, Guid facilityId)
+    public UserFacility(long userId, long facilityId)
     {
-        this.user_id = userId;
-        this.facility_id = facilityId;
+        this.UserId = userId;
+        this.FacilityId = facilityId;
     }
 }

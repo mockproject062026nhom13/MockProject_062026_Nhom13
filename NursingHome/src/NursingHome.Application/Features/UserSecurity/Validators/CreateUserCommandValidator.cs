@@ -23,15 +23,9 @@ public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
 
         // US Phone Number
         RuleFor(x => x.PhoneNumber)
-            .Must(phone =>
-            {
-                var digits = new string(phone.Where(char.IsDigit).ToArray());
-
-                return digits.Length == 10 ||
-                       (digits.Length == 11 && digits.StartsWith("1"));
-            })
+            .Matches(@"^(\d{10}|1\d{10})$")
             .When(x => !string.IsNullOrWhiteSpace(x.PhoneNumber))
-            .WithMessage("Phone number must be a valid US phone number.");
+            .WithMessage("Phone number must contain exactly 10 digits or 11 digits starting with 1.");
 
         // Role
         RuleFor(x => x.RoleId)
