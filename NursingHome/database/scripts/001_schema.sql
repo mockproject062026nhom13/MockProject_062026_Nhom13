@@ -40,9 +40,12 @@ GO
 */
 
 -- Docker mode
+
+
 USE NursingHome;
 GO
 
+SET QUOTED_IDENTIFIER ON;
 -- =====================================================================================
 -- PART 0: GLOBAL LOOKUP / RBAC (Role-Based Access Control)
 -- =====================================================================================
