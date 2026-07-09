@@ -1,7 +1,6 @@
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using NursingHome.Infrastructure.Persistence.DbContexts;
-using DotNetEnv;
 using NursingHome.Api.Middleware;
 using NursingHome.Application;
 
@@ -10,7 +9,6 @@ using NursingHome.Application;
 // picked up by builder.Configuration's environment-variable provider.
 // In containers the values already come from the process environment and no
 // .env file is present — TraversePath().Load() simply finds nothing and is a no-op.
-Env.TraversePath().Load();
 
 var builder = WebApplication.CreateBuilder(args);
 

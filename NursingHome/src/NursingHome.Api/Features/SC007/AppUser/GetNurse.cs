@@ -14,9 +14,9 @@ public class GetActiveNurseNamesEndpoint(NursingHomeDbContext db) :
 
     public override async Task HandleAsync(CancellationToken ct)
     {
-        var nurseNames = await db.users
-            .Where(u => u.status == "active" && !u.is_deleted && u.role_id == 1)
-            .Select(u => u.first_name + " " + u.last_name)
+        var nurseNames = await db.Users
+            .Where(u => u.Status == "active" && !u.IsDeleted && u.RoleId == 1)
+            .Select(u => u.FirstName + " " + u.LastName)
             .ToListAsync(ct);
 
         await SendAsync(ApiResponse<List<string>>.CreateSuccess(nurseNames), cancellation: ct);

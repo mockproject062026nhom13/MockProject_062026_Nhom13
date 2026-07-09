@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using NursingHome.Infrastructure.Persistence.DbContexts;
 using NursingHome.Application.Common;
 
-public record ResidentRequest(Guid Id);
+public record ResidentRequest(long Id);
 
 public record ResidentResponse(
     string FullName,
@@ -21,11 +21,11 @@ public class GetResidentByIdEndpoint(NursingHomeDbContext db) :
 
     public override async Task HandleAsync(ResidentRequest req, CancellationToken ct)
     {
-        var resident = await db.residents
+        var resident = await db.Residents
             .Select(r => new ResidentResponse(
-                r.first_name + " " + r.last_name,
-                r.date_of_birth,
-              r.religion_preference
+                r.FirstName + " " + r.LastName,
+                r.DateOfBirth,
+              r.ReligionPreference
             ))
             .FirstOrDefaultAsync(ct);
 

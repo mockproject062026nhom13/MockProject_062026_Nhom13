@@ -18,14 +18,14 @@ public class GetRoleByUserIdEndpoint(NursingHomeDbContext db) :
 
     public override async Task HandleAsync(CancellationToken ct)
     {
-        var userId = Route<Guid>("UserId");
+        var userId = Route<long>("UserId");
 
-        var role = await db.users
-            .Where(u => u.id == userId)
-            .Select(u => u.role)
+        var role = await db.Users
+            .Where(u => u.Id == userId)
+            .Select(u => u.Role)
             .Select(r => new RoleResponse(
-                r.role_name,
-                r.description
+                r.RoleName,
+                r.Description
             ))
             .FirstOrDefaultAsync(ct);
 

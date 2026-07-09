@@ -16,18 +16,18 @@ public class GetBedsEndpoint(NursingHomeDbContext db) : Endpoint<GetBedsRequest,
     public override async Task HandleAsync(GetBedsRequest req, CancellationToken ct)
     {
         int pageSize = 4;
-        int totalItems = await db.beds.CountAsync(ct);
+        int totalItems = await db.Beds.CountAsync(ct);
         int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
 
-        var data = await db.beds
-            .OrderBy(b => b.id)
+        var data = await db.Beds
+            .OrderBy(b => b.Id)
             .Skip((req.Page - 1) * pageSize)
             .Take(pageSize)
             .Select(b => new BedRecord(
-                b.room.room_number,
-                b.room.room_type,
-                b.bed_number,
-                b.status
+                b.Room.RoomNumber,
+                b.Room.RoomType,
+                b.BedNumber,
+                b.Status
             ))
             .ToListAsync(ct);
 

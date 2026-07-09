@@ -5,7 +5,7 @@ using NursingHome.Infrastructure.Persistence.Generated;
 using NursingHome.Application.Common;
 
 public class GetAllResidentsEndpoint(NursingHomeDbContext db) :
-    EndpointWithoutRequest<ApiResponse<List<resident>>>
+    EndpointWithoutRequest<ApiResponse<List<Resident>>>
 {
     public override void Configure()
     {
@@ -15,10 +15,10 @@ public class GetAllResidentsEndpoint(NursingHomeDbContext db) :
 
     public override async Task HandleAsync(CancellationToken ct)
     {
-        var residents = await db.residents
+        var residents = await db.Residents
             .ToListAsync(ct);
 
-        var response = ApiResponse<List<resident>>.CreateSuccess(residents);
+        var response = ApiResponse<List<Resident>>.CreateSuccess(residents);
         await SendAsync(response, cancellation: ct);
     }
 }

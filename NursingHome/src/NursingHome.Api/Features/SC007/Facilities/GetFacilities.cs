@@ -21,16 +21,16 @@ public class GetFacilityEndpoint(NursingHomeDbContext db) :
 
     public override async Task HandleAsync(CancellationToken ct)
     {
-        var result = await db.facilities
-            .Join(db.addresses,
-                f => f.address_id,
-                a => a.id,
+        var result = await db.Facilities
+            .Join(db.Addresses,
+                f => f.AddressId,
+                a => a.Id,
                 (f, a) => new FacilityResponse(
-                    f.name,
-                    f.facility_code,
-                    f.license_number,
-                    f.target_state,
-                    a.city
+                    f.Name,
+                    f.FacilityCode,
+                    f.LicenseNumber,
+                    f.TargetState,
+                    a.City
                 ))
             .ToListAsync(ct);
         var response = ApiResponse<List<FacilityResponse>>.CreateSuccess(result);

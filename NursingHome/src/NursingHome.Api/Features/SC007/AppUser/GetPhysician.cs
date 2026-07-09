@@ -16,11 +16,11 @@ public class GetActivePhysicianNamesEndpoint(NursingHomeDbContext db) :
 
     public override async Task HandleAsync(CancellationToken ct)
     {
-        var physicians = await db.users
-            .Where(u => u.status == "active" && !u.is_deleted && u.role_id == 4)
+        var physicians = await db.Users
+            .Where(u => u.Status == "active" && !u.IsDeleted && u.RoleId == 4)
             .Select(u => new PhysicianResponse(
-                u.first_name + " " + u.last_name,
-                u.license_number
+                u.FirstName + " " + u.LastName,
+                u.LicenseNumber
             ))
             .ToListAsync(ct);
 

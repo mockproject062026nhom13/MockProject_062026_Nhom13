@@ -1,3 +1,3 @@
 using NursingHome.Application.Features.LocationInfrastructure;
 
-public record GetFacilitiesQuery : IRequest<List<FacilityResponse>>;
+// public record GetFacilitiesQuery : IRequest<List<FacilityResponse>>;
