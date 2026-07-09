@@ -6,27 +6,34 @@ using Microsoft.EntityFrameworkCore;
 
 namespace NursingHome.Infrastructure.Persistence.Generated;
 
-[Index("user_id", "is_read", Name = "idx_notifications_user_id_is_read")]
-public partial class notification
+[Table("notifications")]
+[Index("UserId", "IsRead", Name = "idx_notifications_user_id_is_read")]
+public partial class Notification
 {
     [Key]
-    public Guid id { get; private set; }
+    [Column("id")]
+    public long Id { get; private set; }
 
+    [Column("title")]
     [StringLength(255)]
-    public string title { get; private set; } = null!;
+    public string Title { get; private set; } = null!;
 
+    [Column("type")]
     [StringLength(50)]
     [Unicode(false)]
-    public string type { get; private set; } = null!;
+    public string Type { get; private set; } = null!;
 
-    public bool is_read { get; private set; }
+    [Column("is_read")]
+    public bool IsRead { get; private set; }
 
-    public Guid user_id { get; private set; }
+    [Column("user_id")]
+    public long UserId { get; private set; }
 
+    [Column("created_at")]
     [Precision(0)]
-    public DateTimeOffset created_at { get; private set; }
+    public DateTimeOffset CreatedAt { get; private set; }
 
-    [ForeignKey("user_id")]
-    [InverseProperty("notifications")]
-    public virtual user user { get; private set; } = null!;
+    [ForeignKey("UserId")]
+    [InverseProperty("Notifications")]
+    public virtual User User { get; private set; } = null!;
 }

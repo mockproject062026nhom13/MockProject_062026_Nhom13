@@ -9,9 +9,9 @@
 name: nursinghome
 
 services:
-  # ---- SQL Server 2022 -------------------------------------------------------
+  # ---- SQL Server 2019 -------------------------------------------------------
   db:
-    image: mcr.microsoft.com/mssql/server:2022-latest
+    image: mcr.microsoft.com/mssql/server:2019-latest
     container_name: nursinghome-db
     environment:
       ACCEPT_EULA: "Y"
@@ -21,11 +21,11 @@ services:
     # internal 'backend' network. Uncomment to connect from the host (SSMS,
     # Azure Data Studio); it stays bound to loopback only.
     ports:
-      - "127.0.0.1:1433:1433"
+      - "127.0.0.1:14330:1433"
     volumes:
       - mssql-data:/var/opt/mssql
     healthcheck:
-      # No sqlcmd in the 2022 image; probe the TCP port with bash instead.
+      # Probe the TCP port with bash — works without relying on sqlcmd in the image.
       test: ["CMD-SHELL", "bash -c '</dev/tcp/localhost/1433' >/dev/null 2>&1"]
       interval: 10s
       timeout: 5s
