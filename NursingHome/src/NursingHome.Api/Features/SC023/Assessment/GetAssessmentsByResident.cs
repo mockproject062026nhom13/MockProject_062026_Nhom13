@@ -29,7 +29,7 @@ public class GetAssessmentsByResidentEndpoint(NursingHomeDbContext db) : Endpoin
             .Select(a => new AssessmentByResidentRecord(
                 $"{a.Resident.FirstName} {a.Resident.LastName}",
                 $"{a.AssessedByNavigation.FirstName} {a.AssessedByNavigation.LastName}",
-                a.AssessmentDetails.Max(d => d.Score),
+                a.AssessmentDetails.Sum(d => d.Score),
                 a.ConfirmedCareLevelId,
                 a.CreatedAt.DateTime
             ))
