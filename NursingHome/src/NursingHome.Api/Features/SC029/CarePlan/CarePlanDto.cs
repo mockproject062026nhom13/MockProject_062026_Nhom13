@@ -7,5 +7,5 @@ public record CarePlanDto(
     string BedNumber,
     string CareName,
     string Description,
-    DateTime UpdatedAt
+    DateTime StartDate
 );
