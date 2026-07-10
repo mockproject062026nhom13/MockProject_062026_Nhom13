@@ -1,3 +1,11 @@
+using Microsoft.EntityFrameworkCore;
+using FluentValidation;
+using NursingHome.Application.Abstractions;
+using NursingHome.Infrastructure.Repositories.UserSecurity;
+using NursingHome.Application.Features.UserSecurity.Commands;
+using NursingHome.Application.Features.UserSecurity.Validators;
+using NursingHome.Infrastructure.Persistence.DbContexts;
+
 using DotNetEnv;
 using NursingHome.Api.Middleware;
 using NursingHome.Application;
@@ -17,6 +25,11 @@ builder.Services.AddControllers();
 // Swagger / OpenAPI via Swashbuckle — https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContext<NursingHomeDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddApplication();
 
