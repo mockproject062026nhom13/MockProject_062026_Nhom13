@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using FluentValidation;
 using NursingHome.Application.Abstractions;
+using NursingHome.Infrastructure.Persistence.Repositories.Rbac;
 using NursingHome.Infrastructure.Repositories.UserSecurity;
 using NursingHome.Application.Features.UserSecurity.Commands;
 using NursingHome.Application.Features.UserSecurity.Validators;
@@ -30,6 +31,7 @@ builder.Services.AddDbContext<NursingHomeDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IRbacRepository, RbacRepository>();
 
 builder.Services.AddApplication();
 
