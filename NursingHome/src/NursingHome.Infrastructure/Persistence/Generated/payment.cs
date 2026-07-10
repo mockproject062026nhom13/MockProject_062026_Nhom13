@@ -6,39 +6,47 @@ using Microsoft.EntityFrameworkCore;
 
 namespace NursingHome.Infrastructure.Persistence.Generated;
 
-[Index("invoice_id", Name = "idx_payments_invoice_id")]
-public partial class payment
+[Table("payments")]
+[Index("InvoiceId", Name = "idx_payments_invoice_id")]
+public partial class Payment
 {
     [Key]
-    public Guid id { get; private set; }
+    [Column("id")]
+    public long Id { get; private set; }
 
-    public Guid invoice_id { get; private set; }
+    [Column("invoice_id")]
+    public long InvoiceId { get; private set; }
 
+    [Column("payer_type")]
     [StringLength(20)]
     [Unicode(false)]
-    public string payer_type { get; private set; } = null!;
+    public string PayerType { get; private set; } = null!;
 
+    [Column("payment_method")]
     [StringLength(20)]
     [Unicode(false)]
-    public string payment_method { get; private set; } = null!;
+    public string PaymentMethod { get; private set; } = null!;
 
-    [Column(TypeName = "decimal(18, 2)")]
-    public decimal amount { get; private set; }
+    [Column("amount", TypeName = "decimal(18, 2)")]
+    public decimal Amount { get; private set; }
 
+    [Column("payment_token_encrypted")]
     [StringLength(512)]
     [Unicode(false)]
-    public string? payment_token_encrypted { get; private set; }
+    public string? PaymentTokenEncrypted { get; private set; }
 
-    public Guid received_by { get; private set; }
+    [Column("received_by")]
+    public long ReceivedBy { get; private set; }
 
+    [Column("paid_at")]
     [Precision(0)]
-    public DateTimeOffset paid_at { get; private set; }
+    public DateTimeOffset PaidAt { get; private set; }
 
-    [ForeignKey("invoice_id")]
-    [InverseProperty("payments")]
-    public virtual invoice invoice { get; private set; } = null!;
+    [ForeignKey("InvoiceId")]
+    [InverseProperty("Payments")]
+    public virtual Invoice Invoice { get; private set; } = null!;
 
-    [ForeignKey("received_by")]
-    [InverseProperty("payments")]
-    public virtual user received_byNavigation { get; private set; } = null!;
+    [ForeignKey("ReceivedBy")]
+    [InverseProperty("Payments")]
+    public virtual User ReceivedByNavigation { get; private set; } = null!;
 }

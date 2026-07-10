@@ -6,21 +6,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace NursingHome.Infrastructure.Persistence.Generated;
 
-[Index("action_code", Name = "UQ__permissi__BFFF1CB86F72BBCB", IsUnique = true)]
-public partial class permission
+[Table("permissions")]
+[Index("ActionCode", Name = "UQ__permissi__BFFF1CB8F6F010F2", IsUnique = true)]
+public partial class Permission
 {
     [Key]
-    public long id { get; private set; }
+    [Column("id")]
+    public long Id { get; private set; }
 
+    [Column("action_code")]
     [StringLength(100)]
-    public string action_code { get; private set; } = null!;
+    public string ActionCode { get; private set; } = null!;
 
-    public bool is_phi_sensitive { get; private set; }
+    [Column("is_phi_sensitive")]
+    public bool IsPhiSensitive { get; private set; }
 
+    [Column("created_at")]
     [Precision(0)]
-    public DateTimeOffset created_at { get; private set; }
+    public DateTimeOffset CreatedAt { get; private set; }
 
-    [ForeignKey("permission_id")]
-    [InverseProperty("permissions")]
-    public virtual ICollection<role> roles { get; private set; } = new List<role>();
+    [ForeignKey("PermissionId")]
+    [InverseProperty("Permissions")]
+    public virtual ICollection<Role> Roles { get; private set; } = new List<Role>();
 }

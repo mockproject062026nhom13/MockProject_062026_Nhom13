@@ -191,3 +191,5 @@ BenchmarkDotNet.Artifacts/
 # =====================================================
 
 .localhistory/
+
+seed.sql

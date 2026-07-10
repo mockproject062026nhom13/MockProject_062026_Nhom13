@@ -6,31 +6,39 @@ using Microsoft.EntityFrameworkCore;
 
 namespace NursingHome.Infrastructure.Persistence.Generated;
 
-[Index("resident_id", Name = "idx_admissions_resident_id")]
-public partial class admission
+[Table("admissions")]
+[Index("ResidentId", Name = "idx_admissions_resident_id")]
+public partial class Admission
 {
     [Key]
-    public Guid id { get; private set; }
+    [Column("id")]
+    public long Id { get; private set; }
 
-    public DateOnly admission_date { get; private set; }
+    [Column("admission_date")]
+    public DateOnly AdmissionDate { get; private set; }
 
-    public DateOnly? discharge_date { get; private set; }
+    [Column("discharge_date")]
+    public DateOnly? DischargeDate { get; private set; }
 
+    [Column("discharge_reason")]
     [StringLength(255)]
-    public string? discharge_reason { get; private set; }
+    public string? DischargeReason { get; private set; }
 
-    public Guid resident_id { get; private set; }
+    [Column("resident_id")]
+    public long ResidentId { get; private set; }
 
-    public Guid facility_id { get; private set; }
+    [Column("facility_id")]
+    public long FacilityId { get; private set; }
 
+    [Column("created_at")]
     [Precision(0)]
-    public DateTimeOffset created_at { get; private set; }
+    public DateTimeOffset CreatedAt { get; private set; }
 
-    [ForeignKey("facility_id")]
-    [InverseProperty("admissions")]
-    public virtual facility facility { get; private set; } = null!;
+    [ForeignKey("FacilityId")]
+    [InverseProperty("Admissions")]
+    public virtual Facility Facility { get; private set; } = null!;
 
-    [ForeignKey("resident_id")]
-    [InverseProperty("admissions")]
-    public virtual resident resident { get; private set; } = null!;
+    [ForeignKey("ResidentId")]
+    [InverseProperty("Admissions")]
+    public virtual Resident Resident { get; private set; } = null!;
 }
