@@ -1,12 +1,10 @@
-namespace NursingHome.Application.Features.Admission.CreateAdmission;
+namespace NursingHome.Api.Features.CreateAdmission;
 
 public record CreateAdmissionCommand(
     long FacilityId,
     long RoomId,
     long BedId,
-    DateTime AdmissionDate,
+    DateOnly AdmissionDate,
     long ResidentId,
-    long UserId,
-    string ProviderName,
-    string ProviderType
+    long UserId
 );
