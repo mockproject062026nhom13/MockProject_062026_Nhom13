@@ -12,14 +12,11 @@ namespace NursingHome.Application.Features.UserSecurity.Commands;
 public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, ApiResponse<long>>
 {
     private readonly IUserRepository _userRepository;
-    private readonly IValidator<CreateUserCommand> _validator;
 
     public CreateUserCommandHandler(
-        IUserRepository userRepository,
-        IValidator<CreateUserCommand> validator)
+        IUserRepository userRepository)
     {
         _userRepository = userRepository;
-        _validator = validator;
     }
 
     private static string? NormalizePhoneNumber(string? input)
@@ -49,15 +46,6 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, ApiRe
         CreateUserCommand request,
         CancellationToken cancellationToken)
     {
-        var validationResult =
-            await _validator.ValidateAsync(request, cancellationToken);
-
-        if (!validationResult.IsValid)
-        {
-            return ApiResponse<long>.CreateError(
-                400,
-                validationResult.Errors.First().ErrorMessage);
-        }
 
         bool isEmailUnique =
             await _userRepository.IsEmailUniqueAsync(
