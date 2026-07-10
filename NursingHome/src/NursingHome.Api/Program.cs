@@ -23,7 +23,7 @@ builder.Services.AddInfrastructure(builder.Configuration);
 
 // Cấu hình JWT Authentication
 var jwtSettings = builder.Configuration.GetSection("Jwt");
-var secretKey = jwtSettings["Secret"] ?? "b5f93c8a4d7e2f1a6c0b9d8e7f5a4b3c2d1e0f9a8b7c6d5e4f3a2b1c0d9e8f7a";
+var secretKey = jwtSettings["Secret"] ?? throw new InvalidOperationException("JWT Secret is missing in configuration.");
 
 builder.Services.AddAuthentication(options =>
 {
