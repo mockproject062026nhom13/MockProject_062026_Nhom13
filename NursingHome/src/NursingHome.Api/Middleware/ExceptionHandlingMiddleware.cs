@@ -1,5 +1,6 @@
 using FluentValidation;
 using NursingHome.Application.Common;
+using NursingHome.Domain.Exceptions;
 
 namespace NursingHome.Api.Middleware;
 
@@ -54,6 +55,10 @@ public class ExceptionHandlingMiddleware
     /// </summary>
     private static ApiResponse<object> MapToResponse(Exception exception) => exception switch
     {
+        DomainException domainException => ApiResponse<object>.CreateError(
+            StatusCodes.Status400BadRequest,
+            domainException.Message),
+
         ValidationException validationException => ApiResponse<object>.CreateError(
             StatusCodes.Status400BadRequest,
             "One or more validation errors occurred.",
@@ -85,7 +90,7 @@ public class ExceptionHandlingMiddleware
 
         _ => ApiResponse<object>.CreateError(
             StatusCodes.Status500InternalServerError,
-            "An unexpected error occurred while processing your request."),
+            $"An unexpected error occurred while processing your request. Details: {exception.ToString()}"),
     };
 
     private static async Task WriteResponseAsync(HttpContext context, ApiResponse<object> response)
