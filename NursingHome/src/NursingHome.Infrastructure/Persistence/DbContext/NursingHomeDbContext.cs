@@ -5,675 +5,696 @@ using NursingHome.Infrastructure.Persistence.Generated;
 
 namespace NursingHome.Infrastructure.Persistence.DbContexts;
 
-public partial class NursingHomeDbContext : DbContext
+public partial class NursingHomeDbContext
+    : Microsoft.EntityFrameworkCore.DbContext
 {
     public NursingHomeDbContext(DbContextOptions<NursingHomeDbContext> options)
         : base(options)
     {
     }
 
-    public virtual DbSet<address> addresses { get; private set; }
+    public virtual DbSet<Address> Addresses { get; private set; }
 
-    public virtual DbSet<admission> admissions { get; private set; }
+    public virtual DbSet<Admission> Admissions { get; private set; }
 
-    public virtual DbSet<assessment> assessments { get; private set; }
+    public virtual DbSet<Assessment> Assessments { get; private set; }
 
-    public virtual DbSet<assessment_detail> assessment_details { get; private set; }
+    public virtual DbSet<AssessmentDetail> AssessmentDetails { get; private set; }
 
-    public virtual DbSet<assessment_metric> assessment_metrics { get; private set; }
+    public virtual DbSet<AssessmentMetric> AssessmentMetrics { get; private set; }
 
-    public virtual DbSet<audit_log> audit_logs { get; private set; }
+    public virtual DbSet<AuditLog> AuditLogs { get; private set; }
 
-    public virtual DbSet<bed> beds { get; private set; }
+    public virtual DbSet<Bed> Beds { get; private set; }
 
-    public virtual DbSet<care_goal> care_goals { get; private set; }
+    public virtual DbSet<CareGoal> CareGoals { get; private set; }
 
-    public virtual DbSet<care_intervention> care_interventions { get; private set; }
+    public virtual DbSet<CareIntervention> CareInterventions { get; private set; }
 
-    public virtual DbSet<care_level> care_levels { get; private set; }
+    public virtual DbSet<CareLevel> CareLevels { get; private set; }
 
-    public virtual DbSet<care_level_rate> care_level_rates { get; private set; }
+    public virtual DbSet<CareLevelRate> CareLevelRates { get; private set; }
 
-    public virtual DbSet<care_plan> care_plans { get; private set; }
+    public virtual DbSet<CarePlan> CarePlans { get; private set; }
 
-    public virtual DbSet<care_task> care_tasks { get; private set; }
+    public virtual DbSet<CareTask> CareTasks { get; private set; }
 
-    public virtual DbSet<chart_lock_event> chart_lock_events { get; private set; }
+    public virtual DbSet<ClinicalRecord> ClinicalRecords { get; private set; }
 
-    public virtual DbSet<clinical_record> clinical_records { get; private set; }
+    public virtual DbSet<ConsumableSupply> ConsumableSupplies { get; private set; }
 
-    public virtual DbSet<contact> contacts { get; private set; }
+    public virtual DbSet<Contact> Contacts { get; private set; }
 
-    public virtual DbSet<facility> facilities { get; private set; }
+    public virtual DbSet<DurableMedicalEquipment> DurableMedicalEquipments { get; private set; }
 
-    public virtual DbSet<incident> incidents { get; private set; }
+    public virtual DbSet<Facility> Facilities { get; private set; }
 
-    public virtual DbSet<incident_severity> incident_severities { get; private set; }
+    public virtual DbSet<Incident> Incidents { get; private set; }
 
-    public virtual DbSet<insurance_provider> insurance_providers { get; private set; }
+    public virtual DbSet<IncidentSeverity> IncidentSeverities { get; private set; }
 
-    public virtual DbSet<invoice> invoices { get; private set; }
+    public virtual DbSet<IncidentTimeline> IncidentTimelines { get; private set; }
 
-    public virtual DbSet<invoice_line_item> invoice_line_items { get; private set; }
+    public virtual DbSet<InsuranceProvider> InsuranceProviders { get; private set; }
 
-    public virtual DbSet<medication_log> medication_logs { get; private set; }
+    public virtual DbSet<InventoryCategory> InventoryCategories { get; private set; }
 
-    public virtual DbSet<medication_order> medication_orders { get; private set; }
+    public virtual DbSet<Invoice> Invoices { get; private set; }
 
-    public virtual DbSet<medication_schedule> medication_schedules { get; private set; }
+    public virtual DbSet<InvoiceLineItem> InvoiceLineItems { get; private set; }
 
-    public virtual DbSet<notification> notifications { get; private set; }
+    public virtual DbSet<MedicationLog> MedicationLogs { get; private set; }
 
-    public virtual DbSet<payment> payments { get; private set; }
+    public virtual DbSet<MedicationOrder> MedicationOrders { get; private set; }
 
-    public virtual DbSet<permission> permissions { get; private set; }
+    public virtual DbSet<MedicationSchedule> MedicationSchedules { get; private set; }
 
-    public virtual DbSet<phi_access_log> phi_access_logs { get; private set; }
+    public virtual DbSet<Notification> Notifications { get; private set; }
 
-    public virtual DbSet<pre_admission_screening> pre_admission_screenings { get; private set; }
+    public virtual DbSet<Payment> Payments { get; private set; }
 
-    public virtual DbSet<resident> residents { get; private set; }
+    public virtual DbSet<Permission> Permissions { get; private set; }
 
-    public virtual DbSet<resident_care_level_history> resident_care_level_histories { get; private set; }
+    public virtual DbSet<PhiAccessLog> PhiAccessLogs { get; private set; }
 
-    public virtual DbSet<resident_contact> resident_contacts { get; private set; }
+    public virtual DbSet<PreAdmissionScreening> PreAdmissionScreenings { get; private set; }
 
-    public virtual DbSet<resident_insurance_policy> resident_insurance_policies { get; private set; }
+    public virtual DbSet<Resident> Residents { get; private set; }
 
-    public virtual DbSet<resident_sensitive_info> resident_sensitive_infos { get; private set; }
+    public virtual DbSet<ResidentCareLevelHistory> ResidentCareLevelHistories { get; private set; }
 
-    public virtual DbSet<role> roles { get; private set; }
+    public virtual DbSet<ResidentContact> ResidentContacts { get; private set; }
 
-    public virtual DbSet<room> rooms { get; private set; }
+    public virtual DbSet<ResidentInsurancePolicy> ResidentInsurancePolicies { get; private set; }
 
-    public virtual DbSet<shift> shifts { get; private set; }
+    public virtual DbSet<ResidentSensitiveInfo> ResidentSensitiveInfos { get; private set; }
 
-    public virtual DbSet<shift_assignment> shift_assignments { get; private set; }
+    public virtual DbSet<Role> Roles { get; private set; }
 
-    public virtual DbSet<sla_config> sla_configs { get; private set; }
+    public virtual DbSet<Room> Rooms { get; private set; }
 
-    public virtual DbSet<staffing_config> staffing_configs { get; private set; }
+    public virtual DbSet<Shift> Shifts { get; private set; }
 
-    public virtual DbSet<user> users { get; private set; }
+    public virtual DbSet<ShiftAssignment> ShiftAssignments { get; private set; }
 
-    public virtual DbSet<user_facility> user_facilities { get; private set; }
+    public virtual DbSet<SlaConfig> SlaConfigs { get; private set; }
 
-    public virtual DbSet<vital_sign> vital_signs { get; private set; }
+    public virtual DbSet<StaffingConfig> StaffingConfigs { get; private set; }
+
+    public virtual DbSet<User> Users { get; private set; }
+
+    public virtual DbSet<UserFacility> UserFacilities { get; private set; }
+
+    public virtual DbSet<VitalSign> VitalSigns { get; private set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<address>(entity =>
+        modelBuilder.Entity<Address>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__addresse__3213E83F857F95A6");
+            entity.HasKey(e => e.Id).HasName("PK__addresse__3213E83F30DDA70A");
 
-            entity.Property(e => e.address_type).HasDefaultValue("HOME");
-            entity.Property(e => e.created_at).HasDefaultValueSql("(sysdatetimeoffset())");
-            entity.Property(e => e.state).IsFixedLength();
-            entity.Property(e => e.updated_at).HasDefaultValueSql("(sysdatetimeoffset())");
+            entity.Property(e => e.AddressType).HasDefaultValue("HOME");
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
+            entity.Property(e => e.State).IsFixedLength();
+            entity.Property(e => e.UpdatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
         });
 
-        modelBuilder.Entity<admission>(entity =>
+        modelBuilder.Entity<Admission>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__admissio__3213E83F5D437BDC");
+            entity.HasKey(e => e.Id).HasName("PK__admissio__3213E83F34FCEE09");
 
-            entity.Property(e => e.id).HasDefaultValueSql("(newid())");
-            entity.Property(e => e.created_at).HasDefaultValueSql("(sysdatetimeoffset())");
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
 
-            entity.HasOne(d => d.facility).WithMany(p => p.admissions)
+            entity.HasOne(d => d.Facility).WithMany(p => p.Admissions)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__admission__facil__40058253");
+                .HasConstraintName("FK__admission__facil__40C49C62");
 
-            entity.HasOne(d => d.resident).WithMany(p => p.admissions)
+            entity.HasOne(d => d.Resident).WithMany(p => p.Admissions)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__admission__resid__3F115E1A");
+                .HasConstraintName("FK__admission__resid__3FD07829");
         });
 
-        modelBuilder.Entity<assessment>(entity =>
+        modelBuilder.Entity<Assessment>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__assessme__3213E83F3C334068");
+            entity.HasKey(e => e.Id).HasName("PK__assessme__3213E83F35D50A27");
 
-            entity.Property(e => e.id).HasDefaultValueSql("(newid())");
-            entity.Property(e => e.created_at).HasDefaultValueSql("(sysdatetimeoffset())");
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
 
-            entity.HasOne(d => d.assessed_byNavigation).WithMany(p => p.assessments)
+            entity.HasOne(d => d.AssessedByNavigation).WithMany(p => p.Assessments)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__assessmen__asses__51300E55");
+                .HasConstraintName("FK__assessmen__asses__467D75B8");
 
-            entity.HasOne(d => d.confirmed_care_level).WithMany(p => p.assessmentconfirmed_care_levels)
+            entity.HasOne(d => d.ConfirmedCareLevel).WithMany(p => p.AssessmentConfirmedCareLevels)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__assessmen__confi__4F47C5E3");
+                .HasConstraintName("FK__assessmen__confi__44952D46");
 
-            entity.HasOne(d => d.resident).WithMany(p => p.assessments)
+            entity.HasOne(d => d.Resident).WithMany(p => p.Assessments)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__assessmen__resid__503BEA1C");
+                .HasConstraintName("FK__assessmen__resid__4589517F");
 
-            entity.HasOne(d => d.suggested_care_level).WithMany(p => p.assessmentsuggested_care_levels)
+            entity.HasOne(d => d.SuggestedCareLevel).WithMany(p => p.AssessmentSuggestedCareLevels)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__assessmen__sugge__4E53A1AA");
+                .HasConstraintName("FK__assessmen__sugge__43A1090D");
         });
 
-        modelBuilder.Entity<assessment_detail>(entity =>
+        modelBuilder.Entity<AssessmentDetail>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__assessme__3213E83FDEBDC2C4");
+            entity.HasKey(e => e.Id).HasName("PK__assessme__3213E83FFE3B347A");
 
-            entity.Property(e => e.id).HasDefaultValueSql("(newid())");
-
-            entity.HasOne(d => d.assessment).WithMany(p => p.assessment_details)
+            entity.HasOne(d => d.Assessment).WithMany(p => p.AssessmentDetails)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__assessmen__asses__58D1301D");
+                .HasConstraintName("FK__assessmen__asses__477199F1");
 
-            entity.HasOne(d => d.metric).WithMany(p => p.assessment_details)
+            entity.HasOne(d => d.Metric).WithMany(p => p.AssessmentDetails)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__assessmen__metri__59C55456");
+                .HasConstraintName("FK__assessmen__metri__4865BE2A");
         });
 
-        modelBuilder.Entity<assessment_metric>(entity =>
+        modelBuilder.Entity<AssessmentMetric>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__assessme__3213E83FBE9C6892");
+            entity.HasKey(e => e.Id).HasName("PK__assessme__3213E83FDEA4E7C6");
         });
 
-        modelBuilder.Entity<audit_log>(entity =>
+        modelBuilder.Entity<AuditLog>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__audit_lo__3213E83FBF78ED72");
+            entity.HasKey(e => e.Id).HasName("PK__audit_lo__3213E83F4A19EE94");
 
-            entity.Property(e => e.performed_at).HasDefaultValueSql("(sysdatetimeoffset())");
+            entity.Property(e => e.PerformedAt).HasDefaultValueSql("(sysdatetimeoffset())");
 
-            entity.HasOne(d => d.performed_byNavigation).WithMany(p => p.audit_logs)
+            entity.HasOne(d => d.PerformedByNavigation).WithMany(p => p.AuditLogs)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__audit_log__perfo__54CB950F");
+                .HasConstraintName("FK__audit_log__perfo__6225902D");
         });
 
-        modelBuilder.Entity<bed>(entity =>
+        modelBuilder.Entity<Bed>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__beds__3213E83F8AEB77CD");
+            entity.HasKey(e => e.Id).HasName("PK__beds__3213E83F80233057");
 
-            entity.Property(e => e.id).HasDefaultValueSql("(newid())");
-            entity.Property(e => e.status).HasDefaultValue("AVAILABLE");
+            entity.Property(e => e.Status).HasDefaultValue("AVAILABLE");
 
-            entity.HasOne(d => d.room).WithMany(p => p.beds)
+            entity.HasOne(d => d.Room).WithMany(p => p.Beds)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__beds__room_id__02084FDA");
+                .HasConstraintName("FK__beds__room_id__32767D0B");
         });
 
-        modelBuilder.Entity<care_goal>(entity =>
+        modelBuilder.Entity<CareGoal>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__care_goa__3213E83FEF9618EF");
+            entity.HasKey(e => e.Id).HasName("PK__care_goa__3213E83F3806C759");
 
-            entity.Property(e => e.id).HasDefaultValueSql("(newid())");
-
-            entity.HasOne(d => d.care_plan).WithMany(p => p.care_goals)
+            entity.HasOne(d => d.CarePlan).WithMany(p => p.CareGoals)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__care_goal__care___6DCC4D03");
+                .HasConstraintName("FK__care_goal__care___4C364F0E");
         });
 
-        modelBuilder.Entity<care_intervention>(entity =>
+        modelBuilder.Entity<CareIntervention>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__care_int__3213E83F20C6AA07");
+            entity.HasKey(e => e.Id).HasName("PK__care_int__3213E83FCB13A9CF");
 
-            entity.Property(e => e.id).HasDefaultValueSql("(newid())");
-
-            entity.HasOne(d => d.care_plan).WithMany(p => p.care_interventions)
+            entity.HasOne(d => d.CarePlan).WithMany(p => p.CareInterventions)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__care_inte__care___719CDDE7");
+                .HasConstraintName("FK__care_inte__care___4D2A7347");
         });
 
-        modelBuilder.Entity<care_level>(entity =>
+        modelBuilder.Entity<CareLevel>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__care_lev__3213E83FE273D340");
+            entity.HasKey(e => e.Id).HasName("PK__care_lev__3213E83F42A8B634");
         });
 
-        modelBuilder.Entity<care_level_rate>(entity =>
+        modelBuilder.Entity<CareLevelRate>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__care_lev__3213E83FFB5DC63E");
+            entity.HasKey(e => e.Id).HasName("PK__care_lev__3213E83F3FB8F6E4");
 
-            entity.HasOne(d => d.care_level).WithMany(p => p.care_level_rates)
+            entity.HasOne(d => d.CareLevel).WithMany(p => p.CareLevelRates)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__care_leve__care___0D7A0286");
+                .HasConstraintName("FK__care_leve__care___345EC57D");
 
-            entity.HasOne(d => d.facility).WithMany(p => p.care_level_rates)
+            entity.HasOne(d => d.Facility).WithMany(p => p.CareLevelRates)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__care_leve__facil__0E6E26BF");
+                .HasConstraintName("FK__care_leve__facil__3552E9B6");
         });
 
-        modelBuilder.Entity<care_plan>(entity =>
+        modelBuilder.Entity<CarePlan>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__care_pla__3213E83F2F900A02");
+            entity.HasKey(e => e.Id).HasName("PK__care_pla__3213E83F90EB131D");
 
-            entity.Property(e => e.id).HasDefaultValueSql("(newid())");
-            entity.Property(e => e.created_at).HasDefaultValueSql("(sysdatetimeoffset())");
-            entity.Property(e => e.updated_at).HasDefaultValueSql("(sysdatetimeoffset())");
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
+            entity.Property(e => e.UpdatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
 
-            entity.HasOne(d => d.resident).WithMany(p => p.care_plans)
+            entity.HasOne(d => d.Resident).WithMany(p => p.CarePlans)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__care_plan__resid__662B2B3B");
+                .HasConstraintName("FK__care_plan__resid__4B422AD5");
         });
 
-        modelBuilder.Entity<care_task>(entity =>
+        modelBuilder.Entity<CareTask>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__care_tas__3213E83FAAFDF467");
+            entity.HasKey(e => e.Id).HasName("PK__care_tas__3213E83F83005667");
 
-            entity.Property(e => e.id).HasDefaultValueSql("(newid())");
-            entity.Property(e => e.status).HasDefaultValue("PENDING");
+            entity.Property(e => e.Status).HasDefaultValue("PENDING");
 
-            entity.HasOne(d => d.assigned_cna).WithMany(p => p.care_tasks).HasConstraintName("FK__care_task__assig__793DFFAF");
+            entity.HasOne(d => d.AssignedCna).WithMany(p => p.CareTasks).HasConstraintName("FK__care_task__assig__4F12BBB9");
 
-            entity.HasOne(d => d.care_intervention).WithMany(p => p.care_tasks)
+            entity.HasOne(d => d.CareIntervention).WithMany(p => p.CareTasks)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__care_task__care___7849DB76");
+                .HasConstraintName("FK__care_task__care___4E1E9780");
         });
 
-        modelBuilder.Entity<chart_lock_event>(entity =>
+        modelBuilder.Entity<ClinicalRecord>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__chart_lo__3213E83FAC8A5DFD");
+            entity.HasKey(e => e.Id).HasName("PK__clinical__3213E83F019C1F63");
 
-            entity.Property(e => e.id).HasDefaultValueSql("(newid())");
-            entity.Property(e => e.event_time).HasDefaultValueSql("(sysdatetimeoffset())");
-            entity.Property(e => e.locked_by_system).HasDefaultValue(true);
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
+            entity.Property(e => e.UpdatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
 
-            entity.HasOne(d => d.incident).WithMany(p => p.chart_lock_events)
+            entity.HasOne(d => d.RecordedByNavigation).WithMany(p => p.ClinicalRecords)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__chart_loc__incid__4F12BBB9");
+                .HasConstraintName("FK__clinical___recor__42ACE4D4");
 
-            entity.HasOne(d => d.unlocked_byNavigation).WithMany(p => p.chart_lock_events).HasConstraintName("FK__chart_loc__unloc__5006DFF2");
+            entity.HasOne(d => d.Resident).WithMany(p => p.ClinicalRecords)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__clinical___resid__41B8C09B");
         });
 
-        modelBuilder.Entity<clinical_record>(entity =>
+        modelBuilder.Entity<ConsumableSupply>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__clinical__3213E83F4CDB6C4D");
+            entity.HasKey(e => e.Id).HasName("PK__consumab__3213E83FCED600E5");
 
-            entity.Property(e => e.id).HasDefaultValueSql("(newid())");
-            entity.Property(e => e.created_at).HasDefaultValueSql("(sysdatetimeoffset())");
-            entity.Property(e => e.updated_at).HasDefaultValueSql("(sysdatetimeoffset())");
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
+            entity.Property(e => e.Status).HasDefaultValue("OK");
+            entity.Property(e => e.UpdatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
 
-            entity.HasOne(d => d.recorded_byNavigation).WithMany(p => p.clinical_records)
+            entity.HasOne(d => d.Category).WithMany(p => p.ConsumableSupplies)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__clinical___recor__46B27FE2");
+                .HasConstraintName("FK_supplies_category");
 
-            entity.HasOne(d => d.resident).WithMany(p => p.clinical_records)
+            entity.HasOne(d => d.Facility).WithMany(p => p.ConsumableSupplies)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__clinical___resid__45BE5BA9");
+                .HasConstraintName("FK_supplies_facility");
         });
 
-        modelBuilder.Entity<contact>(entity =>
+        modelBuilder.Entity<Contact>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__contacts__3213E83F3726E320");
+            entity.HasKey(e => e.Id).HasName("PK__contacts__3213E83F5F5F9D99");
 
-            entity.Property(e => e.id).HasDefaultValueSql("(newid())");
-            entity.Property(e => e.created_at).HasDefaultValueSql("(sysdatetimeoffset())");
-            entity.Property(e => e.updated_at).HasDefaultValueSql("(sysdatetimeoffset())");
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
+            entity.Property(e => e.UpdatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
 
-            entity.HasOne(d => d.address).WithMany(p => p.contacts).HasConstraintName("FK__contacts__addres__282DF8C2");
+            entity.HasOne(d => d.Address).WithMany(p => p.Contacts).HasConstraintName("FK__contacts__addres__3B0BC30C");
         });
 
-        modelBuilder.Entity<facility>(entity =>
+        modelBuilder.Entity<DurableMedicalEquipment>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__faciliti__3213E83FD210712F");
+            entity.HasKey(e => e.Id).HasName("PK__durable___3213E83FAFF24DC3");
 
-            entity.Property(e => e.id).HasDefaultValueSql("(newid())");
-            entity.Property(e => e.created_at).HasDefaultValueSql("(sysdatetimeoffset())");
-            entity.Property(e => e.target_state).IsFixedLength();
-            entity.Property(e => e.updated_at).HasDefaultValueSql("(sysdatetimeoffset())");
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
+            entity.Property(e => e.Status).HasDefaultValue("AVAILABLE");
+            entity.Property(e => e.UpdatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
 
-            entity.HasOne(d => d.address).WithMany(p => p.facilities).HasConstraintName("FK__facilitie__addre__6E01572D");
+            entity.HasOne(d => d.AssignedToResidentNavigation).WithMany(p => p.DurableMedicalEquipments).HasConstraintName("FK_dme_resident");
+
+            entity.HasOne(d => d.AssignedToUserNavigation).WithMany(p => p.DurableMedicalEquipments).HasConstraintName("FK_dme_user");
+
+            entity.HasOne(d => d.Category).WithMany(p => p.DurableMedicalEquipments)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_dme_category");
+
+            entity.HasOne(d => d.Facility).WithMany(p => p.DurableMedicalEquipments)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_dme_facility");
         });
 
-        modelBuilder.Entity<incident>(entity =>
+        modelBuilder.Entity<Facility>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__incident__3213E83FCAAEEAB3");
+            entity.HasKey(e => e.Id).HasName("PK__faciliti__3213E83FA738D2D7");
 
-            entity.Property(e => e.id).HasDefaultValueSql("(newid())");
-            entity.Property(e => e.reported_at).HasDefaultValueSql("(sysdatetimeoffset())");
-            entity.Property(e => e.status).HasDefaultValue("OPEN");
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
+            entity.Property(e => e.TargetState).IsFixedLength();
+            entity.Property(e => e.UpdatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
 
-            entity.HasOne(d => d.reported_byNavigation).WithMany(p => p.incidents)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__incidents__repor__4959E263");
-
-            entity.HasOne(d => d.resident).WithMany(p => p.incidents)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__incidents__resid__477199F1");
-
-            entity.HasOne(d => d.severity).WithMany(p => p.incidents)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__incidents__sever__4865BE2A");
+            entity.HasOne(d => d.Address).WithMany(p => p.Facilities).HasConstraintName("FK__facilitie__addre__2EA5EC27");
         });
 
-        modelBuilder.Entity<incident_severity>(entity =>
+        modelBuilder.Entity<Incident>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__incident__3213E83FA44FEA01");
+            entity.HasKey(e => e.Id).HasName("PK__incident__3213E83F901EAF32");
+
+            entity.Property(e => e.ReportedAt).HasDefaultValueSql("(sysdatetimeoffset())");
+            entity.Property(e => e.Status).HasDefaultValue("OPEN");
+
+            entity.HasOne(d => d.ReportedByNavigation).WithMany(p => p.Incidents)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__incidents__repor__61316BF4");
+
+            entity.HasOne(d => d.Resident).WithMany(p => p.Incidents)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__incidents__resid__5F492382");
+
+            entity.HasOne(d => d.Severity).WithMany(p => p.Incidents)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__incidents__sever__603D47BB");
         });
 
-        modelBuilder.Entity<insurance_provider>(entity =>
+        modelBuilder.Entity<IncidentSeverity>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__insuranc__3213E83F0863B6AA");
+            entity.HasKey(e => e.Id).HasName("PK__incident__3213E83F8486301F");
         });
 
-        modelBuilder.Entity<invoice>(entity =>
+        modelBuilder.Entity<IncidentTimeline>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__invoices__3213E83FB4F35BD7");
+            entity.HasKey(e => e.Id).HasName("PK__incident__3213E83F1F7315E7");
 
-            entity.Property(e => e.id).HasDefaultValueSql("(newid())");
-            entity.Property(e => e.created_at).HasDefaultValueSql("(sysdatetimeoffset())");
-            entity.Property(e => e.status).HasDefaultValue("DRAFT");
-            entity.Property(e => e.updated_at).HasDefaultValueSql("(sysdatetimeoffset())");
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
 
-            entity.HasOne(d => d.resident).WithMany(p => p.invoices)
+            entity.HasOne(d => d.ActorNavigation).WithMany(p => p.IncidentTimelines).HasConstraintName("FK__incident___actor__65F62111");
+
+            entity.HasOne(d => d.Incident).WithMany(p => p.IncidentTimelines)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__invoices__reside__2704CA5F");
+                .HasConstraintName("FK__incident___incid__6501FCD8");
         });
 
-        modelBuilder.Entity<invoice_line_item>(entity =>
+        modelBuilder.Entity<InsuranceProvider>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__invoice___3213E83F10C334BD");
-
-            entity.HasOne(d => d.invoice).WithMany(p => p.invoice_line_items)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__invoice_l__invoi__32767D0B");
+            entity.HasKey(e => e.Id).HasName("PK__insuranc__3213E83F3EB3F7A5");
         });
 
-        modelBuilder.Entity<medication_log>(entity =>
+        modelBuilder.Entity<InventoryCategory>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__medicati__3213E83FE682555A");
+            entity.HasKey(e => e.Id).HasName("PK__inventor__3213E83FD17499F3");
 
-            entity.Property(e => e.logged_at).HasDefaultValueSql("(sysdatetimeoffset())");
-
-            entity.HasOne(d => d.administered_byNavigation).WithMany(p => p.medication_logadministered_byNavigations)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__medicatio__admin__0C50D423");
-
-            entity.HasOne(d => d.order).WithMany(p => p.medication_logs)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__medicatio__order__0B5CAFEA");
-
-            entity.HasOne(d => d.witnessed_byNavigation).WithMany(p => p.medication_logwitnessed_byNavigations).HasConstraintName("FK__medicatio__witne__0D44F85C");
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
         });
 
-        modelBuilder.Entity<medication_order>(entity =>
+        modelBuilder.Entity<Invoice>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__medicati__3213E83F8A2307F7");
+            entity.HasKey(e => e.Id).HasName("PK__invoices__3213E83F3B84AB8E");
 
-            entity.Property(e => e.id).HasDefaultValueSql("(newid())");
-            entity.Property(e => e.created_at).HasDefaultValueSql("(sysdatetimeoffset())");
-            entity.Property(e => e.updated_at).HasDefaultValueSql("(sysdatetimeoffset())");
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
+            entity.Property(e => e.Status).HasDefaultValue("DRAFT");
+            entity.Property(e => e.UpdatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
 
-            entity.HasOne(d => d.prescribed_byNavigation).WithMany(p => p.medication_orders)
+            entity.HasOne(d => d.Resident).WithMany(p => p.Invoices)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__medicatio__presc__7FEAFD3E");
-
-            entity.HasOne(d => d.resident).WithMany(p => p.medication_orders)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__medicatio__resid__7EF6D905");
+                .HasConstraintName("FK__invoices__reside__5A846E65");
         });
 
-        modelBuilder.Entity<medication_schedule>(entity =>
+        modelBuilder.Entity<InvoiceLineItem>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__medicati__3213E83F004CD2E7");
+            entity.HasKey(e => e.Id).HasName("PK__invoice___3213E83FC0C0E3EE");
 
-            entity.Property(e => e.is_active).HasDefaultValue(true);
-
-            entity.HasOne(d => d.order).WithMany(p => p.medication_schedules)
+            entity.HasOne(d => d.Invoice).WithMany(p => p.InvoiceLineItems)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__medicatio__order__05A3D694");
+                .HasConstraintName("FK__invoice_l__invoi__5B78929E");
         });
 
-        modelBuilder.Entity<notification>(entity =>
+        modelBuilder.Entity<MedicationLog>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__notifica__3213E83F68EAB22F");
+            entity.HasKey(e => e.Id).HasName("PK__medicati__3213E83F4E841EF3");
 
-            entity.Property(e => e.id).HasDefaultValueSql("(newid())");
-            entity.Property(e => e.created_at).HasDefaultValueSql("(sysdatetimeoffset())");
+            entity.Property(e => e.LoggedAt).HasDefaultValueSql("(sysdatetimeoffset())");
 
-            entity.HasOne(d => d.user).WithMany(p => p.notifications)
+            entity.HasOne(d => d.AdministeredByNavigation).WithMany(p => p.MedicationLogAdministeredByNavigations)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__notificat__user___5F492382");
+                .HasConstraintName("FK__medicatio__admin__53D770D6");
+
+            entity.HasOne(d => d.Order).WithMany(p => p.MedicationLogs)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__medicatio__order__52E34C9D");
+
+            entity.HasOne(d => d.WitnessedByNavigation).WithMany(p => p.MedicationLogWitnessedByNavigations).HasConstraintName("FK__medicatio__witne__54CB950F");
         });
 
-        modelBuilder.Entity<payment>(entity =>
+        modelBuilder.Entity<MedicationOrder>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__payments__3213E83FA5E58936");
+            entity.HasKey(e => e.Id).HasName("PK__medicati__3213E83F7CC3C528");
 
-            entity.Property(e => e.id).HasDefaultValueSql("(newid())");
-            entity.Property(e => e.paid_at).HasDefaultValueSql("(sysdatetimeoffset())");
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
+            entity.Property(e => e.UpdatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
 
-            entity.HasOne(d => d.invoice).WithMany(p => p.payments)
+            entity.HasOne(d => d.PrescribedByNavigation).WithMany(p => p.MedicationOrders)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__payments__invoic__373B3228");
+                .HasConstraintName("FK__medicatio__presc__50FB042B");
 
-            entity.HasOne(d => d.received_byNavigation).WithMany(p => p.payments)
+            entity.HasOne(d => d.Resident).WithMany(p => p.MedicationOrders)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__payments__receiv__3A179ED3");
+                .HasConstraintName("FK__medicatio__resid__5006DFF2");
         });
 
-        modelBuilder.Entity<permission>(entity =>
+        modelBuilder.Entity<MedicationSchedule>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__permissi__3213E83F11D0894E");
+            entity.HasKey(e => e.Id).HasName("PK__medicati__3213E83FF13A2E0B");
 
-            entity.Property(e => e.created_at).HasDefaultValueSql("(sysdatetimeoffset())");
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+
+            entity.HasOne(d => d.Order).WithMany(p => p.MedicationSchedules)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__medicatio__order__51EF2864");
         });
 
-        modelBuilder.Entity<phi_access_log>(entity =>
+        modelBuilder.Entity<Notification>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__phi_acce__3213E83F528D315A");
+            entity.HasKey(e => e.Id).HasName("PK__notifica__3213E83FA7C7ED9A");
 
-            entity.Property(e => e.accessed_at).HasDefaultValueSql("(sysdatetimeoffset())");
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
 
-            entity.HasOne(d => d.accessed_byNavigation).WithMany(p => p.phi_access_logs)
+            entity.HasOne(d => d.User).WithMany(p => p.Notifications)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__phi_acces__acces__589C25F3");
+                .HasConstraintName("FK__notificat__user___640DD89F");
         });
 
-        modelBuilder.Entity<pre_admission_screening>(entity =>
+        modelBuilder.Entity<Payment>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__pre_admi__3213E83F8DC369B9");
+            entity.HasKey(e => e.Id).HasName("PK__payments__3213E83F85B8D789");
 
-            entity.Property(e => e.id).HasDefaultValueSql("(newid())");
-            entity.Property(e => e.created_at).HasDefaultValueSql("(sysdatetimeoffset())");
+            entity.Property(e => e.PaidAt).HasDefaultValueSql("(sysdatetimeoffset())");
 
-            entity.HasOne(d => d.resident).WithMany(p => p.pre_admission_screenings)
+            entity.HasOne(d => d.Invoice).WithMany(p => p.Payments)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__pre_admis__resid__395884C4");
+                .HasConstraintName("FK__payments__invoic__5C6CB6D7");
 
-            entity.HasOne(d => d.screened_byNavigation).WithMany(p => p.pre_admission_screenings)
+            entity.HasOne(d => d.ReceivedByNavigation).WithMany(p => p.Payments)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__pre_admis__scree__3A4CA8FD");
+                .HasConstraintName("FK__payments__receiv__5D60DB10");
         });
 
-        modelBuilder.Entity<resident>(entity =>
+        modelBuilder.Entity<Permission>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__resident__3213E83F2459FE28");
+            entity.HasKey(e => e.Id).HasName("PK__permissi__3213E83FEA452E24");
 
-            entity.HasIndex(e => e.status, "idx_residents_status").HasFilter("([is_deleted]=(0))");
-
-            entity.Property(e => e.id).HasDefaultValueSql("(newid())");
-            entity.Property(e => e.created_at).HasDefaultValueSql("(sysdatetimeoffset())");
-            entity.Property(e => e.status).HasDefaultValue("PENDING");
-            entity.Property(e => e.updated_at).HasDefaultValueSql("(sysdatetimeoffset())");
-
-            entity.HasOne(d => d.address).WithMany(p => p.residents).HasConstraintName("FK__residents__addre__160F4887");
-
-            entity.HasOne(d => d.bed).WithMany(p => p.residents).HasConstraintName("FK__residents__bed_i__17036CC0");
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
         });
 
-        modelBuilder.Entity<resident_care_level_history>(entity =>
+        modelBuilder.Entity<PhiAccessLog>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__resident__3213E83F8359E53D");
+            entity.HasKey(e => e.Id).HasName("PK__phi_acce__3213E83FE2E8477F");
 
-            entity.Property(e => e.id).HasDefaultValueSql("(newid())");
+            entity.Property(e => e.AccessedAt).HasDefaultValueSql("(sysdatetimeoffset())");
 
-            entity.HasOne(d => d.care_level).WithMany(p => p.resident_care_level_histories)
+            entity.HasOne(d => d.AccessedByNavigation).WithMany(p => p.PhiAccessLogs)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__resident___care___245D67DE");
-
-            entity.HasOne(d => d.resident).WithMany(p => p.resident_care_level_histories)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__resident___resid__236943A5");
+                .HasConstraintName("FK__phi_acces__acces__6319B466");
         });
 
-        modelBuilder.Entity<resident_contact>(entity =>
+        modelBuilder.Entity<PreAdmissionScreening>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__resident__3213E83F8C1A7303");
+            entity.HasKey(e => e.Id).HasName("PK__pre_admi__3213E83F53874E27");
 
-            entity.Property(e => e.created_at).HasDefaultValueSql("(sysdatetimeoffset())");
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
 
-            entity.HasOne(d => d.contact).WithMany(p => p.resident_contacts)
+            entity.HasOne(d => d.Resident).WithMany(p => p.PreAdmissionScreenings)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__resident___conta__2FCF1A8A");
+                .HasConstraintName("FK__pre_admis__resid__3DE82FB7");
 
-            entity.HasOne(d => d.resident).WithMany(p => p.resident_contacts)
+            entity.HasOne(d => d.ScreenedByNavigation).WithMany(p => p.PreAdmissionScreenings)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__resident___resid__2EDAF651");
+                .HasConstraintName("FK__pre_admis__scree__3EDC53F0");
         });
 
-        modelBuilder.Entity<resident_insurance_policy>(entity =>
+        modelBuilder.Entity<Resident>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__resident__3213E83F92B49655");
+            entity.HasKey(e => e.Id).HasName("PK__resident__3213E83F4337B1E4");
 
-            entity.Property(e => e.id).HasDefaultValueSql("(newid())");
-            entity.Property(e => e.created_at).HasDefaultValueSql("(sysdatetimeoffset())");
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
+            entity.Property(e => e.Status).HasDefaultValue("PENDING");
+            entity.Property(e => e.UpdatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
 
-            entity.HasOne(d => d.insurance_provider).WithMany(p => p.resident_insurance_policies)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__resident___insur__2057CCD0");
+            entity.HasOne(d => d.Address).WithMany(p => p.Residents).HasConstraintName("FK__residents__addre__36470DEF");
 
-            entity.HasOne(d => d.resident).WithMany(p => p.resident_insurance_policies)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__resident___resid__1F63A897");
+            entity.HasOne(d => d.Bed).WithMany(p => p.Residents).HasConstraintName("FK__residents__bed_i__373B3228");
         });
 
-        modelBuilder.Entity<resident_sensitive_info>(entity =>
+        modelBuilder.Entity<ResidentCareLevelHistory>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__resident__3213E83F973E87A8");
+            entity.HasKey(e => e.Id).HasName("PK__resident__3213E83FB7F49FBF");
 
-            entity.Property(e => e.created_at).HasDefaultValueSql("(sysdatetimeoffset())");
-            entity.Property(e => e.updated_at).HasDefaultValueSql("(sysdatetimeoffset())");
-
-            entity.HasOne(d => d.resident).WithOne(p => p.resident_sensitive_info)
+            entity.HasOne(d => d.CareLevel).WithMany(p => p.ResidentCareLevelHistories)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__resident___resid__1DB06A4F");
+                .HasConstraintName("FK__resident___care___3A179ED3");
+
+            entity.HasOne(d => d.Resident).WithMany(p => p.ResidentCareLevelHistories)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__resident___resid__39237A9A");
         });
 
-        modelBuilder.Entity<role>(entity =>
+        modelBuilder.Entity<ResidentContact>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__roles__3213E83F2F881D78");
+            entity.HasKey(e => e.Id).HasName("PK__resident__3213E83F94B8EBDF");
 
-            entity.Property(e => e.created_at).HasDefaultValueSql("(sysdatetimeoffset())");
-            entity.Property(e => e.updated_at).HasDefaultValueSql("(sysdatetimeoffset())");
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
 
-            entity.HasMany(d => d.permissions).WithMany(p => p.roles)
+            entity.HasOne(d => d.Contact).WithMany(p => p.ResidentContacts)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__resident___conta__3CF40B7E");
+
+            entity.HasOne(d => d.Resident).WithMany(p => p.ResidentContacts)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__resident___resid__3BFFE745");
+        });
+
+        modelBuilder.Entity<ResidentInsurancePolicy>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__resident__3213E83F79F0F44B");
+
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
+
+            entity.HasOne(d => d.InsuranceProvider).WithMany(p => p.ResidentInsurancePolicies)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__resident___insur__59904A2C");
+
+            entity.HasOne(d => d.Resident).WithMany(p => p.ResidentInsurancePolicies)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__resident___resid__589C25F3");
+        });
+
+        modelBuilder.Entity<ResidentSensitiveInfo>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__resident__3213E83F7C755BE3");
+
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
+            entity.Property(e => e.UpdatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
+
+            entity.HasOne(d => d.Resident).WithOne(p => p.ResidentSensitiveInfo)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__resident___resid__382F5661");
+        });
+
+        modelBuilder.Entity<Role>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__roles__3213E83FBB0F59C3");
+
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
+            entity.Property(e => e.UpdatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
+
+            entity.HasMany(d => d.Permissions).WithMany(p => p.Roles)
                 .UsingEntity<Dictionary<string, object>>(
-                    "role_permission",
-                    r => r.HasOne<permission>().WithMany()
-                        .HasForeignKey("permission_id")
+                    "RolePermission",
+                    r => r.HasOne<Permission>().WithMany()
+                        .HasForeignKey("PermissionId")
                         .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__role_perm__permi__5535A963"),
-                    l => l.HasOne<role>().WithMany()
-                        .HasForeignKey("role_id")
+                        .HasConstraintName("FK__role_perm__permi__2CBDA3B5"),
+                    l => l.HasOne<Role>().WithMany()
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__role_perm__role___5441852A"),
+                        .HasConstraintName("FK__role_perm__role___2BC97F7C"),
                     j =>
                     {
-                        j.HasKey("role_id", "permission_id").HasName("PK__role_per__C85A54635FA26B98");
+                        j.HasKey("RoleId", "PermissionId").HasName("PK__role_per__C85A54638AB1C73B");
                         j.ToTable("role_permissions");
+                        j.IndexerProperty<long>("RoleId").HasColumnName("role_id");
+                        j.IndexerProperty<long>("PermissionId").HasColumnName("permission_id");
                     });
         });
 
-        modelBuilder.Entity<room>(entity =>
+        modelBuilder.Entity<Room>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__rooms__3213E83FB9F53800");
+            entity.HasKey(e => e.Id).HasName("PK__rooms__3213E83F83575558");
 
-            entity.Property(e => e.id).HasDefaultValueSql("(newid())");
-
-            entity.HasOne(d => d.facility).WithMany(p => p.rooms)
+            entity.HasOne(d => d.Facility).WithMany(p => p.Rooms)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__rooms__facility___7A672E12");
+                .HasConstraintName("FK__rooms__facility___318258D2");
         });
 
-        modelBuilder.Entity<shift>(entity =>
+        modelBuilder.Entity<Shift>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__shifts__3213E83FD3721F5E");
+            entity.HasKey(e => e.Id).HasName("PK__shifts__3213E83FCB7DE149");
 
-            entity.HasOne(d => d.facility).WithMany(p => p.shifts)
+            entity.HasOne(d => d.Facility).WithMany(p => p.Shifts)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__shifts__facility__11158940");
+                .HasConstraintName("FK__shifts__facility__55BFB948");
         });
 
-        modelBuilder.Entity<shift_assignment>(entity =>
+        modelBuilder.Entity<ShiftAssignment>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__shift_as__3213E83F9D731F36");
+            entity.HasKey(e => e.Id).HasName("PK__shift_as__3213E83F7E83D4A9");
 
-            entity.Property(e => e.status).HasDefaultValue("SCHEDULED");
+            entity.Property(e => e.Status).HasDefaultValue("SCHEDULED");
 
-            entity.HasOne(d => d.shift).WithMany(p => p.shift_assignments)
+            entity.HasOne(d => d.Shift).WithMany(p => p.ShiftAssignments)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__shift_ass__shift__15DA3E5D");
+                .HasConstraintName("FK__shift_ass__shift__56B3DD81");
 
-            entity.HasOne(d => d.user).WithMany(p => p.shift_assignments)
+            entity.HasOne(d => d.User).WithMany(p => p.ShiftAssignments)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__shift_ass__user___16CE6296");
+                .HasConstraintName("FK__shift_ass__user___57A801BA");
         });
 
-        modelBuilder.Entity<sla_config>(entity =>
+        modelBuilder.Entity<SlaConfig>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__sla_conf__3213E83F938BDC1B");
+            entity.HasKey(e => e.Id).HasName("PK__sla_conf__3213E83FB5B33DBC");
 
-            entity.HasOne(d => d.severity).WithMany(p => p.sla_configs)
+            entity.HasOne(d => d.Severity).WithMany(p => p.SlaConfigs)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__sla_confi__sever__40C49C62");
+                .HasConstraintName("FK__sla_confi__sever__5E54FF49");
         });
 
-        modelBuilder.Entity<staffing_config>(entity =>
+        modelBuilder.Entity<StaffingConfig>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__staffing__3213E83F7B0264F3");
+            entity.HasKey(e => e.Id).HasName("PK__staffing__3213E83FDF7A8181");
 
-            entity.Property(e => e.created_at).HasDefaultValueSql("(sysdatetimeoffset())");
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
 
-            entity.HasOne(d => d.facility).WithMany(p => p.staffing_configs)
+            entity.HasOne(d => d.Facility).WithMany(p => p.StaffingConfigs)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__staffing___facil__04E4BC85");
+                .HasConstraintName("FK__staffing___facil__336AA144");
         });
 
-        modelBuilder.Entity<user>(entity =>
+        modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__users__3213E83F4890964F");
+            entity.HasKey(e => e.Id).HasName("PK__users__3213E83FC317222B");
 
-            entity.HasIndex(e => e.status, "idx_users_status").HasFilter("([is_deleted]=(0))");
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
+            entity.Property(e => e.Status).HasDefaultValue("ACTIVE");
+            entity.Property(e => e.UpdatedAt).HasDefaultValueSql("(sysdatetimeoffset())");
 
-            entity.Property(e => e.id).HasDefaultValueSql("(newid())");
-            entity.Property(e => e.created_at).HasDefaultValueSql("(sysdatetimeoffset())");
-            entity.Property(e => e.status).HasDefaultValue("ACTIVE");
-            entity.Property(e => e.updated_at).HasDefaultValueSql("(sysdatetimeoffset())");
-
-            entity.HasOne(d => d.role).WithMany(p => p.users)
+            entity.HasOne(d => d.Role).WithMany(p => p.Users)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__users__role_id__5DCAEF64");
+                .HasConstraintName("FK__users__role_id__2DB1C7EE");
         });
 
-        modelBuilder.Entity<user_facility>(entity =>
+        modelBuilder.Entity<UserFacility>(entity =>
         {
-            entity.HasKey(e => new { e.user_id, e.facility_id }).HasName("PK__user_fac__4290B9A5B2192637");
+            entity.HasKey(e => new { e.UserId, e.FacilityId }).HasName("PK__user_fac__4290B9A5EDA96261");
 
-            entity.HasOne(d => d.facility).WithMany(p => p.user_facilities)
+            entity.HasOne(d => d.Facility).WithMany(p => p.UserFacilities)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__user_faci__facil__74AE54BC");
+                .HasConstraintName("FK__user_faci__facil__308E3499");
 
-            entity.HasOne(d => d.user).WithMany(p => p.user_facilities)
+            entity.HasOne(d => d.User).WithMany(p => p.UserFacilities)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__user_faci__user___73BA3083");
+                .HasConstraintName("FK__user_faci__user___2F9A1060");
         });
 
-        modelBuilder.Entity<vital_sign>(entity =>
+        modelBuilder.Entity<VitalSign>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__vital_si__3213E83F19229DD5");
+            entity.HasKey(e => e.Id).HasName("PK__vital_si__3213E83F44CF4A66");
 
-            entity.Property(e => e.recorded_at).HasDefaultValueSql("(sysdatetimeoffset())");
+            entity.Property(e => e.RecordedAt).HasDefaultValueSql("(sysdatetimeoffset())");
 
-            entity.HasOne(d => d.recorded_byNavigation).WithMany(p => p.vital_signs)
+            entity.HasOne(d => d.RecordedByNavigation).WithMany(p => p.VitalSigns)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__vital_sig__recor__5D95E53A");
+                .HasConstraintName("FK__vital_sig__recor__4A4E069C");
 
-            entity.HasOne(d => d.resident).WithMany(p => p.vital_signs)
+            entity.HasOne(d => d.Resident).WithMany(p => p.VitalSigns)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__vital_sig__resid__5CA1C101");
+                .HasConstraintName("FK__vital_sig__resid__4959E263");
         });
 
         OnModelCreatingPartial(modelBuilder);

@@ -6,43 +6,55 @@ using Microsoft.EntityFrameworkCore;
 
 namespace NursingHome.Infrastructure.Persistence.Generated;
 
-public partial class contact
+[Table("contacts")]
+public partial class Contact
 {
     [Key]
-    public Guid id { get; private set; }
+    [Column("id")]
+    public long Id { get; private set; }
 
+    [Column("first_name")]
     [StringLength(100)]
-    public string first_name { get; private set; } = null!;
+    public string FirstName { get; private set; } = null!;
 
+    [Column("middle_name")]
     [StringLength(100)]
-    public string? middle_name { get; private set; }
+    public string? MiddleName { get; private set; }
 
+    [Column("last_name")]
     [StringLength(100)]
-    public string last_name { get; private set; } = null!;
+    public string LastName { get; private set; } = null!;
 
+    [Column("phone_primary")]
     [StringLength(20)]
-    public string phone_primary { get; private set; } = null!;
+    public string PhonePrimary { get; private set; } = null!;
 
+    [Column("phone_secondary")]
     [StringLength(20)]
-    public string? phone_secondary { get; private set; }
+    public string? PhoneSecondary { get; private set; }
 
+    [Column("email")]
     [StringLength(255)]
-    public string? email { get; private set; }
+    public string? Email { get; private set; }
 
-    public long? address_id { get; private set; }
+    [Column("address_id")]
+    public long? AddressId { get; private set; }
 
-    public bool is_deleted { get; private set; }
+    [Column("is_deleted")]
+    public bool IsDeleted { get; private set; }
 
+    [Column("created_at")]
     [Precision(0)]
-    public DateTimeOffset created_at { get; private set; }
+    public DateTimeOffset CreatedAt { get; private set; }
 
+    [Column("updated_at")]
     [Precision(0)]
-    public DateTimeOffset updated_at { get; private set; }
+    public DateTimeOffset UpdatedAt { get; private set; }
 
-    [ForeignKey("address_id")]
-    [InverseProperty("contacts")]
-    public virtual address? address { get; private set; }
+    [ForeignKey("AddressId")]
+    [InverseProperty("Contacts")]
+    public virtual Address? Address { get; private set; }
 
-    [InverseProperty("contact")]
-    public virtual ICollection<resident_contact> resident_contacts { get; private set; } = new List<resident_contact>();
+    [InverseProperty("Contact")]
+    public virtual ICollection<ResidentContact> ResidentContacts { get; private set; } = new List<ResidentContact>();
 }

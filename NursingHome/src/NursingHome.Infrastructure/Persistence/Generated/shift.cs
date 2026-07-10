@@ -6,26 +6,36 @@ using Microsoft.EntityFrameworkCore;
 
 namespace NursingHome.Infrastructure.Persistence.Generated;
 
-[Index("facility_id", Name = "idx_shifts_facility_id")]
-public partial class shift
+[Table("shifts")]
+[Index("FacilityId", Name = "idx_shifts_facility_id")]
+public partial class Shift
 {
     [Key]
-    public long id { get; private set; }
+    [Column("id")]
+    public long Id { get; private set; }
 
-    public Guid facility_id { get; private set; }
+    [Column("facility_id")]
+    public long FacilityId { get; private set; }
 
+    [Column("shift_name")]
     [StringLength(20)]
     [Unicode(false)]
-    public string shift_name { get; private set; } = null!;
+    public string ShiftName { get; private set; } = null!;
 
-    public TimeOnly start_time { get; private set; }
+    [Column("start_time")]
+    public TimeOnly StartTime { get; private set; }
 
-    public TimeOnly end_time { get; private set; }
+    [Column("end_time")]
+    public TimeOnly EndTime { get; private set; }
 
-    [ForeignKey("facility_id")]
-    [InverseProperty("shifts")]
-    public virtual facility facility { get; private set; } = null!;
+    [Column("description")]
+    [StringLength(255)]
+    public string? Description { get; private set; }
 
-    [InverseProperty("shift")]
-    public virtual ICollection<shift_assignment> shift_assignments { get; private set; } = new List<shift_assignment>();
+    [ForeignKey("FacilityId")]
+    [InverseProperty("Shifts")]
+    public virtual Facility Facility { get; private set; } = null!;
+
+    [InverseProperty("Shift")]
+    public virtual ICollection<ShiftAssignment> ShiftAssignments { get; private set; } = new List<ShiftAssignment>();
 }

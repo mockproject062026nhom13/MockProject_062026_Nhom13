@@ -6,57 +6,74 @@ using Microsoft.EntityFrameworkCore;
 
 namespace NursingHome.Infrastructure.Persistence.Generated;
 
-[Index("facility_code", Name = "UQ__faciliti__EC22450ABCEC2DAD", IsUnique = true)]
-public partial class facility
+[Table("facilities")]
+[Index("FacilityCode", Name = "UQ__faciliti__EC22450A228CEEE7", IsUnique = true)]
+public partial class Facility
 {
     [Key]
-    public Guid id { get; private set; }
+    [Column("id")]
+    public long Id { get; private set; }
 
+    [Column("facility_code")]
     [StringLength(50)]
-    public string facility_code { get; private set; } = null!;
+    public string FacilityCode { get; private set; } = null!;
 
+    [Column("name")]
     [StringLength(200)]
-    public string name { get; private set; } = null!;
+    public string Name { get; private set; } = null!;
 
+    [Column("license_number")]
     [StringLength(100)]
-    public string license_number { get; private set; } = null!;
+    public string LicenseNumber { get; private set; } = null!;
 
+    [Column("target_state")]
     [StringLength(2)]
     [Unicode(false)]
-    public string target_state { get; private set; } = null!;
+    public string TargetState { get; private set; } = null!;
 
-    public long? address_id { get; private set; }
+    [Column("address_id")]
+    public long? AddressId { get; private set; }
 
+    [Column("phone_number")]
     [StringLength(20)]
-    public string? phone_number { get; private set; }
+    public string? PhoneNumber { get; private set; }
 
-    public bool is_deleted { get; private set; }
+    [Column("is_deleted")]
+    public bool IsDeleted { get; private set; }
 
+    [Column("created_at")]
     [Precision(0)]
-    public DateTimeOffset created_at { get; private set; }
+    public DateTimeOffset CreatedAt { get; private set; }
 
+    [Column("updated_at")]
     [Precision(0)]
-    public DateTimeOffset updated_at { get; private set; }
+    public DateTimeOffset UpdatedAt { get; private set; }
 
-    [ForeignKey("address_id")]
-    [InverseProperty("facilities")]
-    public virtual address? address { get; private set; }
+    [ForeignKey("AddressId")]
+    [InverseProperty("Facilities")]
+    public virtual Address? Address { get; private set; }
 
-    [InverseProperty("facility")]
-    public virtual ICollection<admission> admissions { get; private set; } = new List<admission>();
+    [InverseProperty("Facility")]
+    public virtual ICollection<Admission> Admissions { get; private set; } = new List<Admission>();
 
-    [InverseProperty("facility")]
-    public virtual ICollection<care_level_rate> care_level_rates { get; private set; } = new List<care_level_rate>();
+    [InverseProperty("Facility")]
+    public virtual ICollection<CareLevelRate> CareLevelRates { get; private set; } = new List<CareLevelRate>();
 
-    [InverseProperty("facility")]
-    public virtual ICollection<room> rooms { get; private set; } = new List<room>();
+    [InverseProperty("Facility")]
+    public virtual ICollection<ConsumableSupply> ConsumableSupplies { get; private set; } = new List<ConsumableSupply>();
 
-    [InverseProperty("facility")]
-    public virtual ICollection<shift> shifts { get; private set; } = new List<shift>();
+    [InverseProperty("Facility")]
+    public virtual ICollection<DurableMedicalEquipment> DurableMedicalEquipments { get; private set; } = new List<DurableMedicalEquipment>();
 
-    [InverseProperty("facility")]
-    public virtual ICollection<staffing_config> staffing_configs { get; private set; } = new List<staffing_config>();
+    [InverseProperty("Facility")]
+    public virtual ICollection<Room> Rooms { get; private set; } = new List<Room>();
 
-    [InverseProperty("facility")]
-    public virtual ICollection<user_facility> user_facilities { get; private set; } = new List<user_facility>();
+    [InverseProperty("Facility")]
+    public virtual ICollection<Shift> Shifts { get; private set; } = new List<Shift>();
+
+    [InverseProperty("Facility")]
+    public virtual ICollection<StaffingConfig> StaffingConfigs { get; private set; } = new List<StaffingConfig>();
+
+    [InverseProperty("Facility")]
+    public virtual ICollection<UserFacility> UserFacilities { get; private set; } = new List<UserFacility>();
 }
