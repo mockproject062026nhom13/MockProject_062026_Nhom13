@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-using DotNetEnv;
-using NursingHome.Infrastructure;
-
-Env.Load("../../.env");
-Console.WriteLine($"DB_NAME = {Environment.GetEnvironmentVariable("DB_NAME")}");
-Console.WriteLine($"DB_APP_USER = {Environment.GetEnvironmentVariable("DB_APP_USER")}");
-Console.WriteLine($"DB_APP_PASSWORD = {Environment.GetEnvironmentVariable("DB_APP_PASSWORD")}");
-=======
 using Microsoft.EntityFrameworkCore;
 using FluentValidation;
 using NursingHome.Application.Abstractions;
@@ -25,7 +16,6 @@ using NursingHome.Application;
 // In containers the values already come from the process environment and no
 // .env file is present — TraversePath().Load() simply finds nothing and is a no-op.
 Env.TraversePath().Load();
->>>>>>> dev
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,15 +46,12 @@ builder.Services.AddApplication();
 
 var app = builder.Build();
 
-<<<<<<< HEAD
-=======
 // Configure the HTTP request pipeline.
 
 // Register first so it wraps every downstream middleware and endpoint, turning
 // unhandled exceptions (incl. FluentValidation's ValidationException) into ApiResponse errors.
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
->>>>>>> dev
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

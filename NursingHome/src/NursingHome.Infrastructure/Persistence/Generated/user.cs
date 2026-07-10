@@ -128,16 +128,9 @@ public partial class User
     [InverseProperty("User")]
     public virtual ICollection<ShiftAssignment> ShiftAssignments { get; private set; } = new List<ShiftAssignment>();
 
-<<<<<<< HEAD
-    [InverseProperty("recorded_byNavigation")]
-    public virtual ICollection<vital_sign> vital_signs { get; private set; } = new List<vital_sign>();
-
-
-=======
     [InverseProperty("User")]
     public virtual ICollection<UserFacility> UserFacilities { get; private set; } = new List<UserFacility>();
 
     [InverseProperty("RecordedByNavigation")]
     public virtual ICollection<VitalSign> VitalSigns { get; private set; } = new List<VitalSign>();
->>>>>>> dev
 }
