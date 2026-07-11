@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using NursingHome.Infrastructure.Persistence.DbContexts;
 using NursingHome.Api.Middleware;
 using NursingHome.Application;
+using NursingHome.Application.Abstractions;
+using NursingHome.Infrastructure.Persistence.Repositories;
 
 // Load variables from the nearest .env file (walking up from the working
 // directory) into the process environment BEFORE the host is built, so they are
@@ -23,6 +25,7 @@ builder.Services.AddFastEndpoints();
 
 builder.Services.AddDbContext<NursingHomeDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<IFacilityRepository, FacilityRepository>();
 
 builder.Services.AddApplication();
 
