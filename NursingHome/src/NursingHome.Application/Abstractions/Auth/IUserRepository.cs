@@ -5,5 +5,5 @@ namespace NursingHome.Application.Abstractions.Auth;
 public interface IUserRepository
 {
     Task<UserAuthDto?> GetUserAuthInfoByEmailAsync(string email);
-    Task UpdateLoginTimeAsync(Guid userId);
+    Task UpdateLoginTimeAsync(long userId);
 }

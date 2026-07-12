@@ -1,7 +1,7 @@
 using MediatR;
 using NursingHome.Application.Abstractions.Auth;
 using NursingHome.Application.Features.Auth.DTOs;
-using NursingHome.Application.Common;
+
 
 namespace NursingHome.Application.Features.Auth.Commands;
 
@@ -22,7 +22,7 @@ public class VerifyMfaCommandHandler(
         if (userDto == null)
         {
             
-            throw new Exception("Tài khoản không tồn tại."); 
+            throw new UnauthorizedAccessException("Tài khoản hoặc mã xác thực không chính xác."); 
         }
 
         if (userDto.MfaEnabled)
@@ -30,7 +30,7 @@ public class VerifyMfaCommandHandler(
             bool isOtpValid = await _otpService.ValidateOtpAsync(request.Email, request.OtpCode);
             if (!isOtpValid)
             {
-                throw new Exception("Mã xác thực không chính xác hoặc đã hết hạn."); // ValidationException
+                throw new UnauthorizedAccessException("Mã xác thực không chính xác hoặc đã hết hạn.");
             }
         }
 

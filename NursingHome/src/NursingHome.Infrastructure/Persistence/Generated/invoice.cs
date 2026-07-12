@@ -6,55 +6,65 @@ using Microsoft.EntityFrameworkCore;
 
 namespace NursingHome.Infrastructure.Persistence.Generated;
 
-[Index("resident_id", Name = "idx_invoices_resident_id")]
-[Index("status", Name = "idx_invoices_status")]
-public partial class invoice
+[Table("invoices")]
+[Index("ResidentId", Name = "idx_invoices_resident_id")]
+[Index("Status", Name = "idx_invoices_status")]
+public partial class Invoice
 {
     [Key]
-    public Guid id { get; private set; }
+    [Column("id")]
+    public long Id { get; private set; }
 
-    public Guid resident_id { get; private set; }
+    [Column("resident_id")]
+    public long ResidentId { get; private set; }
 
-    public DateOnly billing_period_start { get; private set; }
+    [Column("billing_period_start")]
+    public DateOnly BillingPeriodStart { get; private set; }
 
-    public DateOnly billing_period_end { get; private set; }
+    [Column("billing_period_end")]
+    public DateOnly BillingPeriodEnd { get; private set; }
 
-    [Column(TypeName = "decimal(18, 2)")]
-    public decimal total_amount { get; private set; }
+    [Column("total_amount", TypeName = "decimal(18, 2)")]
+    public decimal TotalAmount { get; private set; }
 
-    [Column(TypeName = "decimal(18, 2)")]
-    public decimal medicare_covered_amount { get; private set; }
+    [Column("medicare_covered_amount", TypeName = "decimal(18, 2)")]
+    public decimal MedicareCoveredAmount { get; private set; }
 
-    [Column(TypeName = "decimal(18, 2)")]
-    public decimal medicaid_covered_amount { get; private set; }
+    [Column("medicaid_covered_amount", TypeName = "decimal(18, 2)")]
+    public decimal MedicaidCoveredAmount { get; private set; }
 
-    [Column(TypeName = "decimal(18, 2)")]
-    public decimal private_insurance_covered_amount { get; private set; }
+    [Column("private_insurance_covered_amount", TypeName = "decimal(18, 2)")]
+    public decimal PrivateInsuranceCoveredAmount { get; private set; }
 
-    [Column(TypeName = "decimal(18, 2)")]
-    public decimal patient_responsibility_amount { get; private set; }
+    [Column("patient_responsibility_amount", TypeName = "decimal(18, 2)")]
+    public decimal PatientResponsibilityAmount { get; private set; }
 
+    [Column("status")]
     [StringLength(20)]
     [Unicode(false)]
-    public string status { get; private set; } = null!;
+    public string Status { get; private set; } = null!;
 
-    public DateOnly due_date { get; private set; }
+    [Column("due_date")]
+    public DateOnly DueDate { get; private set; }
 
-    public bool is_deleted { get; private set; }
+    [Column("is_deleted")]
+    public bool IsDeleted { get; private set; }
 
+    [Column("created_at")]
     [Precision(0)]
-    public DateTimeOffset created_at { get; private set; }
+    public DateTimeOffset CreatedAt { get; private set; }
 
+    [Column("updated_at")]
     [Precision(0)]
-    public DateTimeOffset updated_at { get; private set; }
+    public DateTimeOffset UpdatedAt { get; private set; }
 
-    [InverseProperty("invoice")]
-    public virtual ICollection<invoice_line_item> invoice_line_items { get; private set; } = new List<invoice_line_item>();
+    [InverseProperty("Invoice")]
+    public virtual ICollection<InvoiceLineItem> InvoiceLineItems { get; private set; } = new List<InvoiceLineItem>();
 
-    [InverseProperty("invoice")]
-    public virtual ICollection<payment> payments { get; private set; } = new List<payment>();
+    [InverseProperty("Invoice")]
+    public virtual ICollection<Payment> Payments { get; private set; } = new List<Payment>();
 
-    [ForeignKey("resident_id")]
-    [InverseProperty("invoices")]
-    public virtual resident resident { get; private set; } = null!;
+    [ForeignKey("ResidentId")]
+    [InverseProperty("Invoices")]
+    public virtual Resident Resident { get; private set; } = null!;
 }

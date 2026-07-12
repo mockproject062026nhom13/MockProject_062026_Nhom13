@@ -1,7 +1,18 @@
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using NursingHome.Infrastructure.Persistence.DbContexts;
-using MediatR;
+using DotNetEnv;
+using NursingHome.Api.Middleware;
+using NursingHome.Application;
+using NursingHome.Infrastructure;
+
+// Load variables from the nearest .env file (walking up from the working
+// directory) into the process environment BEFORE the host is built, so they are
+// picked up by builder.Configuration's environment-variable provider.
+// In containers the values already come from the process environment and no
+// .env file is present — TraversePath().Load() simply finds nothing and is a no-op.
+Env.TraversePath().Load();
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,19 +22,28 @@ builder.Services.AddControllers();
 // Swagger / OpenAPI via Swashbuckle — https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddFastEndpoints();
+//builder.Services.AddFastEndpoints();
 
 
+// builder.Services.AddDbContext<NursingHomeDbContext>(options =>
+//     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+var dbPassword = Environment.GetEnvironmentVariable("MSSQL_SA_PASSWORD");
+var connectionString = $"Server=127.0.0.1,14330;Database=NursingHome;User Id=sa;Password={dbPassword};TrustServerCertificate=True;";
 builder.Services.AddDbContext<NursingHomeDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(connectionString));
 
-// builder.Services.AddMediatR(cfg => {
-//     cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-// });
+builder.Services.AddApplication();
+builder.Services.AddInfrastructure();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+
+// Register first so it wraps every downstream middleware and endpoint, turning
+// unhandled exceptions (incl. FluentValidation's ValidationException) into ApiResponse errors.
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -36,7 +56,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseFastEndpoints();
+//app.UseFastEndpoints();
 
 app.MapGet("/", () => "API Running");
 

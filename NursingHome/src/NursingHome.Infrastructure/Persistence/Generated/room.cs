@@ -6,27 +6,33 @@ using Microsoft.EntityFrameworkCore;
 
 namespace NursingHome.Infrastructure.Persistence.Generated;
 
-[Index("facility_id", Name = "idx_rooms_facility_id")]
-[Index("facility_id", "room_number", Name = "uq_room_per_facility", IsUnique = true)]
-public partial class room
+[Table("rooms")]
+[Index("FacilityId", Name = "idx_rooms_facility_id")]
+[Index("FacilityId", "RoomNumber", Name = "uq_room_per_facility", IsUnique = true)]
+public partial class Room
 {
     [Key]
-    public Guid id { get; private set; }
+    [Column("id")]
+    public long Id { get; private set; }
 
+    [Column("room_number")]
     [StringLength(20)]
-    public string room_number { get; private set; } = null!;
+    public string RoomNumber { get; private set; } = null!;
 
+    [Column("room_type")]
     [StringLength(50)]
-    public string room_type { get; private set; } = null!;
+    public string RoomType { get; private set; } = null!;
 
-    public Guid facility_id { get; private set; }
+    [Column("facility_id")]
+    public long FacilityId { get; private set; }
 
-    public bool is_deleted { get; private set; }
+    [Column("is_deleted")]
+    public bool IsDeleted { get; private set; }
 
-    [InverseProperty("room")]
-    public virtual ICollection<bed> beds { get; private set; } = new List<bed>();
+    [InverseProperty("Room")]
+    public virtual ICollection<Bed> Beds { get; private set; } = new List<Bed>();
 
-    [ForeignKey("facility_id")]
-    [InverseProperty("rooms")]
-    public virtual facility facility { get; private set; } = null!;
+    [ForeignKey("FacilityId")]
+    [InverseProperty("Rooms")]
+    public virtual Facility Facility { get; private set; } = null!;
 }

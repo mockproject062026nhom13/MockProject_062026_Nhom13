@@ -6,101 +6,122 @@ using Microsoft.EntityFrameworkCore;
 
 namespace NursingHome.Infrastructure.Persistence.Generated;
 
-[Index("bed_id", Name = "idx_residents_bed_id")]
-[Index("date_of_birth", Name = "idx_residents_dob")]
-[Index("last_name", "first_name", Name = "idx_residents_name")]
-public partial class resident
+[Table("residents")]
+[Index("BedId", Name = "idx_residents_bed_id")]
+[Index("DateOfBirth", Name = "idx_residents_dob")]
+[Index("LastName", "FirstName", Name = "idx_residents_name")]
+[Index("Status", Name = "idx_residents_status")]
+public partial class Resident
 {
     [Key]
-    public Guid id { get; private set; }
+    [Column("id")]
+    public long Id { get; private set; }
 
+    [Column("first_name")]
     [StringLength(100)]
-    public string first_name { get; private set; } = null!;
+    public string FirstName { get; private set; } = null!;
 
+    [Column("middle_name")]
     [StringLength(100)]
-    public string? middle_name { get; private set; }
+    public string? MiddleName { get; private set; }
 
+    [Column("last_name")]
     [StringLength(100)]
-    public string last_name { get; private set; } = null!;
+    public string LastName { get; private set; } = null!;
 
-    public DateOnly date_of_birth { get; private set; }
+    [Column("date_of_birth")]
+    public DateOnly DateOfBirth { get; private set; }
 
+    [Column("gender")]
     [StringLength(20)]
     [Unicode(false)]
-    public string? gender { get; private set; }
+    public string? Gender { get; private set; }
 
+    [Column("marital_status")]
     [StringLength(20)]
     [Unicode(false)]
-    public string? marital_status { get; private set; }
+    public string? MaritalStatus { get; private set; }
 
+    [Column("religion_preference")]
     [StringLength(100)]
-    public string? religion_preference { get; private set; }
+    public string? ReligionPreference { get; private set; }
 
+    [Column("status")]
     [StringLength(20)]
     [Unicode(false)]
-    public string status { get; private set; } = null!;
+    public string Status { get; private set; } = null!;
 
-    public bool is_chart_locked { get; private set; }
+    [Column("is_chart_locked")]
+    public bool IsChartLocked { get; private set; }
 
-    public long? address_id { get; private set; }
+    [Column("address_id")]
+    public long? AddressId { get; private set; }
 
-    public Guid? bed_id { get; private set; }
+    [Column("bed_id")]
+    public long? BedId { get; private set; }
 
-    public bool is_deleted { get; private set; }
+    [Column("is_deleted")]
+    public bool IsDeleted { get; private set; }
 
+    [Column("deleted_at")]
     [Precision(0)]
-    public DateTimeOffset? deleted_at { get; private set; }
+    public DateTimeOffset? DeletedAt { get; private set; }
 
+    [Column("created_at")]
     [Precision(0)]
-    public DateTimeOffset created_at { get; private set; }
+    public DateTimeOffset CreatedAt { get; private set; }
 
+    [Column("updated_at")]
     [Precision(0)]
-    public DateTimeOffset updated_at { get; private set; }
+    public DateTimeOffset UpdatedAt { get; private set; }
 
-    [ForeignKey("address_id")]
-    [InverseProperty("residents")]
-    public virtual address? address { get; private set; }
+    [ForeignKey("AddressId")]
+    [InverseProperty("Residents")]
+    public virtual Address? Address { get; private set; }
 
-    [InverseProperty("resident")]
-    public virtual ICollection<admission> admissions { get; private set; } = new List<admission>();
+    [InverseProperty("Resident")]
+    public virtual ICollection<Admission> Admissions { get; private set; } = new List<Admission>();
 
-    [InverseProperty("resident")]
-    public virtual ICollection<assessment> assessments { get; private set; } = new List<assessment>();
+    [InverseProperty("Resident")]
+    public virtual ICollection<Assessment> Assessments { get; private set; } = new List<Assessment>();
 
-    [ForeignKey("bed_id")]
-    [InverseProperty("residents")]
-    public virtual bed? bed { get; private set; }
+    [ForeignKey("BedId")]
+    [InverseProperty("Residents")]
+    public virtual Bed? Bed { get; private set; }
 
-    [InverseProperty("resident")]
-    public virtual ICollection<care_plan> care_plans { get; private set; } = new List<care_plan>();
+    [InverseProperty("Resident")]
+    public virtual ICollection<CarePlan> CarePlans { get; private set; } = new List<CarePlan>();
 
-    [InverseProperty("resident")]
-    public virtual ICollection<clinical_record> clinical_records { get; private set; } = new List<clinical_record>();
+    [InverseProperty("Resident")]
+    public virtual ICollection<ClinicalRecord> ClinicalRecords { get; private set; } = new List<ClinicalRecord>();
 
-    [InverseProperty("resident")]
-    public virtual ICollection<incident> incidents { get; private set; } = new List<incident>();
+    [InverseProperty("AssignedToResidentNavigation")]
+    public virtual ICollection<DurableMedicalEquipment> DurableMedicalEquipments { get; private set; } = new List<DurableMedicalEquipment>();
 
-    [InverseProperty("resident")]
-    public virtual ICollection<invoice> invoices { get; private set; } = new List<invoice>();
+    [InverseProperty("Resident")]
+    public virtual ICollection<Incident> Incidents { get; private set; } = new List<Incident>();
 
-    [InverseProperty("resident")]
-    public virtual ICollection<medication_order> medication_orders { get; private set; } = new List<medication_order>();
+    [InverseProperty("Resident")]
+    public virtual ICollection<Invoice> Invoices { get; private set; } = new List<Invoice>();
 
-    [InverseProperty("resident")]
-    public virtual ICollection<pre_admission_screening> pre_admission_screenings { get; private set; } = new List<pre_admission_screening>();
+    [InverseProperty("Resident")]
+    public virtual ICollection<MedicationOrder> MedicationOrders { get; private set; } = new List<MedicationOrder>();
 
-    [InverseProperty("resident")]
-    public virtual ICollection<resident_care_level_history> resident_care_level_histories { get; private set; } = new List<resident_care_level_history>();
+    [InverseProperty("Resident")]
+    public virtual ICollection<PreAdmissionScreening> PreAdmissionScreenings { get; private set; } = new List<PreAdmissionScreening>();
 
-    [InverseProperty("resident")]
-    public virtual ICollection<resident_contact> resident_contacts { get; private set; } = new List<resident_contact>();
+    [InverseProperty("Resident")]
+    public virtual ICollection<ResidentCareLevelHistory> ResidentCareLevelHistories { get; private set; } = new List<ResidentCareLevelHistory>();
 
-    [InverseProperty("resident")]
-    public virtual ICollection<resident_insurance_policy> resident_insurance_policies { get; private set; } = new List<resident_insurance_policy>();
+    [InverseProperty("Resident")]
+    public virtual ICollection<ResidentContact> ResidentContacts { get; private set; } = new List<ResidentContact>();
 
-    [InverseProperty("resident")]
-    public virtual resident_sensitive_info? resident_sensitive_info { get; private set; }
+    [InverseProperty("Resident")]
+    public virtual ICollection<ResidentInsurancePolicy> ResidentInsurancePolicies { get; private set; } = new List<ResidentInsurancePolicy>();
 
-    [InverseProperty("resident")]
-    public virtual ICollection<vital_sign> vital_signs { get; private set; } = new List<vital_sign>();
+    [InverseProperty("Resident")]
+    public virtual ResidentSensitiveInfo? ResidentSensitiveInfo { get; private set; }
+
+    [InverseProperty("Resident")]
+    public virtual ICollection<VitalSign> VitalSigns { get; private set; } = new List<VitalSign>();
 }

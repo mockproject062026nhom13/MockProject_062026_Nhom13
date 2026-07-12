@@ -1,7 +1,6 @@
 using MediatR;
-using NursingHome.Application.Abstractions.Auth;
 using NursingHome.Application.Features.Auth.DTOs;
-using NursingHome.Application.Common;
+
 
 namespace NursingHome.Application.Features.Auth.Commands;
 
