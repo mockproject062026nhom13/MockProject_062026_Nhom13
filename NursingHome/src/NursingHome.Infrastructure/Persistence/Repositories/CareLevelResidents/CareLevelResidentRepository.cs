@@ -54,7 +54,7 @@ public class CareLevelResidentRepository(NursingHomeDbContext _context) : ICareL
                 string.IsNullOrWhiteSpace(r.MiddleName) 
                     ? r.FirstName + " " + r.LastName 
                     : r.FirstName + " " + r.MiddleName + " " + r.LastName,
-                r.DateOfBirth.ToString("yyyy-MM-dd") + " (" + (today.Year - r.DateOfBirth.Year).ToString() + ")",
+                r.DateOfBirth.ToString("MM/dd/yyyy") + " (" + (today.Year - r.DateOfBirth.Year).ToString() + ")",
                 r.Status,
                 r.Bed != null && r.Bed.Room != null 
                     ? r.Bed.Room.RoomNumber + "-" + r.Bed.BedNumber 
