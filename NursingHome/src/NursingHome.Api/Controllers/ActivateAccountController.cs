@@ -15,7 +15,7 @@ public class ActivateAccountController : ControllerBase
     {
         _context = context;
     }
-
+    //to do: audit log
     [HttpPost("activate-account")]
     public async Task<IActionResult> ActivateAccount([FromBody] ActivateAccountRequest request)
     {
@@ -63,10 +63,10 @@ public class ActivateAccountController : ControllerBase
                     errors));
         }
 
-        var user = await _context.users
+        var user = await _context.Users
             .FirstOrDefaultAsync(x =>
-                x.email == request.Email &&
-                !x.is_deleted);
+                x.Email == request.Email &&
+                !x.IsDeleted);
 
         if (user == null)
         {
@@ -76,7 +76,7 @@ public class ActivateAccountController : ControllerBase
                     "User not found."));
         }
 
-        if (user.status == "Enabled")
+        if (user.Status == "Enabled")
         {
             return Conflict(
                 ApiResponse<object>.CreateError(
@@ -91,8 +91,8 @@ public class ActivateAccountController : ControllerBase
             ApiResponse<ActivateAccountResponse>.CreateSuccess(
                 new ActivateAccountResponse
                 {
-                    Email = user.email,
-                    Status = user.status
+                    Email = user.Email,
+                    Status = user.Status
                 },
                 200,
                 "Account activated successfully."));
@@ -116,3 +116,4 @@ public class ActivateAccountResponse
 
     public string Status { get; set; } = string.Empty;
 }
+// password: 123456Aa

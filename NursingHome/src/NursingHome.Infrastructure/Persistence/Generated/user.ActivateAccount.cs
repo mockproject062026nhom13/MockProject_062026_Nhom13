@@ -1,22 +1,26 @@
+using System;
+
 namespace NursingHome.Infrastructure.Persistence.Generated;
-// <summary>
+
+/// <summary>
 /// Activate the user account with the provided password hash and optional phone number.
-public partial class user
+/// </summary>
+public partial class User
 {
     public void ActivateAccount(string passwordHash, string? phoneNumber)
     {
-        if (is_deleted)
+        if (IsDeleted)
             throw new InvalidOperationException("User has been deleted.");
 
-        if (status == "LOCKED")
+        if (Status == "LOCKED")
             throw new InvalidOperationException("Account is locked.");
 
-        if (status == "Enabled")
+        if (Status == "Enabled")
             throw new InvalidOperationException("Account has already been activated.");
 
-        password_hash = passwordHash;
-        phone_number = phoneNumber;
-        status = "Enabled";
-        updated_at = DateTimeOffset.UtcNow;
+        PasswordHash = passwordHash;
+        PhoneNumber = phoneNumber;
+        Status = "Enabled";
+        UpdatedAt = DateTimeOffset.UtcNow;
     }
 }
