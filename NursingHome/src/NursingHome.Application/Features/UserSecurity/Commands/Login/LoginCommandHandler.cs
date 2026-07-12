@@ -37,7 +37,7 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponse>
         }
 
         // 3. Kiểm tra trạng thái tài khoản
-        if (user.Status != "ACTIVE")
+        if (user.Status != NursingHome.Domain.Constants.UserStatuses.Active)
         {
             throw new DomainException($"Account is {user.Status.ToLower()}. Please contact administrator.");
         }

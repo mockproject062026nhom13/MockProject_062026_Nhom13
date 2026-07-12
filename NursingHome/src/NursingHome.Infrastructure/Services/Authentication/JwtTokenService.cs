@@ -19,9 +19,9 @@ public class JwtTokenService : IJwtTokenService
 
     public string GenerateToken(AuthUserDto user)
     {
-        var secret = _configuration["Jwt:Secret"] ?? "super-secret-key-for-development-purpose-only-do-not-use-in-production";
-        var issuer = _configuration["Jwt:Issuer"] ?? "NHMS";
-        var audience = _configuration["Jwt:Audience"] ?? "NHMS";
+        var secret = _configuration["Jwt:Secret"] ;
+        var issuer = _configuration["Jwt:Issuer"];
+        var audience = _configuration["Jwt:Audience"];
         var expirationMinutes = int.TryParse(_configuration["Jwt:ExpirationMinutes"], out var exp) ? exp : 60;
 
         var claims = new List<Claim>
