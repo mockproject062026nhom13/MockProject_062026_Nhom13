@@ -24,7 +24,17 @@ public class StaffingComplianceBackgroundJob : BackgroundService
     {
         _logger.LogInformation("StaffingComplianceBackgroundJob is starting.");
 
-        using var timer = new PeriodicTimer(TimeSpan.FromHours(24)); // Chạy mỗi 24 giờ
+        // Chạy ngay lần đầu tiên khi ứng dụng vừa khởi động để test dễ dàng
+        try
+        {
+            await CheckComplianceAsync(stoppingToken);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error during initial staffing compliance check.");
+        }
+
+        using var timer = new PeriodicTimer(TimeSpan.FromHours(24)); // Các lần sau cách nhau 24h
         
         // Hoặc cấu hình chạy vào đúng 00:30 mỗi ngày
         // Ở mức Basic, chúng ta giả lập chạy mỗi ngày 1 lần bằng PeriodicTimer cho đơn giản
