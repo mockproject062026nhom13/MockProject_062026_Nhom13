@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.Extensions.Configuration;
 using NursingHome.Application.Abstractions.Authentication;
 using NursingHome.Application.Abstractions.Repositories;
+using NursingHome.Domain.Constants;
 using NursingHome.Domain.Exceptions;
 
 namespace NursingHome.Application.Features.UserSecurity.Commands.Login;
@@ -37,7 +38,7 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponse>
         }
 
         // 3. Kiểm tra trạng thái tài khoản
-        if (user.Status != NursingHome.Domain.Constants.UserStatuses.Active)
+        if (user.Status != UserStatuses.Active)
         {
             throw new DomainException($"Account is {user.Status.ToLower()}. Please contact administrator.");
         }
