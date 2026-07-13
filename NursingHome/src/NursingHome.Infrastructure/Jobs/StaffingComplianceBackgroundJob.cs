@@ -69,7 +69,7 @@ public class StaffingComplianceBackgroundJob : BackgroundService
                 var donUsers = await dbContext.UserFacilities
                     .Include(uf => uf.User)
                     .ThenInclude(u => u.Role)
-                    .Where(uf => uf.FacilityId == facility.Id && uf.User.Role.RoleName == "DON" && !uf.User.IsDeleted)
+                    .Where(uf => uf.FacilityId == facility.Id && uf.User.Role.RoleName.StartsWith("DON") && !uf.User.IsDeleted)
                     .Select(uf => uf.UserId)
                     .ToListAsync(cancellationToken);
 
