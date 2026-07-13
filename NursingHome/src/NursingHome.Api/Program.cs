@@ -5,6 +5,7 @@ using NursingHome.Infrastructure.Repositories.UserSecurity;
 using NursingHome.Application.Features.UserSecurity.Commands;
 using NursingHome.Application.Features.UserSecurity.Validators;
 using NursingHome.Infrastructure.Persistence.DbContexts;
+using NursingHome.Infrastructure.Persistence.Mappers;
 
 using DotNetEnv;
 using NursingHome.Api.Middleware;
@@ -45,6 +46,8 @@ builder.Services.AddDbContext<NursingHomeDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IActivateAccountRepository, ActivateAccountRepository>();
+builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 
 builder.Services.AddApplication();
 
