@@ -1,7 +1,9 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using NursingHome.Application.Common;
 using NursingHome.Application.Features.Facilities.Commands.UpdateStaffingConfig;
 using NursingHome.Application.Features.Facilities.Queries.GetStaffingConfig;
+using NursingHome.Application.Models.Facility;
 
 namespace NursingHome.Api.Controllers.v1;
 
@@ -21,7 +23,7 @@ public class FacilitiesController : ControllerBase
     {
         var query = new GetStaffingConfigQuery(facilityId);
         var response = await _sender.Send(query, cancellationToken);
-        return Ok(response);
+        return Ok(ApiResponse<StaffingConfigDto>.CreateSuccess(response));
     }
 
     [HttpPut("{facilityId}/staffing-configs")]
@@ -31,6 +33,14 @@ public class FacilitiesController : ControllerBase
         command.FacilityId = facilityId;
         
         var response = await _sender.Send(command, cancellationToken);
-        return Ok(response);
+        return Ok(ApiResponse<StaffingConfigDto>.CreateSuccess(response));
+    }
+
+    [HttpGet("{facilityId}/compliance")]
+    public async Task<IActionResult> GetCompliance(long facilityId, [FromQuery] DateOnly? date, CancellationToken cancellationToken)
+    {
+        var query = new NursingHome.Application.Features.Facilities.Queries.GetStaffingCompliance.GetStaffingComplianceQuery(facilityId, date);
+        var response = await _sender.Send(query, cancellationToken);
+        return Ok(ApiResponse<NursingHome.Application.Models.Facility.StaffingComplianceDto>.CreateSuccess(response));
     }
 }

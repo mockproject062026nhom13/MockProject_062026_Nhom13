@@ -59,6 +59,10 @@ public class ExceptionHandlingMiddleware
             StatusCodes.Status400BadRequest,
             domainException.Message),
 
+        NotFoundException notFoundException => ApiResponse<object>.CreateError(
+            StatusCodes.Status404NotFound,
+            notFoundException.Message),
+
         ValidationException validationException => ApiResponse<object>.CreateError(
             StatusCodes.Status400BadRequest,
             "One or more validation errors occurred.",

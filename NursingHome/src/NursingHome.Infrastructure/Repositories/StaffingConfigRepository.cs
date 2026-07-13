@@ -34,6 +34,12 @@ public class StaffingConfigRepository : IStaffingConfigRepository
 
     public async Task<StaffingConfigDto> AddOrUpdateAsync(long facilityId, decimal minHrs, int warnPct, CancellationToken cancellationToken = default)
     {
+        var facilityExists = await _dbContext.Facilities.AnyAsync(f => f.Id == facilityId, cancellationToken);
+        if (!facilityExists)
+        {
+            throw new NursingHome.Domain.Exceptions.NotFoundException("Facility", facilityId);
+        }
+
         var config = await _dbContext.StaffingConfigs
             .FirstOrDefaultAsync(c => c.FacilityId == facilityId, cancellationToken);
 

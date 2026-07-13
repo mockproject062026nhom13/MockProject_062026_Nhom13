@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using NursingHome.Application.Common;
 using NursingHome.Application.Features.UserSecurity.Commands.Login;
 
 namespace NursingHome.Api.Controllers.v1;
@@ -19,6 +20,6 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Login([FromBody] LoginCommand command, CancellationToken cancellationToken)
     {
         var response = await _sender.Send(command, cancellationToken);
-        return Ok(response);
+        return Ok(ApiResponse<LoginResponse>.CreateSuccess(response));
     }
 }

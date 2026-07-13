@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NursingHome.Application.Abstractions.Authentication;
 using NursingHome.Application.Abstractions.Repositories;
+using NursingHome.Infrastructure.Jobs;
 using NursingHome.Infrastructure.Persistence.DbContexts;
 using NursingHome.Infrastructure.Repositories;
 using NursingHome.Infrastructure.Services.Authentication;
@@ -20,6 +21,9 @@ public static class DependencyInjection
 
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IStaffingConfigRepository, StaffingConfigRepository>();
+        services.AddScoped<IStaffingComplianceRepository, StaffingComplianceRepository>();
+
+        services.AddHostedService<StaffingComplianceBackgroundJob>();
 
         services.AddSingleton<IJwtTokenService, JwtTokenService>();
         services.AddSingleton<IPasswordHasher, BcryptPasswordHasher>();
