@@ -1,6 +1,15 @@
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using NursingHome.Infrastructure.Persistence.DbContexts;
+using Microsoft.EntityFrameworkCore;
+using FluentValidation;
+using NursingHome.Application.Abstractions;
+using NursingHome.Infrastructure.Repositories.UserSecurity;
+using NursingHome.Application.Features.UserSecurity.Commands;
+using NursingHome.Application.Features.UserSecurity.Validators;
+using NursingHome.Infrastructure.Persistence.DbContexts;
+
+using DotNetEnv;
 using NursingHome.Api.Middleware;
 using NursingHome.Application;
 using NursingHome.Application.Abstractions;
@@ -27,6 +36,11 @@ builder.Services.AddDbContext<NursingHomeDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IFacilityRepository, FacilityRepository>();
 builder.Services.AddScoped<IBedRepository, BedRepository>();
+
+builder.Services.AddDbContext<NursingHomeDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddApplication();
 
