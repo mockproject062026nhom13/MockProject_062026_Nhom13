@@ -94,7 +94,7 @@ public class ExceptionHandlingMiddleware
 
         _ => ApiResponse<object>.CreateError(
             StatusCodes.Status500InternalServerError,
-            $"An unexpected error occurred while processing your request. Details: {exception.ToString()}"),
+            "An unexpected error occurred while processing your request. Please try again later or contact support."),
     };
 
     private static async Task WriteResponseAsync(HttpContext context, ApiResponse<object> response)

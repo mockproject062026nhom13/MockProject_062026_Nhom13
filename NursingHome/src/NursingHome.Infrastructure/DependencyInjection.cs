@@ -23,6 +23,7 @@ public static class DependencyInjection
         services.AddScoped<IStaffingConfigRepository, StaffingConfigRepository>();
         services.AddScoped<IStaffingComplianceRepository, StaffingComplianceRepository>();
 
+
         services.AddHostedService<StaffingComplianceBackgroundJob>();
 
         services.AddSingleton<IJwtTokenService, JwtTokenService>();

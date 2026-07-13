@@ -20,7 +20,7 @@ public class GetStaffingConfigQueryHandler : IRequestHandler<GetStaffingConfigQu
         
         if (config == null)
         {
-            throw new NotFoundException($"Staffing config for FacilityId {request.FacilityId} not found.");
+            throw new NotFoundException("StaffingConfig", request.FacilityId);
         }
 
         return config;

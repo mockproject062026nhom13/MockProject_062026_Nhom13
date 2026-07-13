@@ -73,7 +73,7 @@ public class StaffingComplianceRepository : IStaffingComplianceRepository
             ScheduledHours = Math.Round(scheduledHours, 2),
             ActualHoursPerResident = Math.Round(actualPerResident, 2),
             IsCompliant = isCompliant,
-            Status = isCompliant ? "✅ Compliant" : "❌ Non-compliant"
+            Status = isCompliant ? "COMPLIANT" : "NON_COMPLIANT"
         };
     }
 }
