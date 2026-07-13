@@ -136,25 +136,18 @@ public class StaffingConfigRepository : IStaffingConfigRepository
             dayCna = dayNurse = eveningCna = eveningNurse = nightCna = nightNurse = 0;
         }
 
-        var stateAbbr = config.Facility?.TargetState ?? "Unknown";
-        var stateName = stateAbbr == "CA" ? "California" : stateAbbr;
-
         return new StaffingConfigDto
         {
             Id = config.Id,
             FacilityId = config.FacilityId,
             MinHrsPerResidentDay = config.MinHrsPerResidentDay,
             WarnBelowPercentage = config.WarnBelowPercentage,
-            State = stateName,
-            RegulationCode = $"REG-{stateAbbr}",
             DayCnaHours = dayCna,
             DayNurseHours = dayNurse,
             EveningCnaHours = eveningCna,
             EveningNurseHours = eveningNurse,
             NightCnaHours = nightCna,
-            NightNurseHours = nightNurse,
-            EffectiveDate = config.CreatedAt.ToString("yyyy-MM-dd"),
-            UpdatedBy = "" // Not tracked in DB
+            NightNurseHours = nightNurse
         };
     }
 }
