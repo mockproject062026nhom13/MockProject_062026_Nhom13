@@ -19,6 +19,7 @@ public static class DependencyInjection
                 b => b.MigrationsAssembly(typeof(NursingHomeDbContext).Assembly.FullName)));
 
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IStaffingConfigRepository, StaffingConfigRepository>();
 
         services.AddSingleton<IJwtTokenService, JwtTokenService>();
         services.AddSingleton<IPasswordHasher, BcryptPasswordHasher>();
