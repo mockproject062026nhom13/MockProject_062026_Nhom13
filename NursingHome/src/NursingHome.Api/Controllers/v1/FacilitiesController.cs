@@ -22,9 +22,9 @@ public class FacilitiesController : ControllerBase
     }
 
     [HttpGet("{facilityId}/staffing-configs")]
-    public async Task<IActionResult> GetStaffingConfig(long facilityId, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetStaffingConfig(long facilityId, [FromQuery] DateOnly? date, CancellationToken cancellationToken)
     {
-        var query = new GetStaffingConfigQuery(facilityId);
+        var query = new GetStaffingConfigQuery(facilityId, date);
         var response = await _sender.Send(query, cancellationToken);
         return Ok(ApiResponse<StaffingConfigDto>.CreateSuccess(response));
     }
