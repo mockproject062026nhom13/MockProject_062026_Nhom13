@@ -11,7 +11,6 @@ namespace NursingHome.Api.Controllers.v1;
 
 [ApiController]
 [Route("api/v1/facilities")]
-[Authorize(Roles = "System_Administrator")]
 public class FacilitiesController : ControllerBase
 {
     private readonly ISender _sender;

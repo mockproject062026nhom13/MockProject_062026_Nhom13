@@ -69,6 +69,7 @@ public class StaffingConfigRepository : IStaffingConfigRepository
     public async Task<StaffingConfigDto?> GetConfigWithRealBreakdownAsync(long facilityId, DateOnly date, CancellationToken cancellationToken = default)
     {
         var config = await _dbContext.StaffingConfigs
+            .Include(c => c.Facility)
             .AsNoTracking()
             .FirstOrDefaultAsync(c => c.FacilityId == facilityId, cancellationToken);
 
@@ -135,22 +136,25 @@ public class StaffingConfigRepository : IStaffingConfigRepository
             dayCna = dayNurse = eveningCna = eveningNurse = nightCna = nightNurse = 0;
         }
 
+        var stateAbbr = config.Facility?.TargetState ?? "Unknown";
+        var stateName = stateAbbr == "CA" ? "California" : stateAbbr;
+
         return new StaffingConfigDto
         {
             Id = config.Id,
             FacilityId = config.FacilityId,
             MinHrsPerResidentDay = config.MinHrsPerResidentDay,
             WarnBelowPercentage = config.WarnBelowPercentage,
-            State = "California",
-            RegulationCode = "BR-01",
+            State = stateName,
+            RegulationCode = $"REG-{stateAbbr}",
             DayCnaHours = dayCna,
             DayNurseHours = dayNurse,
             EveningCnaHours = eveningCna,
             EveningNurseHours = eveningNurse,
             NightCnaHours = nightCna,
             NightNurseHours = nightNurse,
-            EffectiveDate = date.ToString("yyyy-MM-dd"),
-            UpdatedBy = "System Admin"
+            EffectiveDate = config.CreatedAt.ToString("yyyy-MM-dd"),
+            UpdatedBy = "" // Not tracked in DB
         };
     }
 }
