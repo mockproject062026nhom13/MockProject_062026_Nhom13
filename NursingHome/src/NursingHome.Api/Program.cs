@@ -26,6 +26,7 @@ builder.Services.AddFastEndpoints();
 builder.Services.AddDbContext<NursingHomeDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IFacilityRepository, FacilityRepository>();
+builder.Services.AddScoped<IBedRepository, BedRepository>();
 
 builder.Services.AddApplication();
 
