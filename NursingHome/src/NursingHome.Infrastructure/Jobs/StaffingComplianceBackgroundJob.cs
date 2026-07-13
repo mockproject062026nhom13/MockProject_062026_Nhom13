@@ -79,15 +79,26 @@ public class StaffingComplianceBackgroundJob : BackgroundService
                     .Select(uf => uf.UserId)
                     .ToListAsync(cancellationToken);
 
-                // 4. Tạo Notification
+                // 4. Tạo Notification (kiểm tra xem hôm nay đã gửi chưa để tránh spam)
+                var todayStart = DateTimeOffset.UtcNow.Date;
                 foreach (var userId in donUsers)
                 {
-                    var notification = new Notification(
-                        title: "Staffing Shortage Detected",
-                        type: "ALERT",
-                        userId: userId
-                    );
-                    dbContext.Notifications.Add(notification);
+                    var alreadySent = await dbContext.Notifications
+                        .AnyAsync(n => n.UserId == userId 
+                                    && n.Type == "ALERT" 
+                                    && n.Title == "Staffing Shortage Detected" 
+                                    && n.CreatedAt >= todayStart, 
+                                  cancellationToken);
+
+                    if (!alreadySent)
+                    {
+                        var notification = new Notification(
+                            title: "Staffing Shortage Detected",
+                            type: "ALERT",
+                            userId: userId
+                        );
+                        dbContext.Notifications.Add(notification);
+                    }
                 }
             }
         }
