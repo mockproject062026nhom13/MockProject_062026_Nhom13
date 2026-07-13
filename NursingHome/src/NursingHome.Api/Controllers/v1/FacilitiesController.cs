@@ -1,7 +1,9 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NursingHome.Application.Common;
 using NursingHome.Application.Features.Facilities.Commands.UpdateStaffingConfig;
+using NursingHome.Application.Features.Facilities.Queries.GetStaffingCompliance;
 using NursingHome.Application.Features.Facilities.Queries.GetStaffingConfig;
 using NursingHome.Application.Models.Facility;
 
@@ -9,6 +11,7 @@ namespace NursingHome.Api.Controllers.v1;
 
 [ApiController]
 [Route("api/v1/facilities")]
+[Authorize(Roles = "System_Administrator")]
 public class FacilitiesController : ControllerBase
 {
     private readonly ISender _sender;

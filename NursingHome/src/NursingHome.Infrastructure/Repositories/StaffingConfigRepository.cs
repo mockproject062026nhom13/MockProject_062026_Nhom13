@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using NursingHome.Application.Abstractions.Repositories;
 using NursingHome.Application.Models.Facility;
+using NursingHome.Domain.Exceptions;
 using NursingHome.Infrastructure.Persistence.DbContexts;
 using NursingHome.Infrastructure.Persistence.Generated;
 
@@ -37,7 +38,7 @@ public class StaffingConfigRepository : IStaffingConfigRepository
         var facilityExists = await _dbContext.Facilities.AnyAsync(f => f.Id == facilityId, cancellationToken);
         if (!facilityExists)
         {
-            throw new NursingHome.Domain.Exceptions.NotFoundException("Facility", facilityId);
+            throw new NotFoundException("Facility", facilityId);
         }
 
         var config = await _dbContext.StaffingConfigs
