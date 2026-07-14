@@ -34,6 +34,7 @@ public static class DependencyInjection
         services.AddScoped<IOtpService, OtpService>();
         services.AddScoped<IEmailService, SmtpEmailService>();
         services.AddScoped<IStaffingRuleService, StaffingRuleService>();
+        services.AddScoped<ICnaDashboardService, CnaDashboardService>();
 
         return services;
     }
