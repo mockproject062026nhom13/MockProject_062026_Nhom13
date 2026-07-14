@@ -1,1 +1,0 @@
-sc003 quan trọng
