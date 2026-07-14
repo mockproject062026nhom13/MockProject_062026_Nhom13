@@ -6,7 +6,7 @@ using NursingHome.Domain.Constant;
 
 namespace NursingHome.API.Controllers;
 
-[Route("api/roomtypes")]
+[Route("api/roomtype")]
 public class RoomTypeController : ControllerBase
 {
     [HttpGet]
@@ -19,7 +19,7 @@ public class RoomTypeController : ControllerBase
     }
 }
 
-[Route("api/bed")]
+[Route("api/beds")]
 public class BedController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
