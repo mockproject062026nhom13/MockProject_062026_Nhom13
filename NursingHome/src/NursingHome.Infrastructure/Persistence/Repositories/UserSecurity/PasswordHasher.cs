@@ -1,5 +1,6 @@
 using BCrypt.Net;
-namespace NursingHome.Application.Abstractions;
+using NursingHome.Application.Abstractions;
+namespace NursingHome.Infrastructure.Repositories.UserSecurity;
 
 public class PasswordHasher : IPasswordHasher
 {

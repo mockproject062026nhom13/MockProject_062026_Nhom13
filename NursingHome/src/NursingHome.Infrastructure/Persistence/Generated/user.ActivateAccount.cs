@@ -17,12 +17,12 @@ public partial class User
         if (Status == "LOCKED")
             throw new InvalidOperationException("Account is locked.");
 
-        if (Status == "Enabled")
+        if (Status == "ENABLED")
             throw new InvalidOperationException("Account has already been activated.");
 
         PasswordHash = passwordHash;
         PhoneNumber = phoneNumber;
-        Status = "Enabled";
+        Status = "ENABLED";
         UpdatedAt = DateTimeOffset.UtcNow;
     }
     public void ApplyFromDomain(Domain.Entities.User domain)
