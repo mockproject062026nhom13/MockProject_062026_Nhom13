@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.Extensions.Configuration;
 using NursingHome.Application.Abstractions.Authentication;
 using NursingHome.Application.Abstractions.Repositories;
+using NursingHome.Application.Abstractions.Services;
 using NursingHome.Domain.Constants;
 using NursingHome.Domain.Exceptions;
 
@@ -13,17 +14,23 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponse>
     private readonly IPasswordHasher _passwordHasher;
     private readonly IJwtTokenService _jwtTokenService;
     private readonly IConfiguration _configuration;
+    private readonly IOtpService _otpService;
+    private readonly IEmailService _emailService;
 
     public LoginCommandHandler(
         IUserRepository userRepository, 
         IPasswordHasher passwordHasher, 
         IJwtTokenService jwtTokenService,
-        IConfiguration configuration)
+        IConfiguration configuration,
+        IOtpService otpService,
+        IEmailService emailService)
     {
         _userRepository = userRepository;
         _passwordHasher = passwordHasher;
         _jwtTokenService = jwtTokenService;
         _configuration = configuration;
+        _otpService = otpService;
+        _emailService = emailService;
     }
 
     public async Task<LoginResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
@@ -55,7 +62,16 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponse>
         // 4. Generate Pre-Auth Token for 2FA
         var preAuthToken = _jwtTokenService.GeneratePreAuthToken(user);
 
-        // 5. Do NOT update LastLoginAt yet (will be updated after 2FA)
+        // 5. Generate and Send OTP
+        var otp = await _otpService.GenerateOtpAsync(user.Id, cancellationToken);
+        var subject = "Your Login Verification Code";
+        var body = $"<p>Your 2-Step Verification code is: <strong>{otp}</strong></p><p>This code will expire in 5 minutes.</p>";
+        
+        // In a real scenario, you'd check if request.Identifier is email or phone.
+        // Assuming Email for this SmtpEmailService implementation.
+        await _emailService.SendEmailAsync(user.Email, subject, body, cancellationToken);
+
+        // 6. Do NOT update LastLoginAt yet (will be updated after 2FA)
 
         return new LoginResponse(true, preAuthToken, "Bearer", 5 * 60);
     }

@@ -8,6 +8,9 @@ using NursingHome.Infrastructure.Persistence.DbContexts;
 using NursingHome.Infrastructure.Persistence.Repositories.EmarShift;
 using NursingHome.Infrastructure.Persistence.Repositories.UserSecurity;
 using NursingHome.Infrastructure.Services.Authentication;
+using NursingHome.Infrastructure.Services.Messaging;
+using NursingHome.Infrastructure.Services.Security;
+using NursingHome.Application.Abstractions.Services;
 
 namespace NursingHome.Infrastructure;
 
@@ -29,6 +32,10 @@ public static class DependencyInjection
 
         services.AddSingleton<IJwtTokenService, JwtTokenService>();
         services.AddSingleton<IPasswordHasher, BcryptPasswordHasher>();
+
+        services.AddMemoryCache();
+        services.AddScoped<IOtpService, OtpService>();
+        services.AddScoped<IEmailService, SmtpEmailService>();
 
         return services;
     }
