@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using FluentValidation;
 using NursingHome.Application.Abstractions;
+using NursingHome.Infrastructure.Persistence.Repositories.AdmissionEhrCarePlan;
 using NursingHome.Infrastructure.Persistence.Repositories.LocationInfrastructure;
 using NursingHome.Infrastructure.Persistence.Repositories.Rbac;
 using NursingHome.Infrastructure.Repositories.UserSecurity;
@@ -34,6 +35,7 @@ builder.Services.AddDbContext<NursingHomeDbContext>(options =>
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRbacRepository, RbacRepository>();
 builder.Services.AddScoped<IInventoryRepository, InventoryRepository>();
+builder.Services.AddScoped<IAdmissionRepository, AdmissionRepository>();
 
 builder.Services.AddApplication();
 
