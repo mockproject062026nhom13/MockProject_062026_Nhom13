@@ -1,18 +1,15 @@
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using NursingHome.Infrastructure.Persistence.DbContexts;
-using Microsoft.EntityFrameworkCore;
 using FluentValidation;
 using NursingHome.Application.Abstractions;
 using NursingHome.Infrastructure.Repositories.UserSecurity;
 using NursingHome.Application.Features.UserSecurity.Commands;
 using NursingHome.Application.Features.UserSecurity.Validators;
-using NursingHome.Infrastructure.Persistence.DbContexts;
 
 using DotNetEnv;
 using NursingHome.Api.Middleware;
 using NursingHome.Application;
-using NursingHome.Application.Abstractions;
 using NursingHome.Infrastructure.Persistence.Repositories;
 
 // Load variables from the nearest .env file (walking up from the working
