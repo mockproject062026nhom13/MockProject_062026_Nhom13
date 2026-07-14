@@ -1,0 +1,18 @@
+# NursingHome — solution-local ignore rules.
+#
+# The repository-root .gitignore already excludes .env*, docker-compose*.yml,
+# secrets, and certs. The negations below re-include the files that are SAFE and
+# meant to be committed (they contain no secrets), while keeping the real secret
+# and local-override files ignored.
+
+# --- Keep ignored (belt-and-suspenders; also covered by the root .gitignore) --
+.env
+.env.local
+appsettings.Local.json
+docker-compose.override.yml
+
+# --- Re-include committed, secret-free templates/infra ------------------------
+!.env.example
+!docker-compose.yml
+
+doc/
