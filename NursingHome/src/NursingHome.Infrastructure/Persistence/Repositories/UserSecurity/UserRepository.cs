@@ -3,7 +3,7 @@ using NursingHome.Application.Abstractions.Repositories;
 using NursingHome.Application.Features.UserSecurity.DTOs.Auth;
 using NursingHome.Infrastructure.Persistence.DbContexts;
 
-namespace NursingHome.Infrastructure.Repositories;
+namespace NursingHome.Infrastructure.Persistence.Repositories.UserSecurity;
 
 public class UserRepository : IUserRepository
 {
@@ -14,12 +14,12 @@ public class UserRepository : IUserRepository
         _dbContext = dbContext;
     }
 
-    public async Task<AuthUserDto?> GetAuthUserByEmployeeCodeAsync(string employeeCode, CancellationToken cancellationToken = default)
+    public async Task<AuthUserDto?> GetAuthUserByIdentifierAsync(string identifier, CancellationToken cancellationToken = default)
     {
         var user = await _dbContext.Users
             .Include(u => u.Role)
             .ThenInclude(r => r.Permissions)
-            .FirstOrDefaultAsync(u => u.EmployeeCode == employeeCode && !u.IsDeleted, cancellationToken);
+            .FirstOrDefaultAsync(u => (u.Email == identifier || u.PhoneNumber == identifier) && !u.IsDeleted, cancellationToken);
 
         if (user == null) return null;
 

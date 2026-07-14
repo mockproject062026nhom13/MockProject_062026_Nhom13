@@ -28,29 +28,35 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponse>
 
     public async Task<LoginResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
-        // 1. Lấy thông tin user dựa vào EmployeeCode
-        var user = await _userRepository.GetAuthUserByEmployeeCodeAsync(request.EmployeeCode, cancellationToken);
+        // 1. Lấy thông tin user dựa vào Identifier (Email/Phone)
+        var user = await _userRepository.GetAuthUserByIdentifierAsync(request.Identifier, cancellationToken);
 
         // 2. Validate tài khoản tồn tại và kiểm tra password
         if (user == null || !_passwordHasher.VerifyPassword(request.Password, user.PasswordHash))
         {
-            throw new DomainException("Invalid EmployeeCode or password.");
+            throw new DomainException("Invalid identifier or password.");
         }
 
         // 3. Kiểm tra trạng thái tài khoản
-        if (user.Status != UserStatuses.Active)
+        if (user.Status.Equals("Invited", StringComparison.OrdinalIgnoreCase))
+        {
+            throw new DomainException("Account not activated, check invite link.");
+        }
+        else if (user.Status.Equals("Suspended", StringComparison.OrdinalIgnoreCase) || 
+                 user.Status.Equals("Deactivated", StringComparison.OrdinalIgnoreCase))
+        {
+            throw new DomainException("Account is suspended or deactivated. Please contact your Admin.");
+        }
+        else if (user.Status != UserStatuses.Active)
         {
             throw new DomainException($"Account is {user.Status.ToLower()}. Please contact administrator.");
         }
 
-        // 4. Sinh JWT Token
-        var token = _jwtTokenService.GenerateToken(user);
+        // 4. Generate Pre-Auth Token for 2FA
+        var preAuthToken = _jwtTokenService.GeneratePreAuthToken(user);
 
-        // 5. Cập nhật LastLoginAt
-        await _userRepository.UpdateLastLoginAsync(user.Id, cancellationToken);
+        // 5. Do NOT update LastLoginAt yet (will be updated after 2FA)
 
-        var expirationMinutes = int.TryParse(_configuration["Jwt:ExpirationMinutes"], out var exp) ? exp : 60;
-
-        return new LoginResponse(token, "Bearer", expirationMinutes * 60);
+        return new LoginResponse(true, preAuthToken, "Bearer", 5 * 60);
     }
 }

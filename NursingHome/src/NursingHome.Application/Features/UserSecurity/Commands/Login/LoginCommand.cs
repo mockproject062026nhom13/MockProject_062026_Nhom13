@@ -2,6 +2,6 @@ using MediatR;
 
 namespace NursingHome.Application.Features.UserSecurity.Commands.Login;
 
-public record LoginResponse(string AccessToken, string TokenType, int ExpiresIn);
+public record LoginResponse(bool RequiresTwoFactor, string PreAuthToken, string TokenType, int ExpiresIn);
 
-public record LoginCommand(string EmployeeCode, string Password) : IRequest<LoginResponse>;
+public record LoginCommand(string Identifier, string Password) : IRequest<LoginResponse>;
