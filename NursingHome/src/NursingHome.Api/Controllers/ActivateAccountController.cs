@@ -134,7 +134,9 @@ public class ActivateAccountController : ControllerBase
     {
         _mediator = mediator;
     }
-
+    //already do: audit + domain layer validation + password hashing + validation + check if user is deleted, suspended, locked or active
+    //to do: permission check + jwt if required
+    //note: auditlog is save password hash?, check again with team
     [HttpPost("activate-account")]
     public async Task<IActionResult> ActivateAccount(
         ActivateAccountCommand command)
