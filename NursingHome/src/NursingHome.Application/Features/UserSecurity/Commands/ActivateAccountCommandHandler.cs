@@ -2,6 +2,7 @@
 using MediatR;
 using NursingHome.Application.Abstractions;
 using NursingHome.Application.Common;
+using NursingHome.Application.Features.UserSecurity.DTOs;
 
 namespace NursingHome.Application.Features.UserSecurity.Commands.ActivateAccount;
 
