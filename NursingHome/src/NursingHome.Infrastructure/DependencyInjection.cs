@@ -10,6 +10,10 @@ using NursingHome.Infrastructure.Services.Authentication;
 using NursingHome.Infrastructure.Services.Messaging;
 using NursingHome.Infrastructure.Services.Security;
 using NursingHome.Application.Abstractions.Services;
+using Microsoft.Extensions.DependencyInjection;
+using NursingHome.Application.Abstractions;
+using NursingHome.Infrastructure.Repositories.UserSecurity;
+using NursingHome.Infrastructure.Persistence.Repositories.CareLevelResidents;
 
 namespace NursingHome.Infrastructure;
 
@@ -23,6 +27,7 @@ public static class DependencyInjection
                 b => b.MigrationsAssembly(typeof(NursingHomeDbContext).Assembly.FullName)));
 
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ICareLevelResidentRepository, CareLevelResidentRepository>();
 
 
         services.AddHostedService<StaffingComplianceBackgroundJob>();
