@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using NursingHome.Application.Abstractions;
 using NursingHome.Application.Features.CareLevelResidents.Queries;
 using NursingHome.Infrastructure.Persistence.DbContexts;
+using NursingHome.Application.Features.CareLevelResidents.DTOs;
 
 namespace NursingHome.Infrastructure.Persistence.Repositories.CareLevelResidents;
 
@@ -25,13 +26,23 @@ public class CareLevelResidentRepository(NursingHomeDbContext _context) : ICareL
             query = query.Where(r => r.Status == status.ToUpper());
         }
 
-        // Search (by First Name hoặc Last Name)
+        // Search by name, room, or resident ID
         if (!string.IsNullOrWhiteSpace(searchTerm))
         {
             var search = searchTerm.Trim().ToLower();
+            
             query = query.Where(r => 
-                r.FirstName.ToLower().Contains(search) || 
-                r.LastName.ToLower().Contains(search));
+                (r.FirstName + " " + r.LastName).ToLower().Contains(search) || // Full name (first + last)
+                (r.FirstName + " " + (r.MiddleName ?? "") + " " + r.LastName).ToLower().Contains(search) || // Full name (first + middle + last)
+
+                // Search by Room/Room-Bed
+                (r.Bed != null && r.Bed.Room != null && 
+                    (r.Bed.Room.RoomNumber.ToLower().Equals(search) || 
+                     (r.Bed.Room.RoomNumber + "-" + r.Bed.BedNumber).ToLower().Equals(search))) ||
+
+                // Search by residentId
+                r.Id.ToString().Equals(search)
+            );
         }
 
         // filter by payerSource

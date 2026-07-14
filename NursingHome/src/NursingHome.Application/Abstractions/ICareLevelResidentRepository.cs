@@ -1,4 +1,5 @@
 using NursingHome.Application.Features.CareLevelResidents.Queries;
+using NursingHome.Application.Features.CareLevelResidents.DTOs;
 
 namespace NursingHome.Application.Abstractions;
 

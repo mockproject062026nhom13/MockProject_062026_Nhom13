@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using NursingHome.Application.Common;
 using NursingHome.Application.Features.CareLevelResidents.Queries; 
+using NursingHome.Application.Features.CareLevelResidents.DTOs;
 
 namespace NursingHome.Api.Controllers;
 
