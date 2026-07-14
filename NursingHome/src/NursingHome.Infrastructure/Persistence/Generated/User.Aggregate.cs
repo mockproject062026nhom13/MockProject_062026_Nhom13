@@ -21,7 +21,7 @@ public partial class User
         this.RoleId = roleId;
         this.LicenseNumber = licenseNumber;
 
-        this.Status = "INVITED"; 
+        this.Status = "INACTIVE"; 
   
         this.PasswordHash = "$2b$12$DummyHashForPendingActivationUsersDoNotUseThisDirectly";
         
