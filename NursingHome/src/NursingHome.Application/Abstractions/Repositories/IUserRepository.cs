@@ -1,4 +1,4 @@
-using NursingHome.Application.Models.Auth;
+using NursingHome.Application.Features.UserSecurity.DTOs.Auth;
 
 namespace NursingHome.Application.Abstractions.Repositories;
 

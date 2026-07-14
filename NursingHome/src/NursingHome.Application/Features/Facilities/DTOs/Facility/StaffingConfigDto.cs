@@ -1,4 +1,4 @@
-namespace NursingHome.Application.Models.Facility;
+namespace NursingHome.Application.Features.Facilities.DTOs.Facility;
 
 public class StaffingConfigDto
 {

@@ -1,4 +1,4 @@
-namespace NursingHome.Application.Models.Auth;
+namespace NursingHome.Application.Features.UserSecurity.DTOs.Auth;
 
 public class AuthUserDto
 {

@@ -1,5 +1,5 @@
 using MediatR;
-using NursingHome.Application.Models.Facility;
+using NursingHome.Application.Features.Facilities.DTOs.Facility;
 
 namespace NursingHome.Application.Features.Facilities.Queries.GetStaffingConfig;
 

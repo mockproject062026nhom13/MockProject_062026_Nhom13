@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using NursingHome.Application.Abstractions.Authentication;
-using NursingHome.Application.Models.Auth;
+using NursingHome.Application.Features.UserSecurity.DTOs.Auth;
 
 namespace NursingHome.Infrastructure.Services.Authentication;
 

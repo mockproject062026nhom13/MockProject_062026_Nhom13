@@ -5,7 +5,8 @@ using NursingHome.Application.Abstractions.Authentication;
 using NursingHome.Application.Abstractions.Repositories;
 using NursingHome.Infrastructure.Jobs;
 using NursingHome.Infrastructure.Persistence.DbContexts;
-using NursingHome.Infrastructure.Repositories;
+using NursingHome.Infrastructure.Persistence.Repositories.EmarShift;
+using NursingHome.Infrastructure.Persistence.Repositories.UserSecurity;
 using NursingHome.Infrastructure.Services.Authentication;
 
 namespace NursingHome.Infrastructure;

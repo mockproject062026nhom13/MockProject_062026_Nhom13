@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using NursingHome.Application.Abstractions.Repositories;
-using NursingHome.Application.Models.Auth;
+using NursingHome.Application.Features.UserSecurity.DTOs.Auth;
 using NursingHome.Infrastructure.Persistence.DbContexts;
 
 namespace NursingHome.Infrastructure.Repositories;

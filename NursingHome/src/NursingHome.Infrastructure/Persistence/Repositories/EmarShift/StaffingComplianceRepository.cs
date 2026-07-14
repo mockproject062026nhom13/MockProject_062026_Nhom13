@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using NursingHome.Application.Abstractions.Repositories;
-using NursingHome.Application.Models.Facility;
+using NursingHome.Application.Features.Facilities.DTOs.Facility;
 using NursingHome.Domain.Exceptions;
 using NursingHome.Infrastructure.Persistence.DbContexts;
 
-namespace NursingHome.Infrastructure.Repositories;
+namespace NursingHome.Infrastructure.Persistence.Repositories.EmarShift;
 
 public class StaffingComplianceRepository : IStaffingComplianceRepository
 {

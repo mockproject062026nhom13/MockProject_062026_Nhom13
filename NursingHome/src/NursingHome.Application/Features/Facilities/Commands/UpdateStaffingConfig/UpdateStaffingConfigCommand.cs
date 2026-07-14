@@ -1,5 +1,5 @@
 using MediatR;
-using NursingHome.Application.Models.Facility;
+using NursingHome.Application.Features.Facilities.DTOs.Facility;
 using System.Text.Json.Serialization;
 
 namespace NursingHome.Application.Features.Facilities.Commands.UpdateStaffingConfig;

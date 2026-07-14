@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NursingHome.Application.Common;
 using NursingHome.Application.Features.Facilities.Commands.UpdateStaffingConfig;
+using NursingHome.Application.Features.Facilities.DTOs.Facility;
 using NursingHome.Application.Features.Facilities.Queries.GetStaffingCompliance;
 using NursingHome.Application.Features.Facilities.Queries.GetStaffingConfig;
-using NursingHome.Application.Models.Facility;
 
 namespace NursingHome.Api.Controllers.v1;
 
@@ -43,6 +43,6 @@ public class FacilitiesController : ControllerBase
     {
         var query = new NursingHome.Application.Features.Facilities.Queries.GetStaffingCompliance.GetStaffingComplianceQuery(facilityId, date);
         var response = await _sender.Send(query, cancellationToken);
-        return Ok(ApiResponse<NursingHome.Application.Models.Facility.StaffingComplianceDto>.CreateSuccess(response));
+        return Ok(ApiResponse<StaffingComplianceDto>.CreateSuccess(response));
     }
 }

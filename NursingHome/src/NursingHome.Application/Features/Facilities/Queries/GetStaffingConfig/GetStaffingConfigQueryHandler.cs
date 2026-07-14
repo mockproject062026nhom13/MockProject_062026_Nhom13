@@ -1,6 +1,6 @@
 using MediatR;
 using NursingHome.Application.Abstractions.Repositories;
-using NursingHome.Application.Models.Facility;
+using NursingHome.Application.Features.Facilities.DTOs.Facility;
 using NursingHome.Domain.Exceptions;
 
 namespace NursingHome.Application.Features.Facilities.Queries.GetStaffingConfig;
