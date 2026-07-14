@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using NursingHome.Application.Features.Facilities.Queries.GetStaffingCompliance;
+using NursingHome.Application.Abstractions.Services;
 using NursingHome.Infrastructure.Persistence.DbContexts;
 using NursingHome.Infrastructure.Persistence.Generated;
 
@@ -54,7 +54,7 @@ public class StaffingComplianceBackgroundJob : BackgroundService
 
         using var scope = _serviceProvider.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<NursingHomeDbContext>();
-        var sender = scope.ServiceProvider.GetRequiredService<ISender>();
+        var ruleService = scope.ServiceProvider.GetRequiredService<IStaffingRuleService>();
 
         // 1. Lấy tất cả Facility
         var facilities = await dbContext.Facilities
@@ -63,13 +63,16 @@ public class StaffingComplianceBackgroundJob : BackgroundService
 
         foreach (var facility in facilities)
         {
-            // 2. Tính toán Compliance
-            var query = new GetStaffingComplianceQuery(facility.Id, null);
-            var complianceResult = await sender.Send(query, cancellationToken);
+            // 2. Tính toán Compliance dựa trên định mức mới
+            var today = DateOnly.FromDateTime(DateTime.Today);
+            var complianceResult = await ruleService.GetComplianceAsync(facility.Id, today, cancellationToken);
 
-            if (!complianceResult.IsCompliant)
+            // Kiểm tra xem có ca nào bị thiếu nhân sự (Warning hoặc Critical) hay không
+            bool hasShortage = complianceResult.ShiftDetails.Any(sd => sd.Status == "Warning" || sd.Status == "Critical");
+
+            if (hasShortage)
             {
-                _logger.LogWarning($"Facility {facility.FacilityCode} is NON-COMPLIANT. Required: {complianceResult.RequiredHours}, Scheduled: {complianceResult.ScheduledHours}. Sending alerts...");
+                _logger.LogWarning($"Facility {facility.FacilityCode} has staffing shortages detected on one or more shifts. Sending alerts...");
 
                 // 3. Tìm tất cả DON của Facility này
                 var donUsers = await dbContext.UserFacilities

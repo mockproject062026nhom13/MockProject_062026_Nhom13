@@ -5,7 +5,6 @@ using NursingHome.Application.Abstractions.Authentication;
 using NursingHome.Application.Abstractions.Repositories;
 using NursingHome.Infrastructure.Jobs;
 using NursingHome.Infrastructure.Persistence.DbContexts;
-using NursingHome.Infrastructure.Persistence.Repositories.EmarShift;
 using NursingHome.Infrastructure.Persistence.Repositories.UserSecurity;
 using NursingHome.Infrastructure.Services.Authentication;
 using NursingHome.Infrastructure.Services.Messaging;
@@ -24,8 +23,6 @@ public static class DependencyInjection
                 b => b.MigrationsAssembly(typeof(NursingHomeDbContext).Assembly.FullName)));
 
         services.AddScoped<IUserRepository, UserRepository>();
-        services.AddScoped<IStaffingConfigRepository, StaffingConfigRepository>();
-        services.AddScoped<IStaffingComplianceRepository, StaffingComplianceRepository>();
 
 
         services.AddHostedService<StaffingComplianceBackgroundJob>();
@@ -36,6 +33,7 @@ public static class DependencyInjection
         services.AddMemoryCache();
         services.AddScoped<IOtpService, OtpService>();
         services.AddScoped<IEmailService, SmtpEmailService>();
+        services.AddScoped<IStaffingRuleService, StaffingRuleService>();
 
         return services;
     }
