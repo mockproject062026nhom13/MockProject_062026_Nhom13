@@ -61,6 +61,11 @@ SET ANSI_NULLS ON;
 SET QUOTED_IDENTIFIER ON;
 GO
 
+
+USE NursingHome;
+GO
+
+SET QUOTED_IDENTIFIER ON;
 -- =====================================================================================
 -- TABLES
 -- Toàn bộ CREATE TABLE nằm ở khối này. Khóa ngoại & index được khai báo ở các khối riêng
@@ -626,7 +631,10 @@ CREATE TABLE [incidents] (
   [id] BIGINT IDENTITY(1,1) PRIMARY KEY,
   [incident_type] VARCHAR(50) NOT NULL CHECK (incident_type IN ('FALL','MEDICATION_ERROR','ALTERCATION','SKIN_TEAR')),
   [status] VARCHAR(20) NOT NULL CHECK (status IN ('OPEN','UNDER_INVESTIGATION','CLOSED')) DEFAULT 'OPEN',
-  [description] NVARCHAR(MAX),
+  [location] NVARCHAR(255) NOT NULL,
+  [description] NVARCHAR(MAX) NOT NULL,
+  [witness] NVARCHAR(255) NULL,
+  [immediate_actions_taken] NVARCHAR(MAX) NOT NULL,
   [sla_deadline] DATETIMEOFFSET(0) NOT NULL,
   [resident_id] BIGINT NOT NULL,
   [severity_id] BIGINT NOT NULL,

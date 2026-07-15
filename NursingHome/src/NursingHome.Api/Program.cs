@@ -1,6 +1,8 @@
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using NursingHome.Infrastructure.Persistence.DbContexts;
+using Microsoft.EntityFrameworkCore;
+using NursingHome.Infrastructure.Persistence.DbContexts;
 using FluentValidation;
 using NursingHome.Application.Abstractions;
 using NursingHome.Application.Features.UserSecurity.Commands;
@@ -18,6 +20,7 @@ using NursingHome.Infrastructure;
 // In containers the values already come from the process environment and no
 // .env file is present — TraversePath().Load() simply finds nothing and is a no-op.
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -34,6 +37,13 @@ builder.Services.AddDbContext<NursingHomeDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddScoped<IFacilityRepository, FacilityRepository>();
 builder.Services.AddScoped<IBedRepository, BedRepository>();
+//builder.Services.AddFastEndpoints();
+
+
+ builder.Services.AddDbContext<NursingHomeDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
 
 builder.Services.AddDbContext<NursingHomeDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -63,6 +73,11 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.UseFastEndpoints();
+
+app.MapGet("/", () => "API Running");
+
+app.Run();
+//app.UseFastEndpoints();
 
 app.MapGet("/", () => "API Running");
 
