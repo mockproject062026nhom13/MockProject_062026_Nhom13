@@ -27,18 +27,18 @@ public partial class IncidentSeverity
     public virtual ICollection<SlaConfig> SlaConfigs { get; private set; } = new List<SlaConfig>();
 
     //2 thuộc tính bị thiếu 
-    // [Column("description")]
-    // public string? Description { get; private set; }
+    [Column("description")]
+    public string? Description { get; private set; }
 
-    // [Column("example")]
-    // public string? Example { get; private set; }
+    [Column("example")]
+    public string? Example { get; private set; }
 
 
-    // public void UpdateDetails(string ? description, string? example)
-    // {
-    //    Description = description?.Trim();
-    //    Example = example?.Trim(); 
-    // }
+    public void UpdateDetails(string ? description, string? example)
+    {
+       Description = description?.Trim();
+       Example = example?.Trim(); 
+    }
 
 }
 

@@ -1,12 +1,10 @@
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using NursingHome.Infrastructure.Persistence.DbContexts;
-using Microsoft.EntityFrameworkCore;
 using FluentValidation;
 using NursingHome.Application.Abstractions;
 using NursingHome.Application.Features.UserSecurity.Commands;
 using NursingHome.Application.Features.UserSecurity.Validators;
-using NursingHome.Infrastructure.Persistence.DbContexts;
 
 using DotNetEnv;
 using NursingHome.Api.Middleware;
