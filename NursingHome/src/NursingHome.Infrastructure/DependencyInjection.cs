@@ -1,26 +1,49 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NursingHome.Application.Abstractions;
-using NursingHome.Infrastructure.Repositories.UserSecurity;
+using NursingHome.Infrastructure.Persistence.Audit;
+using NursingHome.Infrastructure.Persistence.DbContexts;
 using NursingHome.Infrastructure.Persistence.Repositories.CareLevelResidents;
-using NursingHome.Infrastructure.Persistence.Repositories.RiskAuditLogs;
-using NursingHome.Application.Abstractions.Auth;
-using NursingHome.Application.Abstractions.RiskAuditLogs;
-using NursingHome.Infrastructure.Persistence.Repositories.Auth;
-using NursingHome.Infrastructure.Services;
+using NursingHome.Infrastructure.Repositories.UserSecurity;
+using NursingHome.Infrastructure.Persistence.Repositories.LocationInfrastructure;
 
 namespace NursingHome.Infrastructure;
 
-public static class DependencyInjection{
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services)
+public static class DependencyInjection
+{
+    public static IServiceCollection AddInfrastructure(
+        this IServiceCollection services,
+        IConfiguration configuration)
     {
-        services.AddScoped<IUserRepository,UserRepository>();
+        // Current user & auditing
+        services.AddScoped<ICurrentUserService, CurrentUserService>();
+        services.AddScoped<AuditSaveChangesInterceptor>();
+
+        // Repositories
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IActivateAccountRepository, ActivateAccountRepository>();
+        services.AddScoped<ICareLevelResidentRepository, CareLevelResidentRepository>();
+        services.AddScoped<ILOCRateRepository, LOCRateRepository>();
+        services.AddScoped<IIncidentSeverityRepository, IncidentSeverityRepository>();
+        services.AddScoped<IIncidentRepository, IncidentRepository>();
+
+        // Services
+        services.AddScoped<IPasswordHasher, PasswordHasher>();
         services.AddMemoryCache();
         services.AddScoped<IOtpService, OtpService>();
         services.AddScoped<ITokenService, TokenService>();
 
-        services.AddScoped<IIncidentSeverityRepository, IncidentSeverityRepository>();
-        services.AddScoped<ICareLevelResidentRepository, CareLevelResidentRepository>();
-        services.AddScoped<IIncidentRepository, IncidentRepository>();
+        // DbContext
+        services.AddDbContext<NursingHomeDbContext>((sp, options) =>
+        {
+            options.UseSqlServer(
+                configuration.GetConnectionString("DefaultConnection"));
+
+            options.AddInterceptors(
+                sp.GetRequiredService<AuditSaveChangesInterceptor>());
+        });
+
         return services;
     }
 
