@@ -39,7 +39,7 @@ public partial class UserRepository
             await _context.SaveChangesAsync(cancellationToken);
         }
     }
-}
+
     public async Task<bool> IsEmailUniqueAsync(string email, CancellationToken cancellationToken)
     {
         return !await _context.Users.AnyAsync(u => u.Email == email, cancellationToken);
