@@ -25,13 +25,10 @@ builder.Services.AddSwaggerGen();
 //builder.Services.AddFastEndpoints();
 
 
-// builder.Services.AddDbContext<NursingHomeDbContext>(options =>
-//     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+ builder.Services.AddDbContext<NursingHomeDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-var dbPassword = Environment.GetEnvironmentVariable("MSSQL_SA_PASSWORD");
-var connectionString = $"Server=127.0.0.1,14330;Database=NursingHome;User Id=sa;Password={dbPassword};TrustServerCertificate=True;";
-builder.Services.AddDbContext<NursingHomeDbContext>(options =>
-    options.UseSqlServer(connectionString));
+
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();

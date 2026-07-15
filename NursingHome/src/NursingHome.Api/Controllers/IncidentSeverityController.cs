@@ -11,7 +11,7 @@ namespace NursingHome.Api.Controllers;
 
 [ApiController]
 [Route("api/v1/incident-severities")]
-[Authorize(Roles = RoleConstants.FacilityManager + "," + RoleConstants.SystemAdministrator)]
+[Authorize(Roles = RoleConstants.SystemAdministrator)]
 public class IncidentSeverityController(IMediator mediator) : ControllerBase
 {
     private readonly IMediator _mediator = mediator;

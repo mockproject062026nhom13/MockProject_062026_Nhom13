@@ -35,10 +35,8 @@ public class IncidentSeverityRepository(NursingHomeDbContext context) : IInciden
 
         if(entity == null) return false;
 
-        entity.Description = description;
-        entity.Example = example;
-
-        _context.Set<IncidentSeverity>().Update(entity);
+        entity.UpdateDetails(description,example);
+        
         await _context.SaveChangesAsync();
 
         return true;
