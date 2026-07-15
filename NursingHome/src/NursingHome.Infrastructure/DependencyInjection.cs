@@ -27,6 +27,7 @@ public static class DependencyInjection
         services.AddScoped<ICareLevelResidentRepository, CareLevelResidentRepository>();
         services.AddScoped<ILOCRateRepository, LOCRateRepository>();
         services.AddScoped<IAssessmentService, AssessmentService>();
+        services.AddScoped<ICarePlanRepository, CarePlanRepository>();
         // Services
         services.AddScoped<IPasswordHasher, PasswordHasher>();
 
