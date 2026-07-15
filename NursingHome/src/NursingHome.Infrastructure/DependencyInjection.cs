@@ -25,9 +25,14 @@ public static class DependencyInjection
         services.AddScoped<IActivateAccountRepository, ActivateAccountRepository>();
         services.AddScoped<ICareLevelResidentRepository, CareLevelResidentRepository>();
         services.AddScoped<ILOCRateRepository, LOCRateRepository>();
+        services.AddScoped<IIncidentSeverityRepository, IncidentSeverityRepository>();
+        services.AddScoped<IIncidentRepository, IncidentRepository>();
 
         // Services
         services.AddScoped<IPasswordHasher, PasswordHasher>();
+        services.AddMemoryCache();
+        services.AddScoped<IOtpService, OtpService>();
+        services.AddScoped<ITokenService, TokenService>();
 
         // DbContext
         services.AddDbContext<NursingHomeDbContext>((sp, options) =>
@@ -41,4 +46,5 @@ public static class DependencyInjection
 
         return services;
     }
+
 }

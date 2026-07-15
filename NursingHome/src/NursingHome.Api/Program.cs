@@ -1,3 +1,13 @@
+using FastEndpoints;
+using Microsoft.EntityFrameworkCore;
+using NursingHome.Infrastructure.Persistence.DbContexts;
+using Microsoft.EntityFrameworkCore;
+using FluentValidation;
+using NursingHome.Application.Abstractions;
+using NursingHome.Application.Features.UserSecurity.Commands;
+using NursingHome.Application.Features.UserSecurity.Validators;
+using NursingHome.Infrastructure.Persistence.DbContexts;
+
 using DotNetEnv;
 using NursingHome.Api.Middleware;
 using NursingHome.Application;
@@ -6,6 +16,7 @@ using NursingHome.Infrastructure;
 // Load variables from the nearest .env file (walking up from the working
 // directory) into the process environment BEFORE the host is built.
 Env.TraversePath().Load();
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,17 +30,10 @@ builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
         "TrustServerCertificate=True;"
 });
 
-Console.WriteLine(Environment.GetEnvironmentVariable("DB_NAME"));
-Console.WriteLine(Environment.GetEnvironmentVariable("DB_APP_USER"));
-Console.WriteLine(Environment.GetEnvironmentVariable("DB_APP_PASSWORD"));
-
 builder.Services.AddControllers();
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
-
-Console.WriteLine(builder.Configuration.GetConnectionString("DefaultConnection"));
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -49,5 +53,9 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+//app.UseFastEndpoints();
+
+app.MapGet("/", () => "API Running");
 
 app.Run();
