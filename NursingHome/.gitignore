@@ -10,7 +10,11 @@
 .env.local
 appsettings.Local.json
 docker-compose.override.yml
+#documentation file
+documentations/
 
 # --- Re-include committed, secret-free templates/infra ------------------------
 !.env.example
 !docker-compose.yml
+
+doc/

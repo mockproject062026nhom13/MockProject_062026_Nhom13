@@ -12,4 +12,7 @@
 *.yml     text eol=lf
 *.yaml    text eol=lf
 *.sql     text
+
+#documentation file
+**/documentations/
 Dockerfile text eol=lf
