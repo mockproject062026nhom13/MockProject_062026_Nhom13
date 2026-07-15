@@ -1,3 +1,6 @@
+using FastEndpoints;
+using Microsoft.EntityFrameworkCore;
+using NursingHome.Infrastructure.Persistence.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using FluentValidation;
 using NursingHome.Application.Abstractions;
@@ -17,6 +20,7 @@ using NursingHome.Infrastructure;
 // .env file is present — TraversePath().Load() simply finds nothing and is a no-op.
 Env.TraversePath().Load();
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -25,6 +29,13 @@ builder.Services.AddControllers();
 // Swagger / OpenAPI via Swashbuckle — https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+//builder.Services.AddFastEndpoints();
+
+
+ builder.Services.AddDbContext<NursingHomeDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
 
 builder.Services.AddDbContext<NursingHomeDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -52,5 +63,9 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+//app.UseFastEndpoints();
+
+app.MapGet("/", () => "API Running");
 
 app.Run();

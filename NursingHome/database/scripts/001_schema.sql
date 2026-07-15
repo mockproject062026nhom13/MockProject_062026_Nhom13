@@ -53,9 +53,12 @@ SET QUOTED_IDENTIFIER ON;
 GO
 
 -- Docker mode
+
+
 USE NursingHome;
 GO
 
+SET QUOTED_IDENTIFIER ON;
 -- =====================================================================================
 -- TABLES
 -- Toàn bộ CREATE TABLE nằm ở khối này. Khóa ngoại & index được khai báo ở các khối riêng
