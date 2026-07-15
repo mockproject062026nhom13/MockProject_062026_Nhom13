@@ -1,33 +1,20 @@
-using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using NursingHome.Application.Abstractions;
-using NursingHome.Application.Features.UserSecurity.Commands;
 using NursingHome.Infrastructure.Persistence.Generated;
+using NursingHome.Application.Abstractions.Auth;
 
-using NursingHome.Infrastructure.Persistence.DbContexts;
+namespace NursingHome.Infrastructure.Persistence.Repositories.Auth;
 
-namespace NursingHome.Infrastructure.Repositories.UserSecurity;
-
-public class UserRepository : IUserRepository
+public partial class UserRepository
 {
-    private readonly NursingHomeDbContext _dbContext;
-
-    public UserRepository(NursingHomeDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
 
     public async Task<bool> IsEmailUniqueAsync(string email, CancellationToken cancellationToken)
     {
-        return !await _dbContext.Users.AnyAsync(u => u.Email == email, cancellationToken);
+        return !await _context.Users.AnyAsync(u => u.Email == email, cancellationToken);
     }
 
     public async Task<string?> GetLastEmployeeCodeAsync(CancellationToken cancellationToken)
     {
-        return await _dbContext.Users
+        return await _context.Users
             .Where(u => u.EmployeeCode.StartsWith("NHMS-"))
             .OrderByDescending(u => u.EmployeeCode)
             .Select(u => u.EmployeeCode)
@@ -36,12 +23,12 @@ public class UserRepository : IUserRepository
 
     public async Task<bool> IsRoleExistsAsync(long roleId, CancellationToken cancellationToken)
     {
-        return await _dbContext.Roles.AnyAsync(r => r.Id == roleId, cancellationToken);
+        return await _context.Roles.AnyAsync(r => r.Id == roleId, cancellationToken);
     }
 
     public async Task<bool> IsFacilityExistsAsync(long facilityId, CancellationToken cancellationToken)
     {
-        return await _dbContext.Facilities.AnyAsync(f => f.Id == facilityId, cancellationToken);
+        return await _context.Facilities.AnyAsync(f => f.Id == facilityId, cancellationToken);
     }
 
     public async Task<long> AddUserAsync(UserCreationDto dto, CancellationToken cancellationToken)
@@ -55,17 +42,17 @@ public class UserRepository : IUserRepository
             lastName: dto.LastName,
             phoneNumber: dto.PhoneNumber,
             roleId: dto.RoleId
-            // licenseNumber default = null
+        // licenseNumber default = null
         );
 
-        await _dbContext.Users.AddAsync(newUser, cancellationToken);
-        await _dbContext.SaveChangesAsync(cancellationToken);
+        await _context.Users.AddAsync(newUser, cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
 
         if (dto.AssignedFacilityId.HasValue)
-            {
-                newUser.UserFacilities.Add(new UserFacility(newUser.Id, dto.AssignedFacilityId.Value));
-                await _dbContext.SaveChangesAsync(cancellationToken); // Lưu lần 2 cho bảng trung gian
-            }
+        {
+            newUser.UserFacilities.Add(new UserFacility(newUser.Id, dto.AssignedFacilityId.Value));
+            await _context.SaveChangesAsync(cancellationToken); // Lưu lần 2 cho bảng trung gian
+        }
         return newUser.Id;
     }
 }
