@@ -9,6 +9,7 @@ namespace NursingHome.Api.Controllers;
 /// <summary>
 /// Controller for managing LOC rates.
 /// </summary>
+// todo: validate + perrmisson
 [ApiController]
 [Route("api/auth")]
 public class LOCRateController : ControllerBase

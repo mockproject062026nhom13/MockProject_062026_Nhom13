@@ -8,6 +8,7 @@ using NursingHome.Infrastructure.Persistence.Repositories.CareLevelResidents;
 using NursingHome.Infrastructure.Repositories.UserSecurity;
 using NursingHome.Infrastructure.Persistence.Repositories.LocationInfrastructure;
 
+
 namespace NursingHome.Infrastructure;
 
 public static class DependencyInjection
@@ -25,7 +26,7 @@ public static class DependencyInjection
         services.AddScoped<IActivateAccountRepository, ActivateAccountRepository>();
         services.AddScoped<ICareLevelResidentRepository, CareLevelResidentRepository>();
         services.AddScoped<ILOCRateRepository, LOCRateRepository>();
-
+        services.AddScoped<IAssessmentService, AssessmentService>();
         // Services
         services.AddScoped<IPasswordHasher, PasswordHasher>();
 
