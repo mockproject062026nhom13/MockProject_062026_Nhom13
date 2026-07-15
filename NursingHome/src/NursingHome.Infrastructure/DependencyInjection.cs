@@ -15,6 +15,7 @@ public static class DependencyInjection{
         services.AddScoped<ITokenService, TokenService>();
 
         services.AddScoped<IIncidentSeverityRepository, IncidentSeverityRepository>();
+        services.AddScoped<ICareLevelResidentRepository, CareLevelResidentRepository>();
         return services;
     }
 
