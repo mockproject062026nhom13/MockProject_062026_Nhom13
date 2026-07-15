@@ -3,11 +3,11 @@ using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 using NursingHome.Infrastructure.Persistence.DbContexts;
 using Microsoft.EntityFrameworkCore;
+using NursingHome.Infrastructure.Persistence.DbContexts;
 using FluentValidation;
 using NursingHome.Application.Abstractions;
 using NursingHome.Application.Features.UserSecurity.Commands;
 using NursingHome.Application.Features.UserSecurity.Validators;
-using NursingHome.Infrastructure.Persistence.DbContexts;
 
 using DotNetEnv;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -15,6 +15,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using NursingHome.Api.Middleware;
 using NursingHome.Application;
+using NursingHome.Infrastructure.Persistence.Repositories;
 using NursingHome.Infrastructure;
 
 // Load variables from the nearest .env file
@@ -27,6 +28,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+// Swagger / OpenAPI via Swashbuckle — https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddFastEndpoints();
 
 // Swagger / OpenAPI via Swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -118,7 +121,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-//app.UseFastEndpoints();
+app.UseFastEndpoints();
 
 app.MapGet("/", () => "API Running");
 
