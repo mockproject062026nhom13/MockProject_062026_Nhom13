@@ -2,7 +2,7 @@ using NursingHome.Application.Abstractions.Authentication;
 
 namespace NursingHome.Infrastructure.Services.Authentication;
 
-public class BcryptPasswordHasher : IPasswordHasher
+public class PasswordHasher : IPasswordHasher
 {
     public string HashPassword(string password)
     {

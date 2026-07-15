@@ -1,4 +1,5 @@
 using NursingHome.Application.Features.Auth.DTOs;
+using NursingHome.Application.Features.UserSecurity.DTOs.Auth;
 
 namespace NursingHome.Application.Abstractions.Auth;
 
@@ -20,6 +21,9 @@ public interface IUserRepository
 
     // Get max employee_code
     Task<string?> GetLastEmployeeCodeAsync(CancellationToken cancellationToken);
+
+    Task<AuthUserDto?> GetAuthUserByIdentifierAsync(string identifier, CancellationToken cancellationToken = default);
+    Task UpdateLastLoginAsync(long userId, CancellationToken cancellationToken = default);
 }
 
 public class UserCreationDto

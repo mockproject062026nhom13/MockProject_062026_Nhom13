@@ -16,11 +16,6 @@ public static class DependencyInjection
 
         services.AddMemoryCache();
 
-        services.AddDbContext<NursingHomeDbContext>(options =>
-            options.UseSqlServer(
-                configuration.GetConnectionString("DefaultConnection"),
-                b => b.MigrationsAssembly(typeof(NursingHomeDbContext).Assembly.FullName)));
-
         // DbContext
         services.AddDbContext<NursingHomeDbContext>((sp, options) =>
         {

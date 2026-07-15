@@ -1,7 +1,7 @@
 using NursingHome.Application.Abstractions;
 using NursingHome.Infrastructure.Persistence.DbContexts;
-namespace NursingHome.Infrastructure.Repositories.UserSecurity;
 
+namespace NursingHome.Infrastructure.Persistence.Repositories.UserSecurity;
 
 public sealed class CurrentUserService : ICurrentUserService
 {

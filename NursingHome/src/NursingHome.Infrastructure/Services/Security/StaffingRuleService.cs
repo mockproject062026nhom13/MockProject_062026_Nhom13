@@ -16,8 +16,9 @@ public class StaffingRuleService : IStaffingRuleService
     private readonly ILogger<StaffingRuleService> _logger;
     private readonly IConfiguration _configuration;
 
-    private static readonly string ConfigPath = Path.Combine(AppContext.BaseDirectory, "staffing_ratios.json");
-    private static readonly string LogPath = Path.Combine(AppContext.BaseDirectory, "compliance_status_logs.json");
+    private static readonly string StorageDirectory = Path.Combine(Path.GetTempPath(), "nursinghome");
+    private static readonly string ConfigPath = Path.Combine(StorageDirectory, "staffing_ratios.json");
+    private static readonly string LogPath = Path.Combine(StorageDirectory, "compliance_status_logs.json");
 
     private static readonly object FileLock = new();
 
@@ -26,6 +27,8 @@ public class StaffingRuleService : IStaffingRuleService
         _dbContext = dbContext;
         _logger = logger;
         _configuration = configuration;
+
+        Directory.CreateDirectory(StorageDirectory);
     }
 
     public async Task<StaffingRuleConfigDto> GetRulesAsync(long facilityId, CancellationToken cancellationToken = default)

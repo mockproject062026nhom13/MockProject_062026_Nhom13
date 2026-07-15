@@ -82,15 +82,19 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
     };
 });
-builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
+
+if (string.IsNullOrWhiteSpace(builder.Configuration.GetConnectionString("DefaultConnection")))
 {
-    ["ConnectionStrings:DefaultConnection"] =
-        $"Server=127.0.0.1,14330;" +
-        $"Database={Environment.GetEnvironmentVariable("DB_NAME")};" +
-        $"User Id={Environment.GetEnvironmentVariable("DB_APP_USER")};" +
-        $"Password={Environment.GetEnvironmentVariable("DB_APP_PASSWORD")};" +
-        "TrustServerCertificate=True;"
-});
+    builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
+    {
+        ["ConnectionStrings:DefaultConnection"] =
+            $"Server=127.0.0.1,14330;" +
+            $"Database={Environment.GetEnvironmentVariable("DB_NAME")};" +
+            $"User Id={Environment.GetEnvironmentVariable("DB_APP_USER")};" +
+            $"Password={Environment.GetEnvironmentVariable("DB_APP_PASSWORD")};" +
+            "TrustServerCertificate=True;"
+    });
+}
 
 var app = builder.Build();
 

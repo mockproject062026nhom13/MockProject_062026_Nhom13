@@ -68,6 +68,10 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Development}
       ASPNETCORE_URLS: http://+:8080
+      Jwt__Secret: ${Jwt__Secret:?set Jwt__Secret in .env}
+      Jwt__Issuer: ${Jwt__Issuer:-NursingHome}
+      Jwt__Audience: ${Jwt__Audience:-NursingHomeApi}
+      Jwt__ExpirationMinutes: ${Jwt__ExpirationMinutes:-60}
       # Built from .env — the API connects as the least-privilege app login,
       # never as 'sa'. TrustServerCertificate is fine for the self-signed dev
       # cert; use a real certificate for anything beyond local development.

@@ -8,12 +8,12 @@ using NursingHome.Application.Abstractions.Services;
 
 namespace NursingHome.Infrastructure.Services.Messaging;
 
-public class SmtpEmailService : IEmailService
+public class EmailService : IEmailService
 {
     private readonly IConfiguration _configuration;
-    private readonly ILogger<SmtpEmailService> _logger;
+    private readonly ILogger<EmailService> _logger;
 
-    public SmtpEmailService(IConfiguration configuration, ILogger<SmtpEmailService> logger)
+    public EmailService(IConfiguration configuration, ILogger<EmailService> logger)
     {
         _configuration = configuration;
         _logger = logger;
@@ -43,10 +43,10 @@ public class SmtpEmailService : IEmailService
         emailMessage.From.Add(new MailboxAddress(senderName, fromEmail));
         emailMessage.To.Add(new MailboxAddress("", toEmail));
         emailMessage.Subject = subject;
-        
-        emailMessage.Body = new TextPart(TextFormat.Html) 
-        { 
-            Text = body 
+
+        emailMessage.Body = new TextPart(TextFormat.Html)
+        {
+            Text = body
         };
 
         using var client = new SmtpClient();
