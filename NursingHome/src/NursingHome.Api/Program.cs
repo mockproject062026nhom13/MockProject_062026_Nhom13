@@ -1,21 +1,11 @@
 using System.Text;
 using FastEndpoints;
-using Microsoft.EntityFrameworkCore;
-using NursingHome.Infrastructure.Persistence.DbContexts;
-using Microsoft.EntityFrameworkCore;
-using NursingHome.Infrastructure.Persistence.DbContexts;
-using FluentValidation;
-using NursingHome.Application.Abstractions;
-using NursingHome.Application.Features.UserSecurity.Commands;
-using NursingHome.Application.Features.UserSecurity.Validators;
-
 using DotNetEnv;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using NursingHome.Api.Middleware;
 using NursingHome.Application;
-using NursingHome.Infrastructure.Persistence.Repositories;
 using NursingHome.Infrastructure;
 
 // Load variables from the nearest .env file
@@ -36,7 +26,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "NursingHome API", Version = "v1" });
-    
+
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = "JWT Authorization header using the Bearer scheme. Enter your token below.",
@@ -92,15 +82,19 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
     };
 });
-builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
+
+if (string.IsNullOrWhiteSpace(builder.Configuration.GetConnectionString("DefaultConnection")))
 {
-    ["ConnectionStrings:DefaultConnection"] =
-        $"Server=127.0.0.1,14330;" +
-        $"Database={Environment.GetEnvironmentVariable("DB_NAME")};" +
-        $"User Id={Environment.GetEnvironmentVariable("DB_APP_USER")};" +
-        $"Password={Environment.GetEnvironmentVariable("DB_APP_PASSWORD")};" +
-        "TrustServerCertificate=True;"
-});
+    builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
+    {
+        ["ConnectionStrings:DefaultConnection"] =
+            $"Server=127.0.0.1,14330;" +
+            $"Database={Environment.GetEnvironmentVariable("DB_NAME")};" +
+            $"User Id={Environment.GetEnvironmentVariable("DB_APP_USER")};" +
+            $"Password={Environment.GetEnvironmentVariable("DB_APP_PASSWORD")};" +
+            "TrustServerCertificate=True;"
+    });
+}
 
 var app = builder.Build();
 

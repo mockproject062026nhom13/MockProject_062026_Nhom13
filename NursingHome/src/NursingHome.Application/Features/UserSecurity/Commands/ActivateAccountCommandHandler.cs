@@ -1,6 +1,7 @@
 
 using MediatR;
 using NursingHome.Application.Abstractions;
+using NursingHome.Application.Abstractions.Authentication;
 using NursingHome.Application.Common;
 using NursingHome.Application.Features.UserSecurity.DTOs;
 
@@ -36,7 +37,7 @@ public class ActivateAccountCommandHandler
         }
         // in domain layer, we have already check if user is deleted, suspended, locked or active, so we don't need to check here again
         user.ActivateAccount(
-            _passwordHasher.Hash(request.Password),
+            _passwordHasher.HashPassword(request.Password),
             request.PhoneNumber);
 
 

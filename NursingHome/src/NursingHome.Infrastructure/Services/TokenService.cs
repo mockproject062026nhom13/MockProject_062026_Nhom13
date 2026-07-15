@@ -15,17 +15,17 @@ public class TokenService(IConfiguration configuration) : ITokenService
     private readonly IConfiguration _configuration = configuration;
 
 
-    public string GenerateAccessToken(long userId,string email)
+    public string GenerateAccessToken(long userId, string email)
     {
         //read configuration from appsettings.jason
-        var secretKey = _configuration["JwtSettings:SecretKey"]?? throw new InvalidOperationException("CRITICAL: Thiếu JwtSettings:SecretKey trong appsettings.json");
-        var issuer = _configuration["JwtSettings: Issuer"];
-        var audience = _configuration["JwtSettigs: Audience"];
-        var expiryMinutes = Convert.ToDouble(_configuration["JwtSettings:ExpiryMinutes"]);
+        var secretKey = _configuration["Jwt:Secret"] ?? throw new InvalidOperationException("CRITICAL: Thiếu Jwt:Secret trong cấu hình.");
+        var issuer = _configuration["Jwt:Issuer"];
+        var audience = _configuration["Jwt:Audience"];
+        var expiryMinutes = Convert.ToDouble(_configuration["Jwt:ExpirationMinutes"]);
 
         //convert the Secret Key into a byte array for encryption
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
-        var credentials = new SigningCredentials(securityKey,SecurityAlgorithms.HmacSha256);
+        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
         //Create payload
         var claims = new[]
@@ -38,18 +38,18 @@ public class TokenService(IConfiguration configuration) : ITokenService
 
         //assemble the components into a complete JWT token
         var token = new JwtSecurityToken(
-            issuer:issuer, 
-            audience: audience, 
-            claims:claims,
-            expires:DateTime.UtcNow.AddMinutes(expiryMinutes),
-            signingCredentials:credentials);
-        
+            issuer: issuer,
+            audience: audience,
+            claims: claims,
+            expires: DateTime.UtcNow.AddMinutes(expiryMinutes),
+            signingCredentials: credentials);
+
         //Export Token
         return new JwtSecurityTokenHandler().WriteToken(token);
 
-    }    
+    }
 
-        
+
 
     public string GenerateRefreshToken()
     {

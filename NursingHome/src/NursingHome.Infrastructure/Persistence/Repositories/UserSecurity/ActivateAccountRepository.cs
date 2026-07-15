@@ -2,7 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using NursingHome.Application.Abstractions;
 using NursingHome.Infrastructure.Persistence.DbContexts;
 using NursingHome.Infrastructure.Persistence.Mappers;
-namespace NursingHome.Infrastructure.Repositories.UserSecurity;
+
+namespace NursingHome.Infrastructure.Persistence.Repositories.UserSecurity;
+
 public class ActivateAccountRepository : IActivateAccountRepository
 {
     private readonly NursingHomeDbContext _context;
