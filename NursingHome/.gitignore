@@ -16,3 +16,5 @@ documentations/
 # --- Re-include committed, secret-free templates/infra ------------------------
 !.env.example
 !docker-compose.yml
+
+doc/
