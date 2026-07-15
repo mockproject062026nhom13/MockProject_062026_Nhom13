@@ -5,6 +5,7 @@ using DotNetEnv;
 using NursingHome.Api.Middleware;
 using NursingHome.Application;
 using NursingHome.Infrastructure;
+using NursingHome.Api.Extensions;
 
 // Load variables from the nearest .env file (walking up from the working
 // directory) into the process environment BEFORE the host is built, so they are
@@ -23,6 +24,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 //builder.Services.AddFastEndpoints();
+builder.Services.AddCustomAuthorizationPolicies();
 
 
  builder.Services.AddDbContext<NursingHomeDbContext>(options =>

@@ -1,6 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
+using NursingHome.Application.Abstractions;
 using NursingHome.Application.Abstractions.Auth;
 using NursingHome.Application.Abstractions.RiskAuditLogs;
+using NursingHome.Infrastructure.Persistence.Repositories;
 using NursingHome.Infrastructure.Persistence.Repositories.Auth;
 using NursingHome.Infrastructure.Services;
 
@@ -15,6 +17,8 @@ public static class DependencyInjection{
         services.AddScoped<ITokenService, TokenService>();
 
         services.AddScoped<IIncidentSeverityRepository, IncidentSeverityRepository>();
+
+        services.AddScoped<IIncidentRepository,IncidentRepository>();
         return services;
     }
 

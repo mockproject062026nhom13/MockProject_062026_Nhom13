@@ -59,4 +59,9 @@ public partial class Incident
     [ForeignKey("SeverityId")]
     [InverseProperty("Incidents")]
     public virtual IncidentSeverity Severity { get; private set; } = null!;
+
+
+    //function to calculate SLA countdown
+    
+    
 }
