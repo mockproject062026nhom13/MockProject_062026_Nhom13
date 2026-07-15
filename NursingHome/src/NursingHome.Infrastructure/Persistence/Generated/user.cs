@@ -133,4 +133,10 @@ public partial class User
 
     [InverseProperty("RecordedByNavigation")]
     public virtual ICollection<VitalSign> VitalSigns { get; private set; } = new List<VitalSign>();
+
+
+    public void UpdateLastLogin(DateTimeOffset time)
+    {
+        this.LastLoginAt = time;
+    }
 }
