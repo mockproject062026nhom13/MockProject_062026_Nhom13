@@ -1,13 +1,15 @@
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NursingHome.Domain.Constants;
+using NursingHome.Infrastructure.Authorization;
 using NursingHome.Application.Features.RiskAuditLogs.Queries;
+
 
 namespace NursingHome.Api.Controllers;
 
 [ApiController]
 [Route("api/v1/incidents")]
-//[Authorize(Policy = "RequireDashboardAccess")]
+[PermissionAuthorize(PermissionConstants.IncidentListView)]
 public class IncidentController: ControllerBase
 {
     private readonly IMediator _mediator;
