@@ -1,46 +1,46 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NursingHome.Application.Abstractions;
-using NursingHome.Infrastructure.Persistence.Audit;
+using NursingHome.Infrastructure.Jobs;
 using NursingHome.Infrastructure.Persistence.DbContexts;
-using NursingHome.Infrastructure.Persistence.Repositories.CareLevelResidents;
-using NursingHome.Infrastructure.Repositories.UserSecurity;
-using NursingHome.Infrastructure.Persistence.Repositories.LocationInfrastructure;
+using NursingHome.Infrastructure.Services;
+using NursingHome.Infrastructure.Persistence.Audit;
 
 
 namespace NursingHome.Infrastructure;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddInfrastructure(
-        this IServiceCollection services,
-        IConfiguration configuration)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        // Current user & auditing
-        services.AddScoped<ICurrentUserService, CurrentUserService>();
         services.AddScoped<AuditSaveChangesInterceptor>();
 
-        // Repositories
-        services.AddScoped<IUserRepository, UserRepository>();
-        services.AddScoped<IActivateAccountRepository, ActivateAccountRepository>();
-        services.AddScoped<ICareLevelResidentRepository, CareLevelResidentRepository>();
-        services.AddScoped<ILOCRateRepository, LOCRateRepository>();
-        services.AddScoped<IAssessmentService, AssessmentService>();
-        services.AddScoped<ICarePlanRepository, CarePlanRepository>();
-        // Services
-        services.AddScoped<IPasswordHasher, PasswordHasher>();
+        services.AddMemoryCache();
 
         // DbContext
         services.AddDbContext<NursingHomeDbContext>((sp, options) =>
         {
             options.UseSqlServer(
-                configuration.GetConnectionString("DefaultConnection"));
+                configuration.GetConnectionString("DefaultConnection"),
+                b => b.MigrationsAssembly(typeof(NursingHomeDbContext).Assembly.FullName));
 
             options.AddInterceptors(
                 sp.GetRequiredService<AuditSaveChangesInterceptor>());
         });
 
+
+        services.AddHostedService<StaffingComplianceBackgroundJob>();
+
+        services.Scan(scan => scan
+            .FromAssemblyOf<TokenService>()
+            .AddClasses(classes => classes.InNamespaces(
+                "NursingHome.Infrastructure.Persistence.Repositories",
+                "NursingHome.Infrastructure.Services"))
+            .AsMatchingInterface()
+            .WithScopedLifetime());
+
+        services.AddMemoryCache();
         return services;
+
     }
 }

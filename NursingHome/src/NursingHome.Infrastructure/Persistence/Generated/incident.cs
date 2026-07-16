@@ -25,8 +25,19 @@ public partial class Incident
     [Unicode(false)]
     public string Status { get; private set; } = null!;
 
+    [Column("location")]
+    [StringLength(255)]
+    public string Location { get; private set; } = null!;
+
     [Column("description")]
-    public string? Description { get; private set; }
+    public string Description { get; private set; } = null!;
+
+    [Column("witness")]
+    [StringLength(255)]
+    public string? Witness { get; private set; }
+
+    [Column("immediate_actions_taken")]
+    public string ImmediateActionsTaken { get; private set; } = null!;
 
     [Column("sla_deadline")]
     [Precision(0)]

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
 using NursingHome.Application.Abstractions;
+using NursingHome.Application.Abstractions.Auth;
 using NursingHome.Application.Common;
 
 namespace NursingHome.Application.Features.UserSecurity.Commands;
@@ -21,9 +22,9 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, ApiRe
 
     private static string? NormalizePhoneNumber(string? input)
     {
-        if (string.IsNullOrWhiteSpace(input)) 
+        if (string.IsNullOrWhiteSpace(input))
         {
-            return null; 
+            return null;
         }
         var digits = new string(input.Where(char.IsDigit).ToArray());
 
@@ -71,7 +72,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, ApiRe
             if (!isFacilityValid)
             {
                 return ApiResponse<long>.CreateError(
-                    400, 
+                    400,
                     $"The specified Facility ID does not exist in the system.");
             }
         }

@@ -4,10 +4,6 @@ namespace NursingHome.Infrastructure.Persistence.Generated;
 
 public partial class AuditLog
 {
-    private AuditLog()
-    {
-    }
-
     public static AuditLog Create(
         string tableName,
         string recordId,
