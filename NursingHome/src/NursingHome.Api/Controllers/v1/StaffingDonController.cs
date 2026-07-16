@@ -4,11 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using NursingHome.Application.Common;
 using NursingHome.Application.Features.Facilities.Queries.GetDonCompliance;
 using NursingHome.Application.Features.Facilities.DTOs.Facility;
+using NursingHome.Domain.Constants;
 
 namespace NursingHome.Api.Controllers.v1;
 
 [ApiController]
-[Authorize(Roles = "DON - Director of Nursing,System_Administrator")]
+[Authorize(Roles = RoleConstants.DonDirectorOfNursingOrSystemAdministrator)]
 public class StaffingDonController : ControllerBase
 {
     private readonly ISender _sender;
