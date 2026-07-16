@@ -1,0 +1,52 @@
+namespace NursingHome.Domain.Constants;
+
+public static class PermissionConstants
+{
+  public const string ResidentListView = "RESIDENT_LIST_VIEW";
+  public const string ResidentProfileView = "RESIDENT_PROFILE_VIEW";
+  public const string ResidentProfileCreateEdit = "RESIDENT_PROFILE_CREATE_EDIT";
+  public const string PreAdmissionScreeningCreate = "PREADMISSION_SCREENING_CREATE";
+  public const string AdmissionCreate = "ADMISSION_CREATE";
+  public const string AssessmentCreate = "ASSESSMENT_CREATE";
+  public const string AssessmentHistoryView = "ASSESSMENT_HISTORY_VIEW";
+  public const string LocConfirmOverride = "LOC_CONFIRM_OVERRIDE";
+  public const string LocHistoryView = "LOC_HISTORY_VIEW";
+  public const string CarePlanCreateEdit = "CAREPLAN_CREATE_EDIT";
+  public const string CarePlanView = "CAREPLAN_VIEW";
+  public const string ReassessmentTrigger = "REASSESSMENT_TRIGGER";
+  public const string ScsFlagCreate = "SCS_FLAG_CREATE";
+  public const string DailyTaskListView = "DAILY_TASK_LIST_VIEW";
+  public const string TaskCompletionLog = "TASK_COMPLETION_LOG";
+  public const string AbnormalConditionReportCreate = "ABNORMAL_CONDITION_REPORT_CREATE";
+  public const string TaskOverviewManage = "TASK_OVERVIEW_MANAGE";
+  public const string MedPassDashboardView = "MEDPASS_DASHBOARD_VIEW";
+  public const string MedPassAdminister = "MEDPASS_ADMINISTER";
+  public const string MedPassOverride = "MEDPASS_OVERRIDE";
+  public const string MarView = "MAR_VIEW";
+  public const string DoseLogCreate = "DOSE_LOG_CREATE";
+  public const string MedicationOrderView = "MEDICATION_ORDER_VIEW";
+  public const string IncidentCreate = "INCIDENT_CREATE";
+  public const string ChartLockConfirm = "CHARTLOCK_CONFIRM";
+  public const string IncidentDetailView = "INCIDENT_DETAIL_VIEW";
+  public const string IncidentListView = "INCIDENT_LIST_VIEW";
+  public const string IncidentExternalReportSubmit = "INCIDENT_EXTERNAL_REPORT_SUBMIT";
+  public const string ChartLockUnlockOverride = "CHARTLOCK_UNLOCK_OVERRIDE";
+  public const string DashboardView = "DASHBOARD_VIEW";
+  public const string NotificationsView = "NOTIFICATIONS_VIEW";
+  public const string AuditLogView = "AUDIT_LOG_VIEW";
+  public const string ResidentSearch = "RESIDENT_SEARCH";
+  public const string AdUserListView = "AD_USER_LIST_VIEW";
+  public const string AdUserCreateEdit = "AD_USER_CREATE_EDIT";
+  public const string AdRolePermissionMatrixView = "AD_ROLE_PERMISSION_MATRIX_VIEW";
+  public const string AdUserActivateToggle = "AD_USER_ACTIVATE_TOGGLE";
+  public const string AdFacilitySettingsManage = "AD_FACILITY_SETTINGS_MANAGE";
+  public const string AdLocRateManage = "AD_LOC_RATE_MANAGE";
+  public const string AdStaffingRatioConfigManage = "AD_STAFFING_RATIO_CONFIG_MANAGE";
+  public const string AdIncidentSeverityConfigManage = "AD_INCIDENT_SEVERITY_CONFIG_MANAGE";
+  public const string AdSlaConfigManage = "AD_SLA_CONFIG_MANAGE";
+  public const string AdDemoDataSeed = "AD_DEMO_DATA_SEED";
+  public const string AdDataExport = "AD_DATA_EXPORT";
+  public const string AdAuditLogFullView = "AD_AUDIT_LOG_FULL_VIEW";
+  public const string AdActiveSessionsManage = "AD_ACTIVE_SESSIONS_MANAGE";
+  public const string AdPasswordReset = "AD_PASSWORD_RESET";
+}

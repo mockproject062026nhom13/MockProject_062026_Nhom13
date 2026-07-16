@@ -1,8 +1,11 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NursingHome.Application.Features.LocationInfrastructure.Commands.CreateLOCRate;
 using NursingHome.Application.Features.LocationInfrastructure.Commands.UpdateLOCRate;
 using NursingHome.Application.Features.LocationInfrastructure.Queries.GetLOCRates;
+using NursingHome.Domain.Constants;
+using NursingHome.Infrastructure.Authorization;
 
 namespace NursingHome.Api.Controllers;
 
@@ -11,6 +14,7 @@ namespace NursingHome.Api.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/auth")]
+[PermissionAuthorize(PermissionConstants.AdLocRateManage)]
 public class LOCRateController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -48,7 +52,7 @@ public class LOCRateController : ControllerBase
 
         return StatusCode(result.StatusCode, result);
     }
-    
+
 
     /// <summary>
     /// Update an existing LOC rate.

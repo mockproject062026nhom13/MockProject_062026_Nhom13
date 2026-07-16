@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NursingHome.Infrastructure.Authorization;
 using NursingHome.Infrastructure.Jobs;
 using NursingHome.Infrastructure.Persistence.DbContexts;
 using NursingHome.Infrastructure.Services;
@@ -15,6 +17,8 @@ public static class DependencyInjection
         services.AddScoped<AuditSaveChangesInterceptor>();
 
         services.AddMemoryCache();
+        services.AddAuthorization();
+        services.AddSingleton<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
 
         // DbContext
         services.AddDbContext<NursingHomeDbContext>((sp, options) =>
@@ -32,9 +36,13 @@ public static class DependencyInjection
 
         services.Scan(scan => scan
             .FromAssemblyOf<TokenService>()
+            .AddClasses(classes => classes.AssignableTo<IAuthorizationHandler>())
+            .AsImplementedInterfaces()
+            .WithScopedLifetime()
             .AddClasses(classes => classes.InNamespaces(
                 "NursingHome.Infrastructure.Persistence.Repositories",
-                "NursingHome.Infrastructure.Services"))
+                "NursingHome.Infrastructure.Services",
+                "NursingHome.Infrastructure.Authorization"))
             .AsMatchingInterface()
             .WithScopedLifetime());
 

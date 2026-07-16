@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using NursingHome.Application.Abstractions.Services;
 using NursingHome.Application.Features.Facilities.DTOs.Facility;
+using NursingHome.Domain.Constants;
 using NursingHome.Domain.Exceptions;
 using NursingHome.Infrastructure.Persistence.DbContexts;
 using NursingHome.Infrastructure.Persistence.Generated;
@@ -175,7 +176,7 @@ public class StaffingRuleService : IStaffingRuleService
         // 2. Count Active Residents grouped by CareLevel (LOC)
         var residents = await _dbContext.Residents
             .AsNoTracking()
-            .Where(r => r.Status == "Active" && 
+            .Where(r => r.Status == "Active" &&
                         r.Admissions.Any(a => a.FacilityId == facilityId && a.DischargeDate == null))
             .Select(r => new
             {
@@ -255,9 +256,10 @@ public class StaffingRuleService : IStaffingRuleService
 
             foreach (var sa in shiftAssignments)
             {
-                var roleName = sa.User.Role.RoleName.ToUpper();
-                var isNurse = roleName == "NURSE_(LPN/RN)" || roleName == "DON - DIRECTOR OF NURSING";
-                var isCna = roleName == "CNA_(CAREGIVER)";
+                var roleName = sa.User.Role.RoleName;
+                var isNurse = string.Equals(roleName, RoleConstants.NurseLpnRn, StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(roleName, RoleConstants.DonDirectorOfNursing, StringComparison.OrdinalIgnoreCase);
+                var isCna = string.Equals(roleName, RoleConstants.CnaCaregiver, StringComparison.OrdinalIgnoreCase);
 
                 if (isNurse) scheduledNurses++;
                 else if (isCna) scheduledCnas++;

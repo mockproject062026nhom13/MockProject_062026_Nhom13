@@ -3,6 +3,8 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using NursingHome.Application.Common;
 using NursingHome.Application.Features.RiskAuditLogs.Commands;
+using NursingHome.Domain.Constants;
+using NursingHome.Infrastructure.Authorization;
 
 namespace NursingHome.Api.Controllers;
 
@@ -10,6 +12,7 @@ namespace NursingHome.Api.Controllers;
 [ApiController]
 public class IncidentsController(IMediator _mediator) : ControllerBase
 {
+    [PermissionAuthorize(PermissionConstants.IncidentCreate)]
     [HttpPost]
     public async Task<ActionResult<ApiResponse<long>>> CreateIncident([FromBody] CreateIncidentCommand command)
     {
