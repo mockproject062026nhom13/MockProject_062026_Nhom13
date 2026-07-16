@@ -1,25 +1,54 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NursingHome.Application.Abstractions;
-using NursingHome.Application.Abstractions.Auth;
-using NursingHome.Application.Abstractions.RiskAuditLogs;
-using NursingHome.Infrastructure.Persistence.Repositories;
-using NursingHome.Infrastructure.Persistence.Repositories.Auth;
+using NursingHome.Infrastructure.Authorization;
+using NursingHome.Infrastructure.Jobs;
+using NursingHome.Infrastructure.Persistence.DbContexts;
 using NursingHome.Infrastructure.Services;
+using NursingHome.Infrastructure.Persistence.Audit;
 
 namespace NursingHome.Infrastructure;
 
-public static class DependencyInjection{
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services)
+public static class DependencyInjection
+{
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddScoped<IUserRepository,UserRepository>();
+        services.AddScoped<AuditSaveChangesInterceptor>();
+
         services.AddMemoryCache();
-        services.AddScoped<IOtpService, OtpService>();
-        services.AddScoped<ITokenService, TokenService>();
+        services.AddAuthorization();
+        services.AddSingleton<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
 
-        services.AddScoped<IIncidentSeverityRepository, IncidentSeverityRepository>();
+        // DbContext
+        services.AddDbContext<NursingHomeDbContext>((sp, options) =>
+        {
+            options.UseSqlServer(
+                configuration.GetConnectionString("DefaultConnection"),
+                b => b.MigrationsAssembly(typeof(NursingHomeDbContext).Assembly.FullName));
 
-        services.AddScoped<IIncidentRepository,IncidentRepository>();
+            options.AddInterceptors(
+                sp.GetRequiredService<AuditSaveChangesInterceptor>());
+        });
+
+
+        services.AddHostedService<StaffingComplianceBackgroundJob>();
+
+        services.Scan(scan => scan
+            .FromAssemblyOf<TokenService>()
+            .AddClasses(classes => classes.AssignableTo<IAuthorizationHandler>())
+            .AsImplementedInterfaces()
+            .WithScopedLifetime()
+            .AddClasses(classes => classes.InNamespaces(
+                "NursingHome.Infrastructure.Persistence.Repositories",
+                "NursingHome.Infrastructure.Services",
+                "NursingHome.Infrastructure.Authorization"))
+            .AsMatchingInterface()
+            .WithScopedLifetime());
+
+        services.AddMemoryCache();
+
         return services;
-    }
 
+    }
 }

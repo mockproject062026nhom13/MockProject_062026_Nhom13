@@ -46,7 +46,20 @@ USE NursingHome;
 GO
 */
 
+SET ANSI_NULLS ON;
+GO
+
+SET QUOTED_IDENTIFIER ON;
+GO
+
 -- Docker mode
+
+USE NursingHome;
+GO
+
+SET ANSI_NULLS ON;
+SET QUOTED_IDENTIFIER ON;
+GO
 
 
 USE NursingHome;
@@ -100,6 +113,7 @@ GO
 
 -- EN: Staff/system users (nurses, CNAs, admins, billing). Password never stored in plain text.
 -- VI: Tài khoản nhân viên hệ thống. Không lưu mật khẩu dạng plain text, chỉ lưu hash.
+
 CREATE TABLE [users] (
   [id] BIGINT IDENTITY(1,1) PRIMARY KEY,
   [employee_code] NVARCHAR(50) UNIQUE NOT NULL,
@@ -110,7 +124,7 @@ CREATE TABLE [users] (
   [last_name] NVARCHAR(100) NOT NULL,
   [license_number] NVARCHAR(100),                         -- RN/LPN professional license #
   [phone_number] NVARCHAR(20),
-  [status] VARCHAR(20) NOT NULL CHECK (status IN ('ACTIVE','INACTIVE','LOCKED')) DEFAULT 'ACTIVE',
+  [status] VARCHAR(20) NOT NULL CHECK (status IN ('INVITED','ACTIVE','INACTIVE','LOCKED')) DEFAULT 'INVITED',
   [mfa_enabled] BIT NOT NULL DEFAULT (0),                 -- HIPAA: khuyến nghị bắt buộc MFA cho tài khoản có quyền PHI
   [last_login_at] DATETIMEOFFSET(0),
   [role_id] BIGINT NOT NULL,
@@ -617,7 +631,10 @@ CREATE TABLE [incidents] (
   [id] BIGINT IDENTITY(1,1) PRIMARY KEY,
   [incident_type] VARCHAR(50) NOT NULL CHECK (incident_type IN ('FALL','MEDICATION_ERROR','ALTERCATION','SKIN_TEAR')),
   [status] VARCHAR(20) NOT NULL CHECK (status IN ('OPEN','UNDER_INVESTIGATION','CLOSED')) DEFAULT 'OPEN',
-  [description] NVARCHAR(MAX),
+  [location] NVARCHAR(255) NOT NULL,
+  [description] NVARCHAR(MAX) NOT NULL,
+  [witness] NVARCHAR(255) NULL,
+  [immediate_actions_taken] NVARCHAR(MAX) NOT NULL,
   [sla_deadline] DATETIMEOFFSET(0) NOT NULL,
   [resident_id] BIGINT NOT NULL,
   [severity_id] BIGINT NOT NULL,
