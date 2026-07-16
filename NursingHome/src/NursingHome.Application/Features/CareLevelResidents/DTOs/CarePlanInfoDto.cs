@@ -12,7 +12,7 @@ public class CarePlanInfoDto
 
     public string? RoomNumber { get; set; }
 
-    public string Status {get;set;}
+    public string Status {get;set;} = string.Empty;
 
     public List<CareTaskAssignmentDto> CareTasks { get; set; } = [];
 }

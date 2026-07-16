@@ -3,7 +3,7 @@ using NursingHome.Application.Abstractions;
 using NursingHome.Application.Features.CareLevelResidents.Queries;
 using NursingHome.Infrastructure.Persistence.DbContexts;
 using NursingHome.Application.Features.CareLevelResidents.DTOs;
-
+namespace NursingHome.Infrastructure.Persistence.Repositories.CareLevelResidents;
 public class CarePlanRepository : ICarePlanRepository
 {
     private readonly NursingHomeDbContext _context;
