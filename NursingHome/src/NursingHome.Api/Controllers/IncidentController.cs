@@ -7,7 +7,7 @@ namespace NursingHome.Api.Controllers;
 
 [ApiController]
 [Route("api/v1/incidents")]
-[Authorize(Policy = "RequireDashboardAccess")]
+//[Authorize(Policy = "RequireDashboardAccess")]
 public class IncidentController: ControllerBase
 {
     private readonly IMediator _mediator;
