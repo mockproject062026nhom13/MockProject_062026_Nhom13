@@ -8,11 +8,13 @@ using NursingHome.Application.Features.Facilities.Commands.ToggleEmergencyMode;
 using NursingHome.Application.Features.Facilities.Queries.GetStaffingRules;
 using NursingHome.Application.Features.Facilities.DTOs.Facility;
 using System.IdentityModel.Tokens.Jwt;
+using NursingHome.Domain.Constants;
+using NursingHome.Infrastructure.Authorization;
 
 namespace NursingHome.Api.Controllers.v1;
 
 [ApiController]
-[Authorize(Roles = "System_Administrator")]
+[PermissionAuthorize(PermissionConstants.AdStaffingRatioConfigManage)]
 public class StaffingAdminController : ControllerBase
 {
     private readonly ISender _sender;
@@ -34,7 +36,7 @@ public class StaffingAdminController : ControllerBase
     public async Task<IActionResult> UpdateStaffingRules(long facilityId, [FromBody] UpdateStaffingRulesCommand command, CancellationToken cancellationToken)
     {
         command.FacilityId = facilityId;
-        
+
         var subClaim = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
         if (long.TryParse(subClaim, out long userId))
         {
@@ -49,7 +51,7 @@ public class StaffingAdminController : ControllerBase
     public async Task<IActionResult> ToggleEmergencyMode(long facilityId, CancellationToken cancellationToken)
     {
         var command = new ToggleEmergencyModeCommand { FacilityId = facilityId };
-        
+
         var subClaim = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
         if (long.TryParse(subClaim, out long userId))
         {

@@ -9,11 +9,12 @@ using NursingHome.Application.Common;
 using NursingHome.Application.Features.CnaDashboard.DTOs;
 using NursingHome.Application.Features.CnaDashboard.Queries;
 using NursingHome.Application.Features.CnaDashboard.Commands;
+using NursingHome.Domain.Constants;
+using NursingHome.Infrastructure.Authorization;
 
 namespace NursingHome.Api.Controllers.v1;
 
 [ApiController]
-[Authorize(Roles = "CNA_(Caregiver)")]
 public class CnaDashboardController : ControllerBase
 {
     private readonly ISender _sender;
@@ -23,10 +24,11 @@ public class CnaDashboardController : ControllerBase
         _sender = sender;
     }
 
+    [PermissionAuthorize(PermissionConstants.DailyTaskListView)]
     [HttpGet("api/cna/dashboard")]
     public async Task<IActionResult> GetDashboard(CancellationToken cancellationToken)
     {
-        var subClaim = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value 
+        var subClaim = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value
                     ?? User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
         if (string.IsNullOrEmpty(subClaim) || !long.TryParse(subClaim, out long cnaUserId))
@@ -39,10 +41,11 @@ public class CnaDashboardController : ControllerBase
         return Ok(ApiResponse<CnaDashboardDto>.CreateSuccess(response));
     }
 
+    [PermissionAuthorize(PermissionConstants.TaskCompletionLog)]
     [HttpPost("api/cna/tasks/{taskId}/complete")]
     public async Task<IActionResult> CompleteTask(long taskId, CancellationToken cancellationToken)
     {
-        var subClaim = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value 
+        var subClaim = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value
                     ?? User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
         if (string.IsNullOrEmpty(subClaim) || !long.TryParse(subClaim, out long cnaUserId))
