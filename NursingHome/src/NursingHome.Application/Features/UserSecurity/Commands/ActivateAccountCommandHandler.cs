@@ -4,6 +4,7 @@ using NursingHome.Application.Abstractions;
 using NursingHome.Application.Abstractions.Authentication;
 using NursingHome.Application.Common;
 using NursingHome.Application.Features.UserSecurity.DTOs;
+using NursingHome.Application.Features.UserSecurity.Validators;
 
 namespace NursingHome.Application.Features.UserSecurity.Commands;
 
