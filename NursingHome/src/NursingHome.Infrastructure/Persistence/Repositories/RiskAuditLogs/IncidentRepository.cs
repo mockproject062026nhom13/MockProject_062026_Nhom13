@@ -8,11 +8,7 @@ using NursingHome.Infrastructure.Persistence.Generated;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using NursingHome.Application.Abstractions;
 using NursingHome.Application.Features.RiskAuditLogs.Commands;
-using NursingHome.Infrastructure.Persistence.DbContexts;
-using NursingHome.Infrastructure.Persistence.Generated;
 
 namespace NursingHome.Infrastructure.Persistence.Repositories.RiskAuditLogs;
 
