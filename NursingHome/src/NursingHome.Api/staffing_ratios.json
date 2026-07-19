@@ -1,0 +1,31 @@
+{
+  "IsEmergencyMode": false,
+  "Standard": {
+    "Day": {
+      "Nurse": 15,
+      "Cna": 8
+    },
+    "Evening": {
+      "Nurse": 20,
+      "Cna": 10
+    },
+    "Night": {
+      "Nurse": 30,
+      "Cna": 15
+    }
+  },
+  "Emergency": {
+    "Day": {
+      "Nurse": 10,
+      "Cna": 6
+    },
+    "Evening": {
+      "Nurse": 15,
+      "Cna": 8
+    },
+    "Night": {
+      "Nurse": 20,
+      "Cna": 10
+    }
+  }
+}
