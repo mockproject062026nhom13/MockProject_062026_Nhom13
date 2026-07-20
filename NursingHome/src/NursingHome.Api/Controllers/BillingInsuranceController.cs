@@ -9,7 +9,7 @@ using NursingHome.Domain.Constants;
 namespace NursingHome.Api.Controllers;
 
 //SC_035_M2-US-09_cost-billing-panel
-[PermissionAuthorize(PermissionConstants.CarePlanView)]
+[Authorize]
 [ApiController]
 [Route("api/v1/billing-insurance")]
 
