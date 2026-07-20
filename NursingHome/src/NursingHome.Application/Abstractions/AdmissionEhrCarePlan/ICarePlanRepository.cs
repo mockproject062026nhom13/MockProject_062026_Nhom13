@@ -15,5 +15,5 @@ public interface ICarePlanRepository
         CancellationToken cancellationToken
     );
 
-    Task<CarePlanStatisticDto> GetSratisticsByNurseIdAsync(long nurseId,CancellationToken cancellationToken);
+    Task<CarePlanStatisticDto> GetStatisticsByNurseIdAsync(long nurseId,CancellationToken cancellationToken);
 }

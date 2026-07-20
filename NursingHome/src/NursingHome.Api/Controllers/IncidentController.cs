@@ -22,7 +22,7 @@ public class IncidentController: ControllerBase
         [FromQuery] string status = "All",
         [FromQuery] string severity = "All",
         [FromQuery] int page = 1,
-        [FromQuery] int pageSize = 20)
+        [FromQuery] int pageSize = 10)
     {
         var query  = new GetIncidentListQuery(status, severity,page,pageSize);
 

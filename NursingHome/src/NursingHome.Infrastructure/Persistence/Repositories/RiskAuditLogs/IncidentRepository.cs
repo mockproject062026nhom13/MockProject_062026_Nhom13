@@ -1,6 +1,7 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using NursingHome.Application.Abstractions;
+using NursingHome.Application.Common.Models;
 using NursingHome.Application.Features.RiskAuditLogs.DTOs;
 using NursingHome.Infrastructure.Persistence.DbContexts;
 using NursingHome.Infrastructure.Persistence.Generated;
@@ -80,16 +81,18 @@ public class IncidentRepository(NursingHomeDbContext _context) : IIncidentReposi
     // {
     //     _context = context;
     // }
-    public async Task<List<IncidentListItemDto>> GetPagedIncidentsAsync(
+    public async Task<PageResult<IncidentListItemDto>> GetPagedIncidentsAsync(
         string statusFilter,
         string severityFilter,
-        int skip,
-        int take,
+        int pageIndex, 
+        int pageSize,
         CancellationToken cancellationToken)
     {
         var query = _context.Set<Incident>()
-            .AsNoTracking()
-            .AsQueryable();
+        .AsNoTracking()
+        .Include(i => i.Resident) 
+        .Include(i => i.Severity)
+        .AsQueryable();
 
         if(!string.Equals(statusFilter,"All",StringComparison.OrdinalIgnoreCase))
             query = query.Where(i=>i.Status == statusFilter);
@@ -97,12 +100,14 @@ public class IncidentRepository(NursingHomeDbContext _context) : IIncidentReposi
         if(!string.Equals(severityFilter,"All",StringComparison.OrdinalIgnoreCase))
             query = query.Where(i=>i.Severity.LevelName == severityFilter);
         
+        int totalCount = await query.CountAsync(cancellationToken);
+        int skipAmount = (pageIndex - 1) * pageSize;
         var currentTime = DateTimeOffset.UtcNow;
 
         var resultList = await query
             .OrderByDescending(i=>i.ReportedAt)
-            .Skip(skip)
-            .Take(take)
+            .Skip((pageIndex - 1) * pageSize)
+            .Take(pageSize)
             .Select(i=> new IncidentListItemDto(
                 i.Id,
                 i.Resident.FirstName + " " + i.Resident.LastName + " • " + 
@@ -116,35 +121,26 @@ public class IncidentRepository(NursingHomeDbContext _context) : IIncidentReposi
                 i.Resident.IsChartLocked?"Locked" : "Unlocked"
             )).ToListAsync(cancellationToken);
         
-        return resultList;
+        return new PageResult<IncidentListItemDto>(resultList, totalCount, pageIndex, pageSize);;
     }
 
-    public async Task<IncidentSummaryDto> GetIncidentSummaryAsync(int month,int year,CancellationToken cancellationToken)
+    public async Task<IncidentSummaryDto> GetIncidentSummaryAsync(int month, int year, CancellationToken cancellationToken)
     {
         var currentTime = DateTimeOffset.UtcNow;
 
-        var monthData = await _context.Set<Incident>()
+        var summary = await _context.Set<Incident>()
             .AsNoTracking()
-            .Where(i=>i.ReportedAt.Month == month && i.ReportedAt.Year == year)
-            .Select(i=> new{
-                Status = i.Status,
-                SlaDeadline = i.SlaDeadline,
-                IsChartLocked = i.Resident.IsChartLocked
-
-            }).ToListAsync(cancellationToken);
-
-        int total = monthData.Count;
-        int openCount = monthData.Count(i=> i.Status == "OPEN" || i.Status == "UNDER_INVESTIGATION");
-        int overdueCount = monthData.Count(i=>i.Status != "CLOSED" && i.SlaDeadline < currentTime);
-        int chartLockedCount = monthData.Count(i=> i.IsChartLocked);
-        int resolvedCount = monthData.Count(i => i.Status == "CLOSED");
-
-        return new IncidentSummaryDto(
-            TotalThisMonth: total,
-            Open : openCount,
-            Overdue : overdueCount,
-            ChartLocked : chartLockedCount,
-            Resolved : resolvedCount
-        );
+            .Where(i => i.ReportedAt.Month == month && i.ReportedAt.Year == year)
+            .GroupBy(i => 1) 
+            .Select(group => new IncidentSummaryDto(
+                group.Count(), 
+                group.Count(i => i.Status == "OPEN" || i.Status == "UNDER_INVESTIGATION"), 
+                group.Count(i => i.Status != "CLOSED" && i.SlaDeadline < currentTime), 
+                group.Count(i => i.Resident.IsChartLocked), 
+                group.Count(i => i.Status == "CLOSED") 
+            ))
+            .FirstOrDefaultAsync(cancellationToken); 
+           
+        return summary ?? new IncidentSummaryDto(0, 0, 0, 0, 0);
     }
 }

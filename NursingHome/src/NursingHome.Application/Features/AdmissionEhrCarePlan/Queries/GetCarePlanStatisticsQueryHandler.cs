@@ -12,9 +12,9 @@ public class GetCarePlanStatisticsQueryHandler(
 {
     public async Task<CarePlanStatisticDto> Handle(GetCarePlanStatisticsQuery request , CancellationToken cancellationToken)
     {
-        var currentNurseId = currentUserService.UserId;
+        long? currentNurseId = currentUserService.UserId;
 
-        var result = await carePlanRepository.GetSratisticsByNurseIdAsync(currentNurseId,cancellationToken);
+        var result = await carePlanRepository.GetStatisticsByNurseIdAsync(currentNurseId.Value,cancellationToken);
         return result;
     }
 }

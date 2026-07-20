@@ -1,15 +1,16 @@
 
 using NursingHome.Application.Features.RiskAuditLogs.DTOs;
+using NursingHome.Application.Common.Models;
 
-namespace NursingHome.Application.Abstractions;
+namespace NursingHome.Application.Abstractions.RiskAuditLogs;
 
 public interface IIncidentRepository
 {
-    Task<List<IncidentListItemDto>> GetPagedIncidentsAsync(
+    Task<PageResult<IncidentListItemDto>> GetPagedIncidentsAsync(
         string statusFilter,
         string severityFilter,
-        int skip,
-        int take,
+        int pageIndex, 
+        int pageSize,
         CancellationToken cancellationToken
 
     );
