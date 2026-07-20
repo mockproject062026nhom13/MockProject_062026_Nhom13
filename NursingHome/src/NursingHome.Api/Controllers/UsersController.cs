@@ -8,9 +8,11 @@ using NursingHome.Infrastructure.Authorization;
 
 namespace NursingHome.Api.Controllers;
 
+//SC_005_AD-02_create-edit-user
+[PermissionAuthorize(PermissionConstants.AdUserCreateEdit)]
 [ApiController]
 [Route("api/[controller]")]
-[PermissionAuthorize(PermissionConstants.AdUserCreateEdit)]
+
 public class UsersController : ControllerBase
 {
     private readonly IMediator _mediator;
