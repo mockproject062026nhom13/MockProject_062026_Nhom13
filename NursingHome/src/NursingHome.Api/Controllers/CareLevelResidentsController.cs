@@ -3,11 +3,16 @@ using Microsoft.AspNetCore.Mvc;
 using NursingHome.Application.Common;
 using NursingHome.Application.Features.CareLevelResidents.Queries; 
 using NursingHome.Application.Features.CareLevelResidents.DTOs;
+using NursingHome.Infrastructure.Authorization;
+using NursingHome.Domain.Constants;
 
 namespace NursingHome.Api.Controllers;
 
+//SC_017_M1-US-01_resident_list
+[PermissionAuthorize(PermissionConstants.ResidentListView)]
 [Route("api/[controller]")]
 [ApiController]
+
 public class CareLevelResidentsController(IMediator _mediator) : ControllerBase
 {
     //SC_017_Select resident list
