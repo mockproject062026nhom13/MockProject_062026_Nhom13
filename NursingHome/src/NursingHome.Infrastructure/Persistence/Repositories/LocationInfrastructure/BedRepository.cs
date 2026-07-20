@@ -22,7 +22,10 @@ public class BedRepository(NursingHomeDbContext db) : IBedRepository
                 b.Room.RoomNumber,
                 b.Room.RoomType,
                 b.BedNumber,
-                b.Status))
+                b.Status,
+                b.Room.RoomType == "PRIVATE" ? 150 :
+                b.Room.RoomType == "SEMI_PRIVATE" ? 100 : 50
+                ))
             .ToListAsync(ct);
 
         var pagination = new PaginationMetadata(
