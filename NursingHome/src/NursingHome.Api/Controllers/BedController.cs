@@ -12,12 +12,23 @@ public class RoomTypeController : ControllerBase
     [HttpGet]
     public IActionResult Get()
     {
-        var response = ApiResponse<List<string>>.CreateSuccess(
-            RoomConstants.RoomTypes.ToList());
+        var roomTypesWithPrice = RoomConstants.RoomTypes.Select(type => new 
+        {
+            Name = type,
+            Price = type switch
+            {
+                "private" => 150L,
+                "semi-private" => 100L,
+                _ => 50L 
+            }
+        }).ToList();
+
+        var response = ApiResponse<object>.CreateSuccess(roomTypesWithPrice);
 
         return Ok(response);
     }
-}
+    }
+
 
 [Route("api/beds")]
 public class BedController(IMediator mediator) : ControllerBase

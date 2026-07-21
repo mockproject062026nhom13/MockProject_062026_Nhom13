@@ -1,12 +1,15 @@
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using  NursingHome.Application.Features.Facilities.GetResidentStatisticsByFacility.Queries;
-using NursingHome.Domain.Constants;
 using NursingHome.Infrastructure.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using NursingHome.Domain.Constants;
+
+using  NursingHome.Application.Features.Facilities.GetResidentStatisticsByFacility.Queries;
+
 namespace NursingHome.API.Controllers;
 
 [ApiController]
 [Route("api/facilities")]
+// [PermissionAuthorize(PermissionConstants.AdFacilitySettingsManage)]
 public class FacilityController(IMediator mediator) : ControllerBase
 {
     [HttpGet("info")]
