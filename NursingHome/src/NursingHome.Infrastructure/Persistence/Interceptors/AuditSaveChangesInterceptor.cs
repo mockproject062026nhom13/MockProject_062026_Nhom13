@@ -147,7 +147,7 @@ public sealed class AuditSaveChangesInterceptor : SaveChangesInterceptor
             action: auditEntry.Action,
             oldData: AuditSerializer.Serialize(auditEntry.OldValues),
             newData: AuditSerializer.Serialize(auditEntry.NewValues),
-            performedBy: auditEntry.PerformedBy ?? 0,
+            performedBy: auditEntry.PerformedBy ?? 1,
             DateTimeOffset.UtcNow,
             ipAddress: auditEntry.IpAddress);
     }
