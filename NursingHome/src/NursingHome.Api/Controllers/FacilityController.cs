@@ -1,14 +1,10 @@
 using MediatR;
 using NursingHome.Infrastructure.Authorization;
 using Microsoft.AspNetCore.Mvc;
-<<<<<<< HEAD
 using NursingHome.Domain.Constants;
 
-=======
 using  NursingHome.Application.Features.Facilities.GetResidentStatisticsByFacility.Queries;
-using NursingHome.Domain.Constants;
-using NursingHome.Infrastructure.Authorization;
->>>>>>> origin/dev
+
 namespace NursingHome.API.Controllers;
 
 [ApiController]
