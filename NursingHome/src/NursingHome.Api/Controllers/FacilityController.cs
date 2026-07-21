@@ -1,8 +1,14 @@
 using MediatR;
 using NursingHome.Infrastructure.Authorization;
 using Microsoft.AspNetCore.Mvc;
+<<<<<<< HEAD
 using NursingHome.Domain.Constants;
 
+=======
+using  NursingHome.Application.Features.Facilities.GetResidentStatisticsByFacility.Queries;
+using NursingHome.Domain.Constants;
+using NursingHome.Infrastructure.Authorization;
+>>>>>>> origin/dev
 namespace NursingHome.API.Controllers;
 
 [ApiController]
@@ -17,4 +23,16 @@ public class FacilityController(IMediator mediator) : ControllerBase
 
         return Ok(result);
     }
+    //CarePlanView
+    [HttpGet("facility-resident-statistics")]
+    [PermissionAuthorize(PermissionConstants.CarePlanView)]
+    public async Task<IActionResult> GetResidentStatisticsAsync()
+    {
+        var query = new GetResidentStatisticsByFacilityQuery();
+
+        var result = await mediator.Send(query);
+
+        return StatusCode(result.StatusCode, result);
+    }
+
 }

@@ -12,7 +12,8 @@ appsettings.Local.json
 docker-compose.override.yml
 #documentation file
 documentations/
-
+#test file
+tests/NursingHome.Application.UnitTests/
 # --- Re-include committed, secret-free templates/infra ------------------------
 !.env.example
 !docker-compose.yml

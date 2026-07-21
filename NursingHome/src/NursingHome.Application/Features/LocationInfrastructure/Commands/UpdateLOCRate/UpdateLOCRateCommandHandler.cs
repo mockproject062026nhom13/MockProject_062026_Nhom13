@@ -24,7 +24,7 @@ public class UpdateLOCRateCommandHandler
     {
         // Mock userId
         // TODO: Get userId from JWT token
-        var userId = 1L;
+        //var userId = 1L;
 
         // TODO:
         // Do not validate facility access here.

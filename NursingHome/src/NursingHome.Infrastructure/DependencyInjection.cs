@@ -8,6 +8,7 @@ using NursingHome.Infrastructure.Persistence.DbContexts;
 using NursingHome.Infrastructure.Services;
 using NursingHome.Infrastructure.Persistence.Audit;
 
+
 namespace NursingHome.Infrastructure;
 
 public static class DependencyInjection
@@ -39,10 +40,11 @@ public static class DependencyInjection
             .AddClasses(classes => classes.AssignableTo<IAuthorizationHandler>())
             .AsImplementedInterfaces()
             .WithScopedLifetime()
-            .AddClasses(classes => classes.InNamespaces(
-                "NursingHome.Infrastructure.Persistence.Repositories",
-                "NursingHome.Infrastructure.Services",
-                "NursingHome.Infrastructure.Authorization"))
+            .AddClasses(classes => classes.Where(type =>
+                type.Namespace != null &&
+                (type.Namespace.StartsWith("NursingHome.Infrastructure.Persistence.Repositories") ||
+                 type.Namespace.StartsWith("NursingHome.Infrastructure.Services") ||
+                 type.Namespace.StartsWith("NursingHome.Infrastructure.Authorization"))))
             .AsMatchingInterface()
             .WithScopedLifetime());
 

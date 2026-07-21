@@ -8,8 +8,11 @@ using NursingHome.Infrastructure.Authorization;
 
 namespace NursingHome.Api.Controllers;
 
+//SC_037_M7-US-01_report_incident
+[PermissionAuthorize(PermissionConstants.IncidentCreate)]
 [Route("api/[controller]")]
 [ApiController]
+
 public class IncidentsController(IMediator _mediator) : ControllerBase
 {
     [PermissionAuthorize(PermissionConstants.IncidentCreate)]
