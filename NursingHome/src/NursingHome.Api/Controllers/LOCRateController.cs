@@ -14,7 +14,7 @@ namespace NursingHome.Api.Controllers;
 /// </summary>
 // todo: validate + perrmisson
 [ApiController]
-[Route("api/auth")]
+[Route("api/locationinfrastructure")]
 [PermissionAuthorize(PermissionConstants.AdLocRateManage)]
 public class LOCRateController : ControllerBase
 {
