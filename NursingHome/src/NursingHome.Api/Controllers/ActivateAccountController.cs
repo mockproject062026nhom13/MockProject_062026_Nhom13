@@ -8,7 +8,7 @@ using NursingHome.Infrastructure.Authorization;
 namespace NursingHome.Api.Controllers;
 
 [ApiController]
-[Route("api/auth")]
+[Route("api/usersecurity")]
 public class ActivateAccountController : ControllerBase
 {
     private readonly IMediator _mediator;
