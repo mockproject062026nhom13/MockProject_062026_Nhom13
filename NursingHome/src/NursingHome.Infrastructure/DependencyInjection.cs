@@ -8,6 +8,7 @@ using NursingHome.Infrastructure.Persistence.DbContexts;
 using NursingHome.Infrastructure.Services;
 using NursingHome.Infrastructure.Persistence.Audit;
 
+
 namespace NursingHome.Infrastructure;
 
 public static class DependencyInjection

@@ -25,7 +25,7 @@ public sealed class CreateLOCRateCommandHandler
     {
         // Mock userId
         // TODO: Get userId from JWT token
-        var userId = 1L;
+        //var userId = 1L;
 
         // TODO:
         // Check current user has permission for the facility.
