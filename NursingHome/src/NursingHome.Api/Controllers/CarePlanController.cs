@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using NursingHome.Application.Features.CareLevelResidents.Queries;
 using NursingHome.Application.Features.CareLevelResidents.DTOs;
 using NursingHome.Application.Features.CareLevelResidents.Commands;
+using NursingHome.Domain.Constants;
+using NursingHome.Infrastructure.Authorization;
 namespace NursingHome.Api.Controllers;
 
 /// <summary>
@@ -24,6 +26,7 @@ public class CarePlanController : ControllerBase
     /// Get care plan information by care plan id.
     /// </summary>
     [HttpGet("care-plans/status")]
+    [PermissionAuthorize(PermissionConstants.CarePlanView)]
     public async Task<IActionResult> GetCarePlanIdsByStatusAsync(
         [FromQuery] string status)
     {
@@ -34,6 +37,7 @@ public class CarePlanController : ControllerBase
         return StatusCode(result.StatusCode, result);
     }
     [HttpGet("care-plans/{carePlanId:long}")]
+    [PermissionAuthorize(PermissionConstants.CarePlanView)]
     public async Task<IActionResult> GetCarePlanAsync(
         [FromRoute] long carePlanId)
     {
@@ -46,6 +50,7 @@ public class CarePlanController : ControllerBase
 
     //check permission
     [HttpPut("care-plans/{carePlanId:long}/status")]
+    [PermissionAuthorize(PermissionConstants.CarePlanCreateEdit)]
     public async Task<IActionResult> UpdateCarePlanStatusCommand(
         [FromRoute] long carePlanId,
         [FromBody] UpdateCarePlanStatusRequest request)

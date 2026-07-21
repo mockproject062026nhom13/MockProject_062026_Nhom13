@@ -1,7 +1,8 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using NursingHome.Application.Features.CareLevelResidents.Commands;
-
+using NursingHome.Domain.Constants;
+using NursingHome.Infrastructure.Authorization;
 namespace NursingHome.Api.Controllers;
 
 [ApiController]
@@ -15,8 +16,9 @@ public class AssessmentController : ControllerBase
         _mediator = mediator;
     }
 
-
+//AssessmentCreate
     [HttpPost]
+    [PermissionAuthorize(PermissionConstants.AssessmentCreate)]
     public async Task<IActionResult> CreateAssessment(
         CreateAssessmentCommand command)
     {
