@@ -9,7 +9,7 @@ public class BedRepository(NursingHomeDbContext db) : IBedRepository
 {
     public async Task<ApiResponse<List<BedRecordDto>>> GetBedsAsync(int page, CancellationToken ct)
     {
-        const int pageSize = 4;
+        const int pageSize = 10;
 
         var totalItems = await db.Beds.CountAsync(ct);
         var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
