@@ -1,6 +1,7 @@
 
 using NursingHome.Application.Features.RiskAuditLogs.DTOs;
 using NursingHome.Application.Common.Models;
+using NursingHome.Application.Features.RiskAuditLogs.Commands;
 
 namespace NursingHome.Application.Abstractions.RiskAuditLogs;
 
@@ -20,4 +21,6 @@ public interface IIncidentRepository
         int year,
         CancellationToken cancellationToken
     );
+
+    Task<long> CreateIncidentAsync(CreateIncidentCommand command, long currentUserId, CancellationToken cancellationToken);
 }

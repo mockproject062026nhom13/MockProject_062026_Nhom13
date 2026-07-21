@@ -1,6 +1,6 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-using NursingHome.Application.Abstractions;
+using NursingHome.Application.Abstractions.RiskAuditLogs;
 using NursingHome.Application.Common.Models;
 using NursingHome.Application.Features.RiskAuditLogs.DTOs;
 using NursingHome.Infrastructure.Persistence.DbContexts;

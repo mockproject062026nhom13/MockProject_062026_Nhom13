@@ -1,8 +1,8 @@
-using NursingHome.Application.Features.RiskAuditLogs.Commands;
+// using NursingHome.Application.Features.RiskAuditLogs.Commands;
 
-namespace NursingHome.Application.Abstractions;
+// namespace NursingHome.Application.Abstractions;
 
-public interface IIncidentRepository
-{
-    Task<long> CreateIncidentAsync(CreateIncidentCommand command, long currentUserId, CancellationToken cancellationToken);
-}
+// public interface IIncidentRepository
+// {
+//     Task<long> CreateIncidentAsync(CreateIncidentCommand command, long currentUserId, CancellationToken cancellationToken);
+// }

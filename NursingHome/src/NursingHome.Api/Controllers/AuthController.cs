@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using NursingHome.Application.Features.Auth.Commands;
 using NursingHome.Application.Common;
+using NursingHome.Application.Features.UserSecurity.Commands.Login;
 using NursingHome.Application.Features.Auth.DTOs;
 
 namespace NursingHome.Api.Controllers;
@@ -11,6 +12,19 @@ namespace NursingHome.Api.Controllers;
 public class AuthController(IMediator mediator) : ControllerBase
 {
     private readonly IMediator _mediator = mediator;
+    //private readonly ISender _sender;
+
+    // public AuthController(ISender sender)
+    // {
+    //     _sender = sender;
+    // }
+
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] LoginCommand command, CancellationToken cancellationToken)
+    {
+        var response = await mediator.Send(command, cancellationToken);
+        return Ok(ApiResponse<LoginResponse>.CreateSuccess(response));
+    }
 
     //1.OTP authentication API
     [HttpPost("mfa/verify")]
@@ -39,5 +53,8 @@ public class AuthController(IMediator mediator) : ControllerBase
         );
         return Ok(response);
     }
+
+    ///
+    
 
 }

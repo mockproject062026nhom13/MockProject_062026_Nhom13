@@ -1,6 +1,6 @@
 using MediatR;
 using NursingHome.Application.Common;
-using NursingHome.Application.Abstractions;
+using NursingHome.Application.Abstractions.RiskAuditLogs;
 
 namespace NursingHome.Application.Features.RiskAuditLogs.Commands;
 

@@ -1,5 +1,5 @@
 using MediatR;
-using NursingHome.Application.Abstractions;
+using NursingHome.Application.Abstractions.RiskAuditLogs;
 using NursingHome.Application.Features.RiskAuditLogs.DTOs;
 
 namespace NursingHome.Application.Features.RiskAuditLogs.Queries;
