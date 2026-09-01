@@ -1,0 +1,18 @@
+# Shell scripts must keep LF endings or bash inside the Linux container fails
+# with "bad interpreter" / "\r command not found" — force LF regardless of the
+# host's core.autocrlf setting.
+*.sh text eol=lf
+
+# Normalise line endings for common text types.
+*.cs      text
+*.csproj  text
+*.sln     text
+*.slnx    text
+*.json    text
+*.yml     text eol=lf
+*.yaml    text eol=lf
+*.sql     text
+
+#documentation file
+**/documentations/
+Dockerfile text eol=lf

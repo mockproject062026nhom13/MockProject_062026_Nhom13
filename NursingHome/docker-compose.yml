@@ -1,0 +1,87 @@
+# =============================================================================
+# NursingHome — local container stack: API + SQL Server (+ one-shot DB init).
+#
+# Secrets come from a local, git-ignored .env file (copy .env.example -> .env).
+# Start:  docker compose up --build
+# Stop:   docker compose down            (keeps data)
+# Reset:  docker compose down -v         (also drops the database volume)
+# =============================================================================
+name: nursinghome
+
+services:
+  # ---- SQL Server 2019 -------------------------------------------------------
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: nursinghome-db
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:?set MSSQL_SA_PASSWORD in .env}
+      MSSQL_PID: ${MSSQL_PID:-Developer}
+    # The DB port is NOT published by default — it is only reachable on the
+    # internal 'backend' network. Uncomment to connect from the host (SSMS,
+    # Azure Data Studio); it stays bound to loopback only.
+    ports:
+      - "127.0.0.1:14330:1433"
+    volumes:
+      - mssql-data:/var/opt/mssql
+    healthcheck:
+      # Probe the TCP port with bash — works without relying on sqlcmd in the image.
+      test: ["CMD-SHELL", "bash -c '</dev/tcp/localhost/1433' >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+    restart: unless-stopped
+    networks:
+      - backend
+
+  # ---- One-shot database initialiser ----------------------------------------
+  db-init:
+    image: mcr.microsoft.com/mssql-tools:latest
+    container_name: nursinghome-db-init
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:?set MSSQL_SA_PASSWORD in .env}
+      DB_NAME: ${DB_NAME:-NursingHome}
+      DB_APP_USER: ${DB_APP_USER:-nursinghome_app}
+      DB_APP_PASSWORD: ${DB_APP_PASSWORD:?set DB_APP_PASSWORD in .env}
+    volumes:
+      - ./database:/database:ro
+      - ./docker/db/init.sh:/init.sh:ro
+    entrypoint: ["bash", "/init.sh"]
+    restart: "no"
+    networks:
+      - backend
+
+  # ---- ASP.NET Core API ------------------------------------------------------
+  api:
+    build:
+      context: .
+      dockerfile: docker/api/Dockerfile
+    image: nursinghome-api:latest
+    container_name: nursinghome-api
+    depends_on:
+      db-init:
+        condition: service_completed_successfully
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Development}
+      ASPNETCORE_URLS: http://+:8080
+      # Built from .env — the API connects as the least-privilege app login,
+      # never as 'sa'. TrustServerCertificate is fine for the self-signed dev
+      # cert; use a real certificate for anything beyond local development.
+      ConnectionStrings__DefaultConnection: "Server=db,1433;Database=${DB_NAME:-NursingHome};User Id=${DB_APP_USER:-nursinghome_app};Password=${DB_APP_PASSWORD};Encrypt=True;TrustServerCertificate=True;MultipleActiveResultSets=True;"
+    ports:
+      - "${API_PORT:-8080}:8080"
+    restart: unless-stopped
+    networks:
+      - backend
+
+volumes:
+  mssql-data:
+    name: nursinghome-mssql-data
+
+networks:
+  backend:
+    driver: bridge
